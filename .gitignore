@@ -1,8 +1,16 @@
+# Fichiers bytecode #
 *.class
 
-# Package Files #
+# Dossier des .class (eclipse) #
+bin/
+
+# Package Files - à voir #
 *.jar
 *.war
 *.ear
+
+# Fichiers d'ide #
 *.sublime-project
 *.sublime-workspace
+*.classpath
+*.project
