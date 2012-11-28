@@ -13,10 +13,10 @@ import java.util.List;
 public class Node
 {
 	protected Integer	x, y;
-	Integer				id;
+	Integer			id;
 
-	ArrayList<Arc>		inArcs	= new ArrayList<Arc>();
-	ArrayList<Arc>		outArcs	= new ArrayList<Arc>();
+	ArrayList<Arc> inArcs	= new ArrayList<Arc>();
+	ArrayList<Arc> outArcs	= new ArrayList<Arc>();
 
 	public Node(Integer anX, Integer aY, Integer anID)
 	{
@@ -24,6 +24,7 @@ public class Node
 		y=aY;
 		id=anID;
 	}
+        
 	public Integer getX() {
 		return x;
 	}
@@ -43,14 +44,6 @@ public class Node
 	public Integer getID()
 	{
 		return id;
-	}
-
-	public Node(int x, int y, int id)
-	{
-		super();
-		this.x = x;
-		this.y = y;
-		this.id = id;
 	}
 
 	public List<Arc> getInArcs()
