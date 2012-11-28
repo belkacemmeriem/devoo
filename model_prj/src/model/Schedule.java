@@ -7,7 +7,7 @@ package model;
  */
 public class Schedule
 {
-	float start, end;
+	float start, end;	//en HEURES!
 
 	public Schedule(float start, float end)
 	{
@@ -37,12 +37,12 @@ public class Schedule
 		this.end = end;
 	}
 	
-	public String Start_str()
+	public String startStr()
 	{
 		return floatToTime(start);
 	}
 	
-	public String End_str()
+	public String endStr()
 	{
 		return floatToTime(end);
 	}
@@ -50,14 +50,20 @@ public class Schedule
 	protected String floatToTime(float value)
 	{
 		String str = new String();
-		str+= Math.floor(value);
+		
+		Integer heures = (int)Math.floor(value);
+		if (heures > 9)
+			str+=heures.toString();
+		else
+			str+= '0'+heures.toString();
+		
 		str+= ":";
 		
-		int minutes = (int)(value-Math.floor(value))*60;
+		Integer minutes = (int)((value-Math.floor(value))*60);
 		if (minutes > 9)
-			str+=minutes;
+			str+=minutes.toString();
 		else
-			str+= '0'+minutes;
+			str+= '0'+minutes.toString();
 		return str;
 	}
 	
