@@ -23,10 +23,9 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanelGauche" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanelDroite" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="jPanelGauche" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanelDroite" min="-2" pref="227" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -56,9 +55,9 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="jPanelBoutonsGen" min="-2" pref="30" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jPanelPlan" min="-2" pref="379" max="-2" attributes="0"/>
+                  <Component id="jPanelBoutonsGen" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanelPlan" pref="503" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanelEditionLivraison" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -74,19 +73,55 @@
             </Property>
           </Properties>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="0"/>
-            <Property name="rows" type="int" value="1"/>
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonUndo" min="-2" pref="33" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonRedo" min="-2" pref="33" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jComboBoxZone" min="-2" pref="88" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jFormattedTextFieldDate" min="-2" pref="110" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonGenTourn" pref="139" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonFinal" min="-2" pref="150" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jComboBoxZone" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButtonRedo" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButtonUndo" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jFormattedTextFieldDate" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButtonGenTourn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonFinal" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButtonUndo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;-"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Mignot\Documents\GitHub\devoo\Supervision\images\icons\undo_mini.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUndoActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonDo">
+            <Component class="javax.swing.JButton" name="jButtonRedo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="-&gt;"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Mignot\Documents\GitHub\devoo\Supervision\images\icons\redo_mini.png"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBoxZone">
@@ -110,6 +145,16 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFormattedTextFieldDateActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="jButtonGenTourn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer tourn&#xe9;e"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonFinal">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Finaliser tourn&#xe9;e"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelPlan">
@@ -131,59 +176,57 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanelHoraires" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelEdLivTitre" min="-2" pref="430" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="jLabelLivCurr" min="-2" pref="110" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jLabelAddLivCurr" min="-2" pref="320" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jLabelLivCurr" max="32767" attributes="0"/>
+                                  <Component id="jLabelLivPrec" max="32767" attributes="0"/>
+                                  <Component id="jLabelLivSuiv" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabelAddLivPrec" pref="320" max="32767" attributes="0"/>
+                                  <Component id="jLabelAddLivCurr" max="32767" attributes="0"/>
+                                  <Component id="jLabelAddLivSuiv" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jLabelLivPrec" min="-2" pref="110" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jLabelAddLivPrec" min="-2" pref="320" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jLabelLivSuiv" min="-2" pref="110" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                              <Component id="jLabelAddLivSuiv" min="-2" pref="320" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jPanelHoraires" min="-2" pref="430" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="110" pref="110" max="-2" attributes="0"/>
-                              <Component id="jButtonSupprimerLiv" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabelEdLivTitre" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonValiderLiv" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButtonSupprimerLiv" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jLabelEdLivTitre" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelLivCurr" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabelAddLivCurr" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelEdLivTitre" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jButtonSupprimerLiv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jButtonValiderLiv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelLivPrec" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabelAddLivPrec" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelLivCurr" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabelAddLivCurr" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelLivSuiv" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabelAddLivSuiv" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelLivPrec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabelAddLivPrec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jPanelHoraires" min="-2" pref="60" max="-2" attributes="0"/>
-                      <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonSupprimerLiv" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jButtonValiderLiv" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelLivSuiv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabelAddLivSuiv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                      <Component id="jPanelHoraires" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -191,6 +234,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabelEdLivTitre">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Edition de livraison"/>
               </Properties>
             </Component>
@@ -260,39 +304,35 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jLabelTitreTournee" min="-2" pref="220" max="-2" attributes="0"/>
-              <Component id="jPanelTournee" min="-2" pref="220" max="-2" attributes="0"/>
-              <Group type="102" attributes="0">
-                  <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButtonGenTourn" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonFinal" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabelTitreLivraisons" min="-2" pref="212" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jPaneLivraisons" min="-2" pref="230" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="jLabelTitreTournee" min="-2" pref="30" max="-2" attributes="0"/>
-                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                  <Component id="jPanelTournee" min="-2" pref="380" max="-2" attributes="0"/>
-                  <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
-                  <Component id="jButtonGenTourn" min="-2" pref="50" max="-2" attributes="0"/>
-                  <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                  <Component id="jButtonFinal" min="-2" pref="50" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabelTitreLivraisons" min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPaneLivraisons" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabelTitreTournee">
+        <Component class="javax.swing.JLabel" name="jLabelTitreLivraisons">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tourn&#xe9;e"/>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Liste des livraisons"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="jPanelTournee">
+        <Container class="javax.swing.JPanel" name="jPaneLivraisons">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="ff" type="rgb"/>
@@ -301,16 +341,6 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
         </Container>
-        <Component class="javax.swing.JButton" name="jButtonGenTourn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer tourn&#xe9;e"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonFinal">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Finaliser tourn&#xe9;e"/>
-          </Properties>
-        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
