@@ -1,12 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class ZoneGeo
 {
 	protected
-	ArrayList<Node> nodes = new ArrayList<Node>();
+	HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
 	ArrayList<Arc> arcs = new ArrayList<Arc>();
 	int warehouseID;
 	
@@ -17,7 +18,7 @@ public class ZoneGeo
 	 */
 	public void addNode(Node node)
 	{
-			nodes.add(node.id, node);
+			nodes.put(node.id, node);
 	}
 	
 	
@@ -51,20 +52,13 @@ public class ZoneGeo
 	{
 		warehouseID = id;
 	}
-	public ArrayList<Node> getNodes()
+	public HashMap<Integer, Node> getNodes()
 	{
 		return nodes;
 	}
 	public Node getNode(Integer anID)
 	{
-		for(Node n : nodes)
-		{
-			if(n.getID()==anID)
-			{
-				return n;
-			}
-		}
-        throw new IllegalStateException("The required id is unexisting");
+		return nodes.get(anID);
 	}
 	public Node getWarehouse()
 	{
