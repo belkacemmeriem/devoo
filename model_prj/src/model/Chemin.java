@@ -5,35 +5,40 @@ import java.util.ArrayList;
 public class Chemin {
 	protected
 	
-	ArrayList<Node> contenu;
-	Node noeudDepart;
-	Node noeudArrivee;
+	ArrayList<Node> trajectory;
+	Node start;
+	Node target;
+	float duration;
+	
+	public Chemin(ArrayList<Node> contenu, Node noeudDepart, Node noeudArrivee,
+			float duration)
+	{
+		super();
+		this.trajectory = contenu;
+		this.start = noeudDepart;
+		this.target = noeudArrivee;
+		this.duration = duration;
+	}
 	
 	public Node getNoeudDepart()
 	{
-		return noeudDepart;
+		return start;
 	}
+	
 	public Node getNoeudArrivee()
 	{
-		return noeudArrivee;
+		return target;
 
 	}
-	public ArrayList<Node> getContenu()
+	public ArrayList<Node> getTrajectory()
 	{
-		return contenu;
+		return trajectory;
 
 	}
-	public void setContenu(ArrayList<Node> contenu) 
+	public float getDuration()
 	{
-		this.contenu = contenu;
+		return duration;
 	}
-	
-	public void setNoeudDepart(Node noeudDepart) {
-		this.noeudDepart = noeudDepart;
-	}
-	
-	public void setNoeudArrivee(Node noeudArrivee) {
-		this.noeudArrivee = noeudArrivee;
-	}
+
 
 }

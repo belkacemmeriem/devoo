@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author yann
@@ -7,44 +9,52 @@ package model;
  */
 public class Schedule
 {
-	float start, end;	//en HEURES!
+	protected
+	float startTime, endTime;	//en HEURES! ex: 1,5 = 1h30
+	ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
+
+	
+	public ArrayList<Delivery> getDeliveries()
+	{
+		return deliveries;
+	}
 
 	public Schedule(float start, float end)
 	{
 		super();
 		
-		this.start = start;
-		this.end = end;
+		this.startTime = start;
+		this.endTime = end;
 	}
 
-	public float getStart()
+	public float getStartTime()
 	{
-		return start;
+		return startTime;
 	}
 
-	public void setStart(float start)
+	public void setStartTime(float start)
 	{
-		this.start = start;
+		this.startTime = start;
 	}
 
-	public float getEnd()
+	public float getEndTime()
 	{
-		return end;
+		return endTime;
 	}
 
-	public void setEnd(float end)
+	public void setEndTime(float end)
 	{
-		this.end = end;
+		this.endTime = end;
 	}
 	
-	public String startStr()
+	public String startTimeString()
 	{
-		return floatToTime(start);
+		return floatToTime(startTime);
 	}
 	
-	public String endStr()
+	public String endTimeString()
 	{
-		return floatToTime(end);
+		return floatToTime(endTime);
 	}
 	
 	protected String floatToTime(float value)
