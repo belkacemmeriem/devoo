@@ -46,6 +46,9 @@ public class testDijkstra {
 		
 		ArrayList<Node> eng= new ArrayList<Node>();
 		eng.add(n5);
+		eng.add(n1);
+		System.out.println("Lancement de Dijkstra");
+
 		ArrayList<Chemin> solution = Dijkstra.solve(uneZone, n1, eng);
 		
 		for(Chemin c: solution)

@@ -54,7 +54,7 @@ public class Dijkstra {
         }
         dist.put(source.getID(),0);
          Comparator<PriorityNode> comparator = new NodeComparator();
-        PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>(10, comparator);
+        PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>(Infinity, comparator);
         for(Node v : theGraph.getNodes())
         {
             PriorityNode newNode = new PriorityNode(Infinity,v.getID());
@@ -64,8 +64,10 @@ public class Dijkstra {
         Q.add(aNode);
         while((Q.size()!=0)&& (toEnglobe.size()!=0))
         {
-        	
+
             Node u = theGraph.getNode(getMinVertex(dist));
+			System.out.println("Nouveau point"+u.getX()+" "+u.getY());
+
             Q.remove(u.getID());
             if(dist.get(u.getID())==Infinity)
             {
