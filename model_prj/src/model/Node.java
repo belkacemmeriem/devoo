@@ -55,7 +55,8 @@ public class Node
 		
 		for (Arc a: outArcs)
 		{
-			list.add(a.getDest());
+			if ( !list.contains(a.getDest()) )	//evacuer deux arcs qui meneraient au mm noeud.
+				list.add(a.getDest());
 		}
 		return list;
 	}

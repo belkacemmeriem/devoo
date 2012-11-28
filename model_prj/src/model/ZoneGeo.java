@@ -9,18 +9,15 @@ public class ZoneGeo
 	
 	public void addNode(Node node)
 	{
-		if (nodes.get(node.id) != null)
-			System.out.println("ZoneGeo.addNode: inserted node id " + node.id + " already exists! (ignored)");
-		else
 			nodes.add(node.id, node);			
 	}
 	
 	public void addArc(int originID, int destID, int speed, int lenght, String name)
 	{
 		if (nodes.get(originID) == null)
-			System.out.println("ZoneGeo.addArc: inserted origin id " + originID + " already exists! (ignored)");
+			System.out.println("ZoneGeo.addArc: origin id " + originID + " doesn't exists! (arc ignored)");
 		else if (nodes.get(destID) == null)
-			System.out.println("ZoneGeo.addArc: inserted origin id " + destID + " already exists! (ignored)");
+			System.out.println("ZoneGeo.addArc: dest id " + destID + " doesn't exists! (arc ignored)");
 		else
 		{
 			Arc arc = new Arc(	nodes.get(originID),
