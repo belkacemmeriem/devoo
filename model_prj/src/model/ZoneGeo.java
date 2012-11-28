@@ -10,7 +10,47 @@ public class ZoneGeo
 	ArrayList<Arc> arcs = new ArrayList<Arc>();
 	int warehouseID;
 	
-
+	/**
+	 * 
+	 * @param node Node à ajouter.
+	 * @pre Ne pas insérer deux objets avec le même id.
+	 */
+	public void addNode(Node node)
+	{
+			nodes.add(node.id, node);
+	}
+	
+	
+	/**
+	 * 
+	 * @param originID id du Node origine
+	 * @param destID id du Node destination
+	 * @param speed vitesse moyenne du troncon
+	 * @param lenght longueur du troncon
+	 * @param name nom de la rue
+	 * @pre originID et originID doivent avoir été insérés!
+	 */
+	public void addArc(int originID, int destID, int speed, int lenght, String name)
+	{
+		
+		Arc arc = new Arc(	nodes.get(originID),
+							nodes.get(destID),
+							speed,
+							lenght,
+							name );
+		
+		arcs.add(arc);
+		nodes.get(originID).addOutArc(arc);
+		nodes.get(destID).addInArc(arc);
+	}
+	/**
+	 * 
+	 * @pre doit etre un identifiant valide (pas de vérification).
+	 */
+	public void setWarehouse(int id)
+	{
+		warehouseID = id;
+	}
 	public ArrayList<Node> getNodes()
 	{
 		return nodes;
@@ -26,36 +66,6 @@ public class ZoneGeo
 		}
         throw new IllegalStateException("The required id is unexisting");
 	}
-	public void addNode(Node node)
-	{
-			nodes.add(node.id, node);
-	}
-	
-	public void addArc(int originID, int destID, int speed, int lenght, String name)
-	{
-		if (nodes.get(originID) == null)
-			System.out.println("ZoneGeo.addArc: origin id " + originID + " doesn't exists! (arc ignored)");
-		else if (nodes.get(destID) == null)
-			System.out.println("ZoneGeo.addArc: dest id " + destID + " doesn't exists! (arc ignored)");
-		else
-		{
-			Arc arc = new Arc(	nodes.get(originID),
-								nodes.get(destID),
-								speed,
-								lenght,
-								name );
-			
-			arcs.add(arc);
-			nodes.get(originID).addOutArc(arc);
-			nodes.get(destID).addInArc(arc);
-		}
-	}
-	
-	public void setWarehouse(int id)
-	{
-		warehouseID = id;
-	}
-	
 	public Node getWarehouse()
 	{
 		return nodes.get(warehouseID);
