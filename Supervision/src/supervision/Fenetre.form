@@ -40,9 +40,9 @@
           <Group type="102" attributes="0">
               <Component id="jLabelPartieInvisible" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanelGauche" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanelDroite" min="-2" pref="630" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanelGauche" max="32767" attributes="0"/>
+                  <Component id="jPanelDroite" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -162,7 +162,7 @@
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jLabelAddLivSuiv" min="-2" pref="320" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel2" min="-2" pref="430" max="-2" attributes="0"/>
+                  <Component id="jPanelHoraires" min="-2" pref="430" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace min="110" pref="110" max="-2" attributes="0"/>
                       <Component id="jButtonSupprimerLiv" min="-2" max="-2" attributes="0"/>
@@ -187,7 +187,7 @@
                           <Component id="jLabelLivSuiv" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabelAddLivSuiv" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jPanel2" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="jPanelHoraires" min="-2" pref="60" max="-2" attributes="0"/>
                       <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButtonSupprimerLiv" min="-2" pref="30" max="-2" attributes="0"/>
@@ -218,7 +218,7 @@
                 <Property name="text" type="java.lang.String" value="Valider"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel2">
+            <Container class="javax.swing.JPanel" name="jPanelHoraires">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="ff" red="ff" type="rgb"/>
@@ -266,19 +266,40 @@
         </Property>
       </Properties>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="false"/>
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="jLabelTitreTournee" min="-2" pref="220" max="-2" attributes="0"/>
+              <Component id="jPanelTournee" min="-2" pref="220" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jButtonGenTourn" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonFinal" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Component id="jLabelTitreTournee" min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                  <Component id="jPanelTournee" min="-2" pref="380" max="-2" attributes="0"/>
+                  <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
+                  <Component id="jButtonGenTourn" min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                  <Component id="jButtonFinal" min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelTitreTournee">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tourn&#xe9;e"/>
           </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="-1" width="220" height="30"/>
-            </Constraint>
-          </Constraints>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanelTournee">
           <Properties>
@@ -286,11 +307,6 @@
               <Color blue="0" green="0" red="ff" type="rgb"/>
             </Property>
           </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="30" width="220" height="380"/>
-            </Constraint>
-          </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
           <SubComponents>
@@ -304,21 +320,11 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer tourn&#xe9;e"/>
           </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="50" y="460" width="-1" height="50"/>
-            </Constraint>
-          </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonFinal">
           <Properties>
             <Property name="text" type="java.lang.String" value="Finaliser tourn&#xe9;e"/>
           </Properties>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="50" y="540" width="-1" height="50"/>
-            </Constraint>
-          </Constraints>
         </Component>
       </SubComponents>
     </Container>
