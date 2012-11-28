@@ -14,3 +14,4 @@ bin/
 *.sublime-workspace
 *.classpath
 *.project
+/Supervision/nbproject/private/
