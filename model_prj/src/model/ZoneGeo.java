@@ -2,11 +2,28 @@ package model;
 
 import java.util.ArrayList;
 
+
 public class ZoneGeo
 {
 	ArrayList<Node> nodes;
 	ArrayList<Arc> arcs;
 	
+
+	public ArrayList<Node> getNodes()
+	{
+		return nodes;
+	}
+	public Node getNode(Integer anID)
+	{
+		for(Node n : nodes)
+		{
+			if(n.getID()==anID)
+			{
+				return n;
+			}
+		}
+        throw new IllegalStateException("The required id is unexisting");
+	}
 	public void addNode(Node node)
 	{
 			nodes.add(node.id, node);			
