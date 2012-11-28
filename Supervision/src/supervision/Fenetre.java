@@ -4,6 +4,13 @@
  */
 package supervision;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+
+
 /**
  *
  * @author Mignot
@@ -18,7 +25,62 @@ public class Fenetre extends java.awt.Frame {
     public Fenetre() {
         initComponents();
         this.setTitle(TITRE);
+        creeMenu();
+        
     }
+    
+	private void creeMenu(){
+		// Creation de deux menus, chaque menu ayant plusieurs items
+		// et association d'un ecouteur d'action a chacun de ces items
+
+		Menu menuFichier = new Menu("Fichier");
+		Menu menuEdition = new Menu("Edition");
+		ActionListener a4 = new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+		ajoutItem("Sauvegarder en XML", menuFichier, a4);
+		ActionListener a5 = new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
+                
+		ActionListener a6 = new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+		ajoutItem("Undo", menuEdition, a6);
+                
+		ActionListener a7 = new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+		ajoutItem("Redo", menuEdition, a7);
+		
+		MenuBar barreDeMenu = new MenuBar();
+        barreDeMenu.add(menuFichier);
+        barreDeMenu.add(menuEdition);
+        this.setMenuBar(barreDeMenu);
+	}
+	
+	private void ajoutItem(String intitule, Menu menu, ActionListener a){
+		MenuItem item = new MenuItem(intitule);
+		menu.add(item);
+		item.addActionListener(a);
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,10 +111,8 @@ public class Fenetre extends java.awt.Frame {
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreTournee = new javax.swing.JLabel();
         jPanelTournee = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         jButtonGenTourn = new javax.swing.JButton();
         jButtonFinal = new javax.swing.JButton();
-        jLabelPartieInvisible = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -112,25 +172,28 @@ public class Fenetre extends java.awt.Frame {
         jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
         jPanelEditionLivraisonLayout.setHorizontalGroup(
             jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                .addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                .addComponent(jLabelLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanelHoraires, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jButtonSupprimerLiv)
-                .addGap(39, 39, 39)
-                .addComponent(jButtonValiderLiv))
+                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                        .addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                        .addComponent(jLabelLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                        .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelHoraires, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jButtonSupprimerLiv)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButtonValiderLiv)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelEditionLivraisonLayout.setVerticalGroup(
             jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,28 +212,27 @@ public class Fenetre extends java.awt.Frame {
                 .addGap(3, 3, 3)
                 .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonSupprimerLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonValiderLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonValiderLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelGaucheLayout = new javax.swing.GroupLayout(jPanelGauche);
         jPanelGauche.setLayout(jPanelGaucheLayout);
         jPanelGaucheLayout.setHorizontalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelGaucheLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelGaucheLayout.setVerticalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGaucheLayout.createSequentialGroup()
                 .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanelPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanelDroite.setBackground(new java.awt.Color(51, 255, 51));
@@ -178,7 +240,6 @@ public class Fenetre extends java.awt.Frame {
         jLabelTitreTournee.setText("Tournée");
 
         jPanelTournee.setBackground(new java.awt.Color(255, 0, 0));
-        jPanelTournee.add(jPanel1);
 
         jButtonGenTourn.setText("Générer tournée");
 
@@ -209,29 +270,20 @@ public class Fenetre extends java.awt.Frame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabelPartieInvisible.setText("Inexplicablemet, cette partie de la fenêtre ne s'affiche pas");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabelPartieInvisible, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelGauche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanelGauche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabelPartieInvisible, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelDroite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(jPanelDroite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -275,9 +327,7 @@ public class Fenetre extends java.awt.Frame {
     private javax.swing.JLabel jLabelLivCurr;
     private javax.swing.JLabel jLabelLivPrec;
     private javax.swing.JLabel jLabelLivSuiv;
-    private javax.swing.JLabel jLabelPartieInvisible;
     private javax.swing.JLabel jLabelTitreTournee;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBoutonsGen;
     private javax.swing.JPanel jPanelDroite;
     private javax.swing.JPanel jPanelEditionLivraison;
