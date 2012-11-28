@@ -19,9 +19,9 @@ import java.util.*;
 public class Dijkstra {
 
     protected
-            Integer Infinity =1000;
+            static Integer Infinity =1000;
     
-    protected  Integer getMinVertex(HashMap<Integer,Integer> dist)
+    protected  static Integer getMinVertex(HashMap<Integer,Integer> dist)
     {
         Set cles = dist.keySet();
         Iterator it = cles.iterator();
@@ -40,7 +40,7 @@ public class Dijkstra {
         }
         return node;
     }
-    public   ArrayList<Chemin> Dijkstra(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
+    public  static ArrayList<Chemin> solve(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
 
     {
     	ArrayList<Node> toCompute= (ArrayList<Node>) toEnglobe.clone();

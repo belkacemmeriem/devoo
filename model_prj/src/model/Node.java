@@ -18,6 +18,28 @@ public class Node
 	ArrayList<Arc>		inArcs	= new ArrayList<Arc>();
 	ArrayList<Arc>		outArcs	= new ArrayList<Arc>();
 
+	public Node(Integer anX, Integer aY, Integer anID)
+	{
+		x=anX;
+		y=aY;
+		id=anID;
+	}
+	public Integer getX() {
+		return x;
+	}
+
+
+
+	public Integer getY() {
+		return y;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
 	public Integer getID()
 	{
 		return id;

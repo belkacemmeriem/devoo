@@ -27,9 +27,11 @@ public class Chemin {
 	{
 		this.contenu = contenu;
 	}
+	
 	public void setNoeudDepart(Node noeudDepart) {
 		this.noeudDepart = noeudDepart;
 	}
+	
 	public void setNoeudArrivee(Node noeudArrivee) {
 		this.noeudArrivee = noeudArrivee;
 	}
