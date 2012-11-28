@@ -6,6 +6,7 @@ package dijkstra;
 import model.Arc;
 import model.Node;
 import model.ZoneGeo;
+import model.Chemin;
 
 import java.util.*;
 
@@ -39,9 +40,10 @@ public class Dijkstra {
         }
         return node;
     }
-    public   List<Node> Dijkstra(ZoneGeo theGraph, Node source, List<Node> toEnglobe)
+    public   ArrayList<Chemin> Dijkstra(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
 
     {
+    	ArrayList<Node> toCompute= (ArrayList<Node>) toEnglobe.clone();
         HashMap<Integer,Integer> dist = new HashMap<Integer, Integer>(); 
         HashMap<Integer,Integer> previous = new HashMap<Integer, Integer>(); 
         
@@ -90,10 +92,24 @@ public class Dijkstra {
             	}
             }
         }
-        List<Node> Solution= new ArrayList<Node>();
-        return Solution;
-    }
-    public static void main(String[] args) {
-        // TODO code application logic here
+        
+        ArrayList<Chemin> solution= new ArrayList<Chemin>();
+        for(Node n : toCompute)
+        {
+        	Chemin newChemin = new Chemin();
+        	newChemin.setNoeudDepart(source);
+        	newChemin.setNoeudArrivee(n);
+        	ArrayList<Node> contenu = new ArrayList<Node>();
+        	Node temp=theGraph.getNode(n.getID());
+        	while(n.getID()!=source.getID())
+        	{
+        		Integer theID =previous.get(temp.getID());
+        		Node toADD=theGraph.getNode(theID);
+        		contenu.add(toADD);
+            	temp=theGraph.getNode(theID);
+        	}
+        	newChemin.setContenu(contenu);
+        }
+        return solution;
     }
 }
