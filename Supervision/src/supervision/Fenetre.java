@@ -18,7 +18,6 @@ public class Fenetre extends java.awt.Frame {
     public Fenetre() {
         initComponents();
         this.setTitle(TITRE);
-        jPanelGauche.setSize(this.getHeight(), this.getWidth());
     }
 
     /**
@@ -51,19 +50,17 @@ public class Fenetre extends java.awt.Frame {
         jLabelTitreTournee = new javax.swing.JLabel();
         jPanelTournee = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabelPartieInvisible = new javax.swing.JLabel();
         jButtonGenTourn = new javax.swing.JButton();
         jButtonFinal = new javax.swing.JButton();
+        jLabelPartieInvisible = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 exitForm(evt);
             }
         });
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelGauche.setBackground(new java.awt.Color(102, 0, 153));
-        jPanelGauche.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelBoutonsGen.setBackground(new java.awt.Color(255, 204, 102));
         jPanelBoutonsGen.setLayout(new java.awt.GridLayout(1, 0));
@@ -86,48 +83,95 @@ public class Fenetre extends java.awt.Frame {
         });
         jPanelBoutonsGen.add(jFormattedTextFieldDate);
 
-        jPanelGauche.add(jPanelBoutonsGen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 420, 30));
-
         jPanelPlan.setBackground(new java.awt.Color(102, 102, 255));
-        jPanelGauche.add(jPanelPlan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 420, 380));
 
         jPanelEditionLivraison.setBackground(new java.awt.Color(0, 153, 153));
-        jPanelEditionLivraison.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelEdLivTitre.setText("Edition de livraison");
-        jPanelEditionLivraison.add(jLabelEdLivTitre, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 30));
 
         jButtonSupprimerLiv.setText("Supprimer");
-        jPanelEditionLivraison.add(jButtonSupprimerLiv, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 183, -1, 30));
 
         jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
-        jPanelEditionLivraison.add(jLabelAddLivCurr, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 320, 30));
 
         jButtonValiderLiv.setText("Valider");
-        jPanelEditionLivraison.add(jButtonValiderLiv, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 183, -1, 30));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 0));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
-        jPanelEditionLivraison.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 430, 60));
 
         jLabelLivCurr.setText("Adresse de livraison :");
-        jPanelEditionLivraison.add(jLabelLivCurr, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 110, 30));
 
         jLabelLivPrec.setText("Livraison précedente :");
-        jPanelEditionLivraison.add(jLabelLivPrec, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 110, 30));
 
         jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
-        jPanelEditionLivraison.add(jLabelAddLivPrec, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 320, 30));
 
         jLabelLivSuiv.setText("Livraison suivante :");
-        jPanelEditionLivraison.add(jLabelLivSuiv, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 110, 30));
 
         jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
-        jPanelEditionLivraison.add(jLabelAddLivSuiv, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 320, 30));
 
-        jPanelGauche.add(jPanelEditionLivraison, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 420, 220));
+        javax.swing.GroupLayout jPanelEditionLivraisonLayout = new javax.swing.GroupLayout(jPanelEditionLivraison);
+        jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
+        jPanelEditionLivraisonLayout.setHorizontalGroup(
+            jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                .addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                .addComponent(jLabelLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(jButtonSupprimerLiv)
+                .addGap(39, 39, 39)
+                .addComponent(jButtonValiderLiv))
+        );
+        jPanelEditionLivraisonLayout.setVerticalGroup(
+            jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonSupprimerLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonValiderLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
-        add(jPanelGauche, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 430, 630));
+        javax.swing.GroupLayout jPanelGaucheLayout = new javax.swing.GroupLayout(jPanelGauche);
+        jPanelGauche.setLayout(jPanelGaucheLayout);
+        jPanelGaucheLayout.setHorizontalGroup(
+            jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGaucheLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanelGaucheLayout.setVerticalGroup(
+            jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGaucheLayout.createSequentialGroup()
+                .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanelPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         jPanelDroite.setBackground(new java.awt.Color(51, 255, 51));
         jPanelDroite.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -136,10 +180,6 @@ public class Fenetre extends java.awt.Frame {
         jPanelDroite.add(jLabelTitreTournee, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 220, 30));
 
         jPanelTournee.setBackground(new java.awt.Color(255, 0, 0));
-
-        jLabelPartieInvisible.setText("Inexplicablemet, cette partie de la fenêtre ne s'affiche pas");
-        jPanel1.add(jLabelPartieInvisible);
-
         jPanelTournee.add(jPanel1);
 
         jPanelDroite.add(jPanelTournee, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 220, 380));
@@ -150,7 +190,30 @@ public class Fenetre extends java.awt.Frame {
         jButtonFinal.setText("Finaliser tournée");
         jPanelDroite.add(jButtonFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 540, -1, 50));
 
-        add(jPanelDroite, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 220, 630));
+        jLabelPartieInvisible.setText("Inexplicablemet, cette partie de la fenêtre ne s'affiche pas");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabelPartieInvisible, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelGauche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabelPartieInvisible, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelGauche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -4,6 +4,8 @@
  */
 package supervision;
 
+import supervision.Fenetre;
+
 /**
  *
  * @author Mignot
