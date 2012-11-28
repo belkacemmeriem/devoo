@@ -26,4 +26,9 @@ public class Arc
 	{
 		return dest;
 	}
+	
+	public float getDuration()
+	{
+		return lenght/speed;
+	}
 }
