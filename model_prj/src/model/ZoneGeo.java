@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 public class ZoneGeo
 {
+	protected
 	ArrayList<Node> nodes = new ArrayList<Node>();
 	ArrayList<Arc> arcs = new ArrayList<Arc>();
+	int warehouseID;
 	
 
 	public ArrayList<Node> getNodes()
@@ -47,6 +49,21 @@ public class ZoneGeo
 			nodes.get(originID).addOutArc(arc);
 			nodes.get(destID).addInArc(arc);
 		}
+	}
+	
+	public void setWarehouse(int id)
+	{
+		warehouseID = id;
+	}
+	
+	public Node getWarehouse()
+	{
+		return nodes.get(warehouseID);
+	}
+	
+	public int getWarehouseID()
+	{
+		return warehouseID;
 	}
 	
 }
