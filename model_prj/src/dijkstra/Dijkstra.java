@@ -19,9 +19,9 @@ import java.util.*;
 public class Dijkstra {
 
     protected
-            Integer Infinity =1000;
+            static Integer Infinity =1000;
     
-    protected  Integer getMinVertex(HashMap<Integer,Integer> dist)
+    protected  static Integer getMinVertex(HashMap<Integer,Integer> dist)
     {
         Set cles = dist.keySet();
         Iterator it = cles.iterator();
@@ -40,7 +40,7 @@ public class Dijkstra {
         }
         return node;
     }
-    public   ArrayList<Chemin> Dijkstra(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
+    public  static ArrayList<Chemin> solve(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
 
     {
     	ArrayList<Node> toCompute= (ArrayList<Node>) toEnglobe.clone();
@@ -54,7 +54,7 @@ public class Dijkstra {
         }
         dist.put(source.getID(),0);
          Comparator<PriorityNode> comparator = new NodeComparator();
-        PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>(10, comparator);
+        PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>(Infinity, comparator);
         for(Node v : theGraph.getNodes())
         {
             PriorityNode newNode = new PriorityNode(Infinity,v.getID());
@@ -64,8 +64,10 @@ public class Dijkstra {
         Q.add(aNode);
         while((Q.size()!=0)&& (toEnglobe.size()!=0))
         {
-        	
+
             Node u = theGraph.getNode(getMinVertex(dist));
+			System.out.println("Nouveau point"+u.getX()+" "+u.getY());
+
             Q.remove(u.getID());
             if(dist.get(u.getID())==Infinity)
             {
