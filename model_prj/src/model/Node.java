@@ -4,6 +4,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yann
@@ -15,8 +16,8 @@ public class Node
 	protected int		x, y;
 	protected int		id;
 	
-	protected ArrayList<Arc> inArcs;
-	protected ArrayList<Arc> outArcs;
+	protected List<Arc> inArcs = new ArrayList<Arc>();
+	protected List<Arc> outArcs = new ArrayList<Arc>();
 	
 	
 	public Node(int x, int y, int id)
@@ -28,13 +29,13 @@ public class Node
 	}
 
 
-	public ArrayList<Arc> getInArcs()
+	public List<Arc> getInArcs()
 	{
 		return inArcs;
 	}
 
 
-	public ArrayList<Arc> getOutArcs()
+	public List<Arc> getOutArcs()
 	{
 		return outArcs;
 	}
@@ -49,7 +50,7 @@ public class Node
 		outArcs.add(arc);
 	}
 	
-	public ArrayList<Node> getOutNodes()
+	public List<Node> getOutNodes()
 	{
 		ArrayList<Node> list = new ArrayList<Node>();
 		

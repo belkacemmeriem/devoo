@@ -1,15 +1,16 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ZoneGeo
 {
-	ArrayList<Node> nodes;
-	ArrayList<Arc> arcs;
+	List<Node> nodes = new ArrayList<Node>();
+	List<Arc> arcs = new ArrayList<Arc>();
 	
 	public void addNode(Node node)
 	{
-			nodes.add(node.id, node);			
+			nodes.add(node.id, node);
 	}
 	
 	public void addArc(int originID, int destID, int speed, int lenght, String name)
