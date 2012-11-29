@@ -10,6 +10,10 @@ public class ZoneGeo
 	HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
 	ArrayList<Arc> arcs = new ArrayList<Arc>();
 	int warehouseID;
+	int xmin = Integer.MAX_VALUE, 
+		xmax = Integer.MIN_VALUE, 
+		ymin = Integer.MAX_VALUE, 
+		ymax = Integer.MIN_VALUE;
 	
 	/**
 	 * 
@@ -19,6 +23,10 @@ public class ZoneGeo
 	public void addNode(Node node)
 	{
 			nodes.put(node.id, node);
+			xmin = Math.min(xmin, node.getX());
+			xmax = Math.max(xmax, node.getX());
+			ymin = Math.min(ymin, node.getY());
+			ymax = Math.max(ymax, node.getY());
 	}
 	
 	
@@ -44,6 +52,7 @@ public class ZoneGeo
 		nodes.get(originID).addOutArc(arc);
 		nodes.get(destID).addInArc(arc);
 	}
+	
 	/**
 	 * 
 	 * @pre doit etre un identifiant valide (pas de vérification).
@@ -52,14 +61,17 @@ public class ZoneGeo
 	{
 		warehouseID = id;
 	}
+	
 	public HashMap<Integer, Node> getNodes()
 	{
 		return nodes;
 	}
+	
 	public Node getNode(Integer anID)
 	{
 		return nodes.get(anID);
 	}
+	
 	public Node getWarehouse()
 	{
 		return nodes.get(warehouseID);
@@ -68,6 +80,30 @@ public class ZoneGeo
 	public int getWarehouseID()
 	{
 		return warehouseID;
+	}
+	
+	public int getXmin() {
+		return xmin;
+	}
+	
+	public int getXmax() {
+		return xmax;
+	}
+	
+	public int getYmin() {
+		return ymin;
+	}
+	
+	public int getYmax() {
+		return ymax;
+	}
+	
+	public int getWidth() {
+		return xmax - xmin;
+	}
+	
+	public int getHeight() {
+		return ymax - ymin;
 	}
 	
 }
