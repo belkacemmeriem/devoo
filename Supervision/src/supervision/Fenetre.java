@@ -20,419 +20,419 @@ import javax.swing.JOptionPane;
  * @author Mignot
  */
 public class Fenetre extends Frame {
-    
-    private final String TITRE = "Supervision des Livraisons Itinérantes Planifiés";
-    private Frame fenetre;
-    private int selectedZone;
-    private boolean masquerPopUpZone = false;
+
+	private final String TITRE = "Supervision des Livraisons Itinérantes Planifiés";
+	private Frame fenetre;
+	private int selectedZone;
+	private boolean masquerPopUpZone = false;
+	private Controleur controleur;
 
 
-    /**
-     * Creates new form Fenetre
-     */
-    public Fenetre() {
-        fenetre=this;
-        initComponents();
-        this.setTitle(TITRE);
-        creeMenu();
-        setFonts();
-        setPopups();
-        
-    }
-    
-    /**
-     *  Associe les messages popups aux différentes actions qui les déclenchent
-     * 
-     */
-    private void setPopups(){
-        /*Combo box de la zone
-         * On demande confirmation quand l'utilisateur veut changer de zone
-         */
-        selectedZone = jComboBoxZone.getSelectedIndex();
-        ItemListener itemListenerZone = new ItemListener() {
+	/**
+	 * Creates new form Fenetre
+	 */
+	public Fenetre() {
+		fenetre=this;
+		initComponents();
+		this.setTitle(TITRE);
+		creeMenu();
+		setFonts();
+		setPopups();
 
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange()==e.SELECTED)
-                {     
-                    if(masquerPopUpZone)
-                    {
-                        masquerPopUpZone=false;
-                    }
-                    else
-                    {
-                        Object[] options = { "Confirmer", "Annuler" };
-                        int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-                            "Etes-vous sûr de vouloir changer de zone ?"
-                                + "\n (les données de la tournées en cours seront définitivement effacées)",
-                                "Confirmation de changement de zone"+(masquerPopUpZone==true),
-                                JOptionPane.OK_CANCEL_OPTION, 
-                            JOptionPane.WARNING_MESSAGE, null,
-                            options, options[1]);
-                        jLabelTitreLivraisons.setText(""+optionChoisie);
-                        //Si l'utilisateur annule, on ne fait aucun changement
-                        if(optionChoisie==1)
-                        {
-                            masquerPopUpZone=true;
-                            jComboBoxZone.setSelectedIndex(selectedZone);
-                        }
-                        else
-                        {
-                        selectedZone=jComboBoxZone.getSelectedIndex();
-                        }
-                    }
-                }
-            }
-        };
-        jComboBoxZone.addItemListener(itemListenerZone);
-    }
-    
-    /**
-     *  Associe les polices aux différents labels
-     * 
-     */
-    private void setFonts(){
-        //Titre edition livraison
-        Font fontEdLivTitre = new Font("Serif", Font.PLAIN, 20);
-        jLabelEdLivTitre.setFont(fontEdLivTitre);
-        
-        //Titre livraisons
-        jLabelTitreLivraisons.setFont(fontEdLivTitre);
-    }
-    
-    private void creeMenu(){
-    	// Creation de deux menus, chaque menu ayant plusieurs items
-    	// et association d'un ecouteur d'action a chacun de ces items
+	}
 
-        Menu menuFichier = new Menu("Fichier");
-	Menu menuEdition = new Menu("Edition");
-	ActionListener a4 = new ActionListener(){
+	public Dessin getDessin() {
+		return jPanelPlan;
+	}
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
-	ajoutItem("Sauvegarder en XML", menuFichier, a4);
-	ActionListener a5 = new ActionListener(){
+	public void setControleur(Controleur ctrl) {
+		controleur = ctrl;
+	}
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
-	ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
-               
-	ActionListener a6 = new ActionListener(){
+	/**
+	 *  Associe les messages popups aux différentes actions qui les déclenchent
+	 * 
+	 */
+	private void setPopups(){
+		/*Combo box de la zone
+		 * On demande confirmation quand l'utilisateur veut changer de zone
+		 */
+		selectedZone = jComboBoxZone.getSelectedIndex();
+		ItemListener itemListenerZone = new ItemListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
-	ajoutItem("Undo", menuEdition, a6);
-                
-	ActionListener a7 = new ActionListener(){
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==e.SELECTED)
+				{     
+					if(masquerPopUpZone)
+					{
+						masquerPopUpZone=false;
+					}
+					else
+					{
+						Object[] options = { "Confirmer", "Annuler" };
+						int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
+								"Etes-vous sûr de vouloir changer de zone ?"
+										+ "\n (les données de la tournées en cours seront définitivement effacées)",
+										"Confirmation de changement de zone"+(masquerPopUpZone==true),
+										JOptionPane.OK_CANCEL_OPTION, 
+										JOptionPane.WARNING_MESSAGE, null,
+										options, options[1]);
+						jLabelTitreLivraisons.setText(""+optionChoisie);
+						//Si l'utilisateur annule, on ne fait aucun changement
+						if(optionChoisie==1)
+						{
+							masquerPopUpZone=true;
+							jComboBoxZone.setSelectedIndex(selectedZone);
+						}
+						else
+						{
+							selectedZone=jComboBoxZone.getSelectedIndex();
+						}
+					}
+				}
+			}
+		};
+		jComboBoxZone.addItemListener(itemListenerZone);
+	}
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
-	ajoutItem("Redo", menuEdition, a7);
-		
-	MenuBar barreDeMenu = new MenuBar();
-        barreDeMenu.add(menuFichier);
-        barreDeMenu.add(menuEdition);
-        this.setMenuBar(barreDeMenu);
-    }
-	
-    private void ajoutItem(String intitule, Menu menu, ActionListener a){
-    	MenuItem item = new MenuItem(intitule);
-    	menu.add(item);
-    	item.addActionListener(a);
-    }
+	/**
+	 *  Associe les polices aux différents labels
+	 * 
+	 */
+	private void setFonts(){
+		//Titre edition livraison
+		Font fontEdLivTitre = new Font("Serif", Font.PLAIN, 20);
+		jLabelEdLivTitre.setFont(fontEdLivTitre);
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+		//Titre livraisons
+		jLabelTitreLivraisons.setFont(fontEdLivTitre);
+	}
 
-        jPanelGauche = new javax.swing.JPanel();
-        jPanelBoutonsGen = new javax.swing.JPanel();
-        jButtonUndo = new javax.swing.JButton();
-        jButtonRedo = new javax.swing.JButton();
-        jComboBoxZone = new javax.swing.JComboBox();
-        jFormattedTextFieldDate = new javax.swing.JFormattedTextField();
-        jButtonGenTourn = new javax.swing.JButton();
-        jButtonFinal = new javax.swing.JButton();
-        jPanelPlan = new javax.swing.JPanel();
-        jPanelEditionLivraison = new javax.swing.JPanel();
-        jLabelEdLivTitre = new javax.swing.JLabel();
-        jButtonSupprimerLiv = new javax.swing.JButton();
-        jLabelAddLivCurr = new javax.swing.JLabel();
-        jButtonValiderLiv = new javax.swing.JButton();
-        jPanelHoraires = new javax.swing.JPanel();
-        jLabelLivCurr = new javax.swing.JLabel();
-        jLabelLivPrec = new javax.swing.JLabel();
-        jLabelAddLivPrec = new javax.swing.JLabel();
-        jLabelLivSuiv = new javax.swing.JLabel();
-        jLabelAddLivSuiv = new javax.swing.JLabel();
-        jPanelDroite = new javax.swing.JPanel();
-        jLabelTitreLivraisons = new javax.swing.JLabel();
-        jPaneLivraisons = new javax.swing.JPanel();
+	private void creeMenu(){
+		// Creation de deux menus, chaque menu ayant plusieurs items
+		// et association d'un ecouteur d'action a chacun de ces items
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                exitForm(evt);
-            }
-        });
+		Menu menuFichier = new Menu("Fichier");
+		Menu menuEdition = new Menu("Edition");
+		ActionListener a4 = new ActionListener(){
 
-        jPanelGauche.setBackground(new java.awt.Color(102, 0, 153));
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+		};
+		ajoutItem("Sauvegarder en XML", menuFichier, a4);
+		ActionListener a5 = new ActionListener(){
 
-        jPanelBoutonsGen.setBackground(new java.awt.Color(255, 204, 102));
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+		};
+		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
 
-        jButtonUndo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\undo_mini.png")); // NOI18N
-        jButtonUndo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonUndoActionPerformed(evt);
-            }
-        });
+		ActionListener a6 = new ActionListener(){
 
-        jButtonRedo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\redo_mini.png")); // NOI18N
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+		};
+		ajoutItem("Undo", menuEdition, a6);
 
-        jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxZone.setToolTipText("Changer de zone");
+		ActionListener a7 = new ActionListener(){
 
-        jFormattedTextFieldDate.setText("Date de la tournée");
-        jFormattedTextFieldDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldDateActionPerformed(evt);
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+		};
+		ajoutItem("Redo", menuEdition, a7);
 
-        jButtonGenTourn.setText("Générer tournée");
+		MenuBar barreDeMenu = new MenuBar();
+		barreDeMenu.add(menuFichier);
+		barreDeMenu.add(menuEdition);
+		this.setMenuBar(barreDeMenu);
+	}
 
-        jButtonFinal.setText("Finaliser tournée");
+	private void ajoutItem(String intitule, Menu menu, ActionListener a){
+		MenuItem item = new MenuItem(intitule);
+		menu.add(item);
+		item.addActionListener(a);
+	}
 
-        javax.swing.GroupLayout jPanelBoutonsGenLayout = new javax.swing.GroupLayout(jPanelBoutonsGen);
-        jPanelBoutonsGen.setLayout(jPanelBoutonsGenLayout);
-        jPanelBoutonsGenLayout.setHorizontalGroup(
-            jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBoutonsGenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonGenTourn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanelBoutonsGenLayout.setVerticalGroup(
-            jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jFormattedTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonGenTourn)
-                .addComponent(jButtonFinal))
-        );
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
+	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        jPanelPlan.setBackground(new java.awt.Color(102, 102, 255));
+		jPanelGauche = new javax.swing.JPanel();
+		jPanelBoutonsGen = new javax.swing.JPanel();
+		jButtonUndo = new javax.swing.JButton();
+		jButtonRedo = new javax.swing.JButton();
+		jComboBoxZone = new javax.swing.JComboBox();
+		jFormattedTextFieldDate = new javax.swing.JFormattedTextField();
+		jButtonGenTourn = new javax.swing.JButton();
+		jButtonFinal = new javax.swing.JButton();
+		jPanelPlan = new Dessin();
+		jPanelEditionLivraison = new javax.swing.JPanel();
+		jLabelEdLivTitre = new javax.swing.JLabel();
+		jButtonSupprimerLiv = new javax.swing.JButton();
+		jLabelAddLivCurr = new javax.swing.JLabel();
+		jButtonValiderLiv = new javax.swing.JButton();
+		jPanelHoraires = new javax.swing.JPanel();
+		jLabelLivCurr = new javax.swing.JLabel();
+		jLabelLivPrec = new javax.swing.JLabel();
+		jLabelAddLivPrec = new javax.swing.JLabel();
+		jLabelLivSuiv = new javax.swing.JLabel();
+		jLabelAddLivSuiv = new javax.swing.JLabel();
+		jPanelDroite = new javax.swing.JPanel();
+		jLabelTitreLivraisons = new javax.swing.JLabel();
+		jPaneLivraisons = new javax.swing.JPanel();
 
-        jPanelEditionLivraison.setBackground(new java.awt.Color(0, 153, 153));
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent evt) {
+				exitForm(evt);
+			}
+		});
 
-        jLabelEdLivTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelEdLivTitre.setText("Edition de livraison");
+		jPanelGauche.setBackground(new java.awt.Color(102, 0, 153));
 
-        jButtonSupprimerLiv.setText("Supprimer");
+		jPanelBoutonsGen.setBackground(new java.awt.Color(255, 204, 102));
 
-        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
+		jButtonUndo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\undo_mini.png")); // NOI18N
+		jButtonUndo.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButtonUndoActionPerformed(evt);
+			}
+		});
 
-        jButtonValiderLiv.setText("Valider");
+		jButtonRedo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\redo_mini.png")); // NOI18N
 
-        jPanelHoraires.setBackground(new java.awt.Color(255, 255, 0));
-        jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
+		jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+		jComboBoxZone.setToolTipText("Changer de zone");
 
-        jLabelLivCurr.setText("Adresse de livraison :");
+		jFormattedTextFieldDate.setText("Date de la tournée");
+		jFormattedTextFieldDate.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jFormattedTextFieldDateActionPerformed(evt);
+			}
+		});
 
-        jLabelLivPrec.setText("Livraison précedente :");
+		jButtonGenTourn.setText("Générer tournée");
 
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
+		jButtonFinal.setText("Finaliser tournée");
 
-        jLabelLivSuiv.setText("Livraison suivante :");
+		javax.swing.GroupLayout jPanelBoutonsGenLayout = new javax.swing.GroupLayout(jPanelBoutonsGen);
+		jPanelBoutonsGen.setLayout(jPanelBoutonsGenLayout);
+		jPanelBoutonsGenLayout.setHorizontalGroup(
+				jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanelBoutonsGenLayout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jButtonUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jButtonRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jFormattedTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jButtonGenTourn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(jButtonFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+				);
+		jPanelBoutonsGenLayout.setVerticalGroup(
+				jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jButtonRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jButtonUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jFormattedTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jButtonGenTourn)
+						.addComponent(jButtonFinal))
+				);
 
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
+		jPanelPlan.setBackground(new java.awt.Color(102, 102, 255));
 
-        javax.swing.GroupLayout jPanelEditionLivraisonLayout = new javax.swing.GroupLayout(jPanelEditionLivraison);
-        jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
-        jPanelEditionLivraisonLayout.setHorizontalGroup(
-            jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelHoraires, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                        .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelLivPrec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                            .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonValiderLiv)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSupprimerLiv)))
-                .addContainerGap())
-        );
-        jPanelEditionLivraisonLayout.setVerticalGroup(
-            jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSupprimerLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonValiderLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
-                .addComponent(jPanelHoraires, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+		jPanelEditionLivraison.setBackground(new java.awt.Color(0, 153, 153));
 
-        javax.swing.GroupLayout jPanelGaucheLayout = new javax.swing.GroupLayout(jPanelGauche);
-        jPanelGauche.setLayout(jPanelGaucheLayout);
-        jPanelGaucheLayout.setHorizontalGroup(
-            jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanelGaucheLayout.setVerticalGroup(
-            jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelGaucheLayout.createSequentialGroup()
-                .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+		jLabelEdLivTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		jLabelEdLivTitre.setText("Edition de livraison");
 
-        jPanelDroite.setBackground(new java.awt.Color(51, 255, 51));
+		jButtonSupprimerLiv.setText("Supprimer");
 
-        jLabelTitreLivraisons.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTitreLivraisons.setText("Liste des livraisons");
+		jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
 
-        jPaneLivraisons.setBackground(new java.awt.Color(255, 0, 0));
+		jButtonValiderLiv.setText("Valider");
 
-        javax.swing.GroupLayout jPanelDroiteLayout = new javax.swing.GroupLayout(jPanelDroite);
-        jPanelDroite.setLayout(jPanelDroiteLayout);
-        jPanelDroiteLayout.setHorizontalGroup(
-            jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDroiteLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelTitreLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
-            .addGroup(jPanelDroiteLayout.createSequentialGroup()
-                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanelDroiteLayout.setVerticalGroup(
-            jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDroiteLayout.createSequentialGroup()
-                .addComponent(jLabelTitreLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+		jPanelHoraires.setBackground(new java.awt.Color(255, 255, 0));
+		jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelDroite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+		jLabelLivCurr.setText("Adresse de livraison :");
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		jLabelLivPrec.setText("Livraison précedente :");
 
-    /**
-     * Exit the Application
-     */
-    private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
-        System.exit(0);
-    }//GEN-LAST:event_exitForm
+		jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
 
-    private void jFormattedTextFieldDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldDateActionPerformed
+		jLabelLivSuiv.setText("Livraison suivante :");
 
-    private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonUndoActionPerformed
+		jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
+		javax.swing.GroupLayout jPanelEditionLivraisonLayout = new javax.swing.GroupLayout(jPanelEditionLivraison);
+		jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
+		jPanelEditionLivraisonLayout.setHorizontalGroup(
+				jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(jPanelHoraires, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+						.addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+										.addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+												.addComponent(jLabelLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(jLabelLivPrec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(jLabelLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+														.addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+														.addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+														.addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+																.addContainerGap()
+																.addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+																.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(jButtonValiderLiv)
+																.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(jButtonSupprimerLiv)))
+																.addContainerGap())
+				);
+		jPanelEditionLivraisonLayout.setVerticalGroup(
+				jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+						.addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jButtonSupprimerLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jButtonValiderLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(jLabelLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+												.addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(jLabelLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addGap(1, 1, 1)
+														.addComponent(jPanelHoraires, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+				);
 
-            public void run() {
-                new Fenetre().setVisible(true);
-            }
-        });
-    }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonFinal;
-    private javax.swing.JButton jButtonGenTourn;
-    private javax.swing.JButton jButtonRedo;
-    private javax.swing.JButton jButtonSupprimerLiv;
-    private javax.swing.JButton jButtonUndo;
-    private javax.swing.JButton jButtonValiderLiv;
-    private javax.swing.JComboBox jComboBoxZone;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDate;
-    private javax.swing.JLabel jLabelAddLivCurr;
-    private javax.swing.JLabel jLabelAddLivPrec;
-    private javax.swing.JLabel jLabelAddLivSuiv;
-    private javax.swing.JLabel jLabelEdLivTitre;
-    private javax.swing.JLabel jLabelLivCurr;
-    private javax.swing.JLabel jLabelLivPrec;
-    private javax.swing.JLabel jLabelLivSuiv;
-    private javax.swing.JLabel jLabelTitreLivraisons;
-    private javax.swing.JPanel jPaneLivraisons;
-    private javax.swing.JPanel jPanelBoutonsGen;
-    private javax.swing.JPanel jPanelDroite;
-    private javax.swing.JPanel jPanelEditionLivraison;
-    private javax.swing.JPanel jPanelGauche;
-    private javax.swing.JPanel jPanelHoraires;
-    private javax.swing.JPanel jPanelPlan;
-    // End of variables declaration//GEN-END:variables
+		javax.swing.GroupLayout jPanelGaucheLayout = new javax.swing.GroupLayout(jPanelGauche);
+		jPanelGauche.setLayout(jPanelGaucheLayout);
+		jPanelGaucheLayout.setHorizontalGroup(
+				jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				);
+		jPanelGaucheLayout.setVerticalGroup(
+				jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanelGaucheLayout.createSequentialGroup()
+						.addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+				);
+
+		jPanelDroite.setBackground(new java.awt.Color(51, 255, 51));
+
+		jLabelTitreLivraisons.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		jLabelTitreLivraisons.setText("Liste des livraisons");
+
+		jPaneLivraisons.setBackground(new java.awt.Color(255, 0, 0));
+
+		javax.swing.GroupLayout jPanelDroiteLayout = new javax.swing.GroupLayout(jPanelDroite);
+		jPanelDroite.setLayout(jPanelDroiteLayout);
+		jPanelDroiteLayout.setHorizontalGroup(
+				jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDroiteLayout.createSequentialGroup()
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(jLabelTitreLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(64, 64, 64))
+						.addGroup(jPanelDroiteLayout.createSequentialGroup()
+								.addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, Short.MAX_VALUE))
+				);
+		jPanelDroiteLayout.setVerticalGroup(
+				jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanelDroiteLayout.createSequentialGroup()
+						.addComponent(jLabelTitreLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jPaneLivraisons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+				);
+		layout.setVerticalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(jPanelDroite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				);
+
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
+
+	/**
+	 * Exit the Application
+	 */
+	private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
+		System.exit(0);
+	}//GEN-LAST:event_exitForm
+
+	private void jFormattedTextFieldDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDateActionPerformed
+		// TODO add your handling code here:
+	}//GEN-LAST:event_jFormattedTextFieldDateActionPerformed
+
+	private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
+		// TODO add your handling code here:
+	}//GEN-LAST:event_jButtonUndoActionPerformed
+
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private javax.swing.JButton jButtonFinal;
+	private javax.swing.JButton jButtonGenTourn;
+	private javax.swing.JButton jButtonRedo;
+	private javax.swing.JButton jButtonSupprimerLiv;
+	private javax.swing.JButton jButtonUndo;
+	private javax.swing.JButton jButtonValiderLiv;
+	private javax.swing.JComboBox jComboBoxZone;
+	private javax.swing.JFormattedTextField jFormattedTextFieldDate;
+	private javax.swing.JLabel jLabelAddLivCurr;
+	private javax.swing.JLabel jLabelAddLivPrec;
+	private javax.swing.JLabel jLabelAddLivSuiv;
+	private javax.swing.JLabel jLabelEdLivTitre;
+	private javax.swing.JLabel jLabelLivCurr;
+	private javax.swing.JLabel jLabelLivPrec;
+	private javax.swing.JLabel jLabelLivSuiv;
+	private javax.swing.JLabel jLabelTitreLivraisons;
+	private javax.swing.JPanel jPaneLivraisons;
+	private javax.swing.JPanel jPanelBoutonsGen;
+	private javax.swing.JPanel jPanelDroite;
+	private javax.swing.JPanel jPanelEditionLivraison;
+	private javax.swing.JPanel jPanelGauche;
+	private javax.swing.JPanel jPanelHoraires;
+	private Dessin jPanelPlan;
+	// End of variables declaration//GEN-END:variables
+
 }
