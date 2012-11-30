@@ -21,25 +21,6 @@ public class Dijkstra {
     protected
             static Integer Infinity =1000;
     
-    protected  static Integer getMinVertex(HashMap<Integer,Integer> dist)
-    {
-        Set cles = dist.keySet();
-        Iterator it = cles.iterator();
-        Integer min=Infinity;
-        Integer node=0;
-        while (it.hasNext())
-        {
-            Object cle = it.next();
-            Object valeur = dist.get(cle); 
-            if(dist.get(cle)<min);
-            {
-                min=dist.get(cle);
-                node=cle.hashCode();
-            }
-                
-        }
-        return node;
-    }
     public  static ArrayList<Chemin> solve(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
 
     {
