@@ -53,7 +53,7 @@ public class testDijkstra {
 		
 		for(Chemin c: solution)
 		{
-			for(Node n :c.getContenu())
+			for(Node n :c.getTrajectory())
 			{
 				System.out.print(n.getX()+ " "+n.getY());
 			}

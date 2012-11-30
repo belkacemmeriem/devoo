@@ -47,7 +47,7 @@ public class Dijkstra {
         HashMap<Integer,Integer> dist = new HashMap<Integer, Integer>(); 
         HashMap<Integer,Integer> previous = new HashMap<Integer, Integer>(); 
         
-        for(Node v : theGraph.getNodes())
+        for(Node v : theGraph.getNodes().values())
         {
             dist.put(v.getID(),Infinity);
             previous.put(v.getID(),-1);
@@ -55,7 +55,7 @@ public class Dijkstra {
         dist.put(source.getID(),0);
          Comparator<PriorityNode> comparator = new NodeComparator();
         PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>(Infinity, comparator);
-        for(Node v : theGraph.getNodes())
+        for(Node v : theGraph.getNodes().values())
         {
             PriorityNode newNode = new PriorityNode(Infinity,v.getID());
             Q.add(newNode);
@@ -98,9 +98,7 @@ public class Dijkstra {
         ArrayList<Chemin> solution= new ArrayList<Chemin>();
         for(Node n : toCompute)
         {
-        	Chemin newChemin = new Chemin();
-        	newChemin.setNoeudDepart(source);
-        	newChemin.setNoeudArrivee(n);
+        	Integer distance=0;
         	ArrayList<Node> contenu = new ArrayList<Node>();
         	Node temp=theGraph.getNode(n.getID());
         	while(n.getID()!=source.getID())
@@ -110,7 +108,8 @@ public class Dijkstra {
         		contenu.add(toADD);
             	temp=theGraph.getNode(theID);
         	}
-        	newChemin.setContenu(contenu);
+        	Chemin newChemin = new Chemin(contenu,source,n,distance);        
+        	solution.add(newChemin);
         }
         return solution;
     }
