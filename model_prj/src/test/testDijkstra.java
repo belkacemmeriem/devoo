@@ -17,6 +17,7 @@ public class testDijkstra {
 
 	@Test
 	public void run() {
+		//Création d'un graphe 
 		Node n1 = new Node(0,0,0);
 		Node n2 = new Node(0,1,1);
 		Node n3 = new Node(1,0,2);
@@ -44,16 +45,15 @@ public class testDijkstra {
 		uneZone.addNode(n4);
 		uneZone.addNode(n5);
 		
+		//Création de la liste des points à atteindre
 		ArrayList<Node> eng= new ArrayList<Node>();
 		eng.add(n5);
 		eng.add(n3);
 
 
-
-		System.out.println("Lancement de Dijkstra");
-
+		//Appel de Dijkstra
 		ArrayList<Chemin> solution = Dijkstra.solve(uneZone, n1, eng);
-		
+		/*
 		for(Chemin c: solution)
 		{
 			for(Node n :c.getTrajectory())
@@ -62,8 +62,7 @@ public class testDijkstra {
 			}
 			System.out.println(";");
 		}
-
-		System.out.println("test Ok");
+		 */
 	}
 
 }
