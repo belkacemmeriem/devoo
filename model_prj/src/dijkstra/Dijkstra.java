@@ -64,11 +64,9 @@ public class Dijkstra {
         Q.add(aNode);
         while((Q.size()!=0)&& (toEnglobe.size()!=0))
         {
-
-            Node u = theGraph.getNode(getMinVertex(dist));
-			System.out.println("Nouveau point"+u.getX()+" "+u.getY());
-
-            Q.remove(u.getID());
+        	PriorityNode uPN=Q.poll();
+            Node u = theGraph.getNode(uPN.id);
+            
             if(dist.get(u.getID())==Infinity)
             {
             }
@@ -85,32 +83,36 @@ public class Dijkstra {
                         Q.add(newNode) ;
                     }
                 }
-            }
-            for(Node v : toEnglobe)
-            {
-            	if(v.getID()==u.getID())
-            	{
-            		toEnglobe.remove(v);
-            	}
+                
+                for(Node k : toCompute)
+	            {
+	            	if(k.getID()==u.getID())
+	            	{
+	            		toEnglobe.remove(k);
+	            	}
+	            }
+	            
             }
         }
-        
         ArrayList<Chemin> solution= new ArrayList<Chemin>();
         for(Node n : toCompute)
         {
         	Integer distance=0;
         	ArrayList<Node> contenu = new ArrayList<Node>();
         	Node temp=theGraph.getNode(n.getID());
-        	while(n.getID()!=source.getID())
+        	contenu.add(temp);
+        	while(temp.getID()!=source.getID())
         	{
         		Integer theID =previous.get(temp.getID());
         		Node toADD=theGraph.getNode(theID);
         		contenu.add(toADD);
             	temp=theGraph.getNode(theID);
         	}
-        	Chemin newChemin = new Chemin(contenu,source,n,distance);        
+        	Collections.reverse(contenu);
+        	Chemin newChemin = new Chemin(contenu,distance);        
         	solution.add(newChemin);
         }
+        	
         return solution;
     }
 }

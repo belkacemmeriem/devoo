@@ -46,7 +46,10 @@ public class testDijkstra {
 		
 		ArrayList<Node> eng= new ArrayList<Node>();
 		eng.add(n5);
-		eng.add(n1);
+		eng.add(n3);
+
+
+
 		System.out.println("Lancement de Dijkstra");
 
 		ArrayList<Chemin> solution = Dijkstra.solve(uneZone, n1, eng);
@@ -55,12 +58,12 @@ public class testDijkstra {
 		{
 			for(Node n :c.getTrajectory())
 			{
-				System.out.print(n.getX()+ " "+n.getY());
+				System.out.print("Point: "+n.getID()+" ["+n.getX()+ ", "+n.getY()+"] ");
 			}
-			System.out.println("Suivant");
+			System.out.println(";");
 		}
 
-		fail("Not yet implemented");
+		System.out.println("test Ok");
 	}
 
 }

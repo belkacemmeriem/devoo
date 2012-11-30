@@ -90,7 +90,8 @@ public class Node
 
 	public Integer getDistance(Integer anID)
 	{
-		for (Arc a : inArcs)
+
+		for (Arc a : outArcs)
 		{
 			if (a.getDest().getID() == anID)
 			{
