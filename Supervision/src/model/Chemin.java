@@ -10,13 +10,12 @@ public class Chemin {
 	Node target;
 	float duration;
 	
-	public Chemin(ArrayList<Node> contenu, Node noeudDepart, Node noeudArrivee,
-			float duration)
+	public Chemin(ArrayList<Node> contenu, float duration)
 	{
 		super();
 		this.trajectory = contenu;
-		this.start = noeudDepart;
-		this.target = noeudArrivee;
+		this.start = contenu.get(0);
+		this.target = contenu.get(contenu.size()-1);
 		this.duration = duration;
 	}
 	
