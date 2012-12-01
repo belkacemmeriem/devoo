@@ -16,7 +16,7 @@ public class Controleur {
 	Etat etat = Etat.VIDE;
 	
 	public Controleur() {
-		loadZone("/home/fred/plan400.xml");
+		loadZone("./content/plan400.xml");
 	}
 	
 	public void loadZone(String path) {
