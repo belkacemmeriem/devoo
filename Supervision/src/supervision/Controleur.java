@@ -19,7 +19,7 @@ public class Controleur {
 	Etat etat = Etat.VIDE;
 	
 	public Controleur() {
-		loadZone("./content/plan25.xml");
+		loadZone("./content/plan400.xml");
 	}
 	
 	public void loadZone(String path) {
@@ -56,12 +56,13 @@ public class Controleur {
 		selected = null;
 	}
 
-	public void click(int x, int y) {
+	public int click(int x, int y) {
+        int retour = -1;
 		if (etat == Etat.REMPLISSAGE)
 		{
 			Object clicked = viewmain.findAt(x, y);
 			if (clicked == null) {
-				deselect();
+				deselect();                             
 			}
 			else if (clicked instanceof ViewNode) {
 				deselect();
@@ -69,6 +70,7 @@ public class Controleur {
 				ViewNode vn = (ViewNode) clicked;
 				vn.setColor(new Color(255, 0, 0));
 				vn.setRadius(16);
+                retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
 				deselect();
@@ -78,8 +80,9 @@ public class Controleur {
 				System.out.println("OK");
 			}
 		}
-		
+                		
 		viewmain.repaint();
+        return retour;
 	}
 
 }
