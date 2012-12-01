@@ -6,7 +6,17 @@ public class FeuilleDeRoute
 {
 	protected
 	ArrayList<Schedule> timeZones;
+	
+	protected ZoneGeo zoneGeo;
+	protected Entrepot entrepot;
 
+	public Entrepot getEntrepot() {
+		return entrepot;
+	}
+
+	public ZoneGeo getZoneGeo() {
+		return zoneGeo;
+	}
 	
 	public ArrayList<Schedule> getTimeZones()
 	{
