@@ -6,6 +6,8 @@ public class Delivery
 	Schedule schedule;
 	Chemin pathToDest;
 	
+	protected int minutes;//a changer avec un type date
+	
 	
 	public Node getDest()
 	{
