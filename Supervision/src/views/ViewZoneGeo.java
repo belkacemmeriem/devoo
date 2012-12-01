@@ -12,6 +12,7 @@ public class ViewZoneGeo {
 	protected ZoneGeo zonegeo;
 	protected ViewMain mere;
 	protected ArrayList<ViewNode> nodes = new ArrayList<ViewNode>();
+	protected ArrayList<ViewArc> arcs = new ArrayList<ViewArc>();
 	
 	public ViewZoneGeo(ZoneGeo zg, ViewMain m) {
 		zonegeo = zg;
@@ -19,6 +20,10 @@ public class ViewZoneGeo {
 		for (Node n : zonegeo.getNodes().values()) {
 			ViewNode vn = new ViewNode(n, mere);
 			nodes.add(vn);
+		}
+		for (Arc a : zonegeo.getArcs()) {
+			ViewArc va = new ViewArc(a, mere);
+			arcs.add(va);
 		}
 	}
 	
@@ -50,20 +55,19 @@ public class ViewZoneGeo {
 		for (ViewNode vn : nodes) {
 			vn.paint(g);
 		}
-//			for (Arc a : n.getInArcs()) {
-//				g.drawLine(
-//					mere.xpix(a.getOrigin().getX()), 
-//					mere.ypix(a.getOrigin().getY()), 
-//					mere.xpix(a.getDest().getX()), 
-//					mere.ypix(a.getDest().getY())
-//				);
-//			}
+		for (ViewArc va : arcs) {
+			va.paint(g);
+		}
 	}
 
 	public Object findAt(int x, int y) {
 		for (ViewNode vn : nodes) {
 			if (vn.isClicked(x, y))
 				return (Object) vn;
+		}
+		for (ViewArc va : arcs) {
+			if (va.isClicked(x, y))
+				return (Object) va;
 		}
 		return null;
 	}
