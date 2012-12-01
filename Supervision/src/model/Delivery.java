@@ -6,6 +6,7 @@ public class Delivery
 	Schedule schedule;
 	Chemin pathToDest;
 	
+	protected int heurePrevue;
 	
 	public Node getDest()
 	{
