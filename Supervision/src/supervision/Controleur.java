@@ -49,12 +49,13 @@ public class Controleur {
 		selected = null;
 	}
 
-	public void click(int x, int y) {
+	public int click(int x, int y) {
+                int retour=-1;
 		if (etat == Etat.REMPLISSAGE)
 		{
 			Object clicked = viewmain.findAt(x, y);
 			if (clicked == null) {
-				deselect();
+				deselect();                             
 			}
 			else if (clicked instanceof ViewNode) {
 				deselect();
@@ -62,10 +63,12 @@ public class Controleur {
 				ViewNode vn = (ViewNode) clicked;
 				vn.setColor(new Color(255, 0, 0));
 				vn.setRadius(16);
+                                retour=((ViewNode)clicked).getNode().getID();
 			}
 		}
-		
+                		
 		viewmain.repaint();
+                return retour;
 	}
 
 }
