@@ -19,6 +19,11 @@ public class ViewZoneGeo {
 		mere = m;
 		for (Node n : zonegeo.getNodes().values()) {
 			ViewNode vn = new ViewNode(n, mere);
+			if (n.getID() == zonegeo.getWarehouseID()) {
+				vn.setMyDefaultColor(new Color(0, 0, 255));
+				vn.setMyDefaultRadius(8);
+				vn.setDefault();
+			}
 			nodes.add(vn);
 		}
 		for (Arc a : zonegeo.getArcs()) {
@@ -60,15 +65,37 @@ public class ViewZoneGeo {
 		}
 	}
 
-	public Object findAt(int x, int y) {
-		for (ViewNode vn : nodes) {
-			if (vn.isClicked(x, y))
-				return (Object) vn;
+	public Object findAt(int x, int y, boolean onlyArcs) {
+		double distMin;
+		
+		// en premier, test selection node
+		if (onlyArcs == false) { 
+			distMin = ViewNode.defaultRadius;
+			ViewNode clicked = null;
+			for (ViewNode vn : nodes) {
+				double dist = vn.distance(x, y);
+				if (dist < distMin) {
+					distMin = dist;
+					clicked = vn;
+				}
+			}
+			if (clicked != null)
+				return (Object) clicked;
 		}
+		
+		// puis les arcs (le clic droit ne selectionne qu'eux)
+		distMin = 5.0;
+		ViewArc clicked = null;
 		for (ViewArc va : arcs) {
-			if (va.isClicked(x, y))
-				return (Object) va;
+			double dist = va.distance(x, y);
+			if (dist < distMin) {
+				distMin = dist;
+				clicked = va;
+			}
 		}
+		if (clicked != null)
+			return (Object) clicked;
+		
 		return null;
 	}
 	

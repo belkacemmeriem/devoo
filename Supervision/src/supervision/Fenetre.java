@@ -38,7 +38,6 @@ public class Fenetre extends Frame {
 		creeMenu();
 		setFonts();
 		setPopups();
-
 	}
 
 	public Dessin getDessin() {
@@ -394,10 +393,12 @@ public class Fenetre extends Frame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
         
-        public void nodeClicked(int id)
-        {
-            jLabelAddLivCurr.setText(""+id);
-        }
+    public void nodeClicked(int id)
+    {
+        jLabelAddLivCurr.setText(""+id);
+    }
+    
+    
     
 	/**
 	 * Exit the Application

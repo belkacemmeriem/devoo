@@ -35,7 +35,6 @@ public class Controleur {
 	public void setViewMain(ViewMain vm) {
 		viewmain = vm;
     	if (viewmain != null) {
-    		System.out.println("HERE");
     		viewmain.setZoneGeo(zonegeo);
     		viewmain.repaint();
     	}
@@ -45,22 +44,22 @@ public class Controleur {
 		if (selected != null) {
 			if (selected instanceof ViewNode) {
 				ViewNode s = (ViewNode) selected;
-				s.setColor(new Color(0, 0, 0));
-				s.setRadius(8);
+				s.setDefault();
 			}
 			else if (selected instanceof ViewArc) {
 				ViewArc s = (ViewArc) selected;
-				s.setColor(new Color(150, 150, 150));
+				s.setDefault();
 			}
 		}
 		selected = null;
 	}
 
-	public int click(int x, int y) {
+	public int click(int x, int y, int button) {
         int retour = -1;
+        boolean onlyArcs = (button == 3);
 		if (etat == Etat.REMPLISSAGE)
 		{
-			Object clicked = viewmain.findAt(x, y);
+			Object clicked = viewmain.findAt(x, y, onlyArcs);
 			if (clicked == null) {
 				deselect();                             
 			}
@@ -69,7 +68,7 @@ public class Controleur {
 				selected = clicked;
 				ViewNode vn = (ViewNode) clicked;
 				vn.setColor(new Color(255, 0, 0));
-				vn.setRadius(16);
+				vn.setRadius(9);
                 retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
@@ -77,7 +76,7 @@ public class Controleur {
 				selected = clicked;
 				ViewArc va = (ViewArc) clicked;
 				va.setColor(new Color(255, 0, 0));
-				System.out.println("OK");
+				va.setEpaisseur(3);
 			}
 		}
                 		
