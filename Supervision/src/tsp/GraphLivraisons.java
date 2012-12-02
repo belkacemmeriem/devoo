@@ -19,7 +19,6 @@ public class GraphLivraisons implements Graph {
 	}
 	
 	public void createGraph(){
-		
 		//on ajoute l'entrepot au livraisons pour connaitre le nombre de sommets
 		nbVertices=feuilleDeRoute.getFullPath().size()+1;
 		
@@ -169,6 +168,16 @@ public class GraphLivraisons implements Graph {
 		{
 			bound=tsp.getTotalCost();
 		}
+		
+		if(retour==SolutionState.INCONSISTENT)
+		{
+			//lancer une exception
+		}
+		else if(retour==SolutionState.NO_SOLUTION_FOUND)
+		{
+			//lancer une exception
+		}
+		
 		int[] tabPos=tsp.getPos();
 		int[] tabNext=tsp.getNext();
 		ArrayList<Chemin> itineraire=new ArrayList<Chemin>();
