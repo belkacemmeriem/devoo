@@ -1,6 +1,7 @@
 package supervision;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,6 +18,7 @@ public class Dessin extends JPanel implements MouseListener {
 	
 	protected ViewMain viewmain;
 	protected Controleur controleur;
+        protected Fenetre fenetre;
 	
 	public Dessin() {
 		this.addMouseListener(this);
@@ -30,7 +32,8 @@ public class Dessin extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("CLICK");
-		controleur.click(e.getX(), e.getY());
+		int id = controleur.click(e.getX(), e.getY());
+                fenetre.nodeClicked(id);
 	}
 
 	@Override
@@ -66,5 +69,9 @@ public class Dessin extends JPanel implements MouseListener {
 	public void setControleur(Controleur ctrl) {
 		controleur = ctrl;
 	}
+
+        public void setFenetre(Fenetre fenetre) {
+            this.fenetre = fenetre;
+        }
 
 }
