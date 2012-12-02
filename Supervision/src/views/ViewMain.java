@@ -39,8 +39,8 @@ public class ViewMain {
 		return (int) (border + ypourcent * canvasHeight);
 	}
 	
-	public Object findAt(int x, int y) {
-		return zonegeo.findAt(x, y);
+	public Object findAt(int x, int y, boolean onlyArcs) {
+		return zonegeo.findAt(x, y, onlyArcs);
 	}
 	
 	public void paint(Graphics g) {

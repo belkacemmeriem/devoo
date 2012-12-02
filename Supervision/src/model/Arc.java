@@ -15,7 +15,7 @@ public class Arc
 		this.speed = speed;
 		this.lenght = lenght;
 		this.name = name;
-	}
+	}	
 
 	public Node getOrigin()
 	{
