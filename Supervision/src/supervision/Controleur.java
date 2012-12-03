@@ -3,6 +3,7 @@ package supervision;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.io.File;
 
 import parsexml.*;
 import model.ZoneGeo;
@@ -19,10 +20,9 @@ public class Controleur {
 	Etat etat = Etat.VIDE;
 	
 	public Controleur() {
-		loadZone("./content/plan400.xml");
 	}
 	
-	public void loadZone(String path) {
+	public void loadZone(File path) {
 		zonegeo = new ZoneGeo();
     	ParseMapXML parseXml = new ParseMapXML(path, zonegeo);
     	if (viewmain != null) {

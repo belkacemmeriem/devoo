@@ -22,7 +22,7 @@ public class ParseMapXML {
     static Element racine;
     static ZoneGeo zonegeo;
     
-    public ParseMapXML(String file, ZoneGeo zone) {
+    public ParseMapXML(File file, ZoneGeo zone) {
         zonegeo = zone;
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)
         SAXBuilder sxb = new SAXBuilder();
@@ -30,7 +30,7 @@ public class ParseMapXML {
         //Ouverture du fichier XML
         try
         {
-            document = sxb.build(new File(file));
+            document = sxb.build(file);
         }
         catch(Exception e){}
         

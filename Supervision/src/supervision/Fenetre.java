@@ -9,10 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 
 
 /**
@@ -31,6 +33,7 @@ public class Fenetre extends Frame {
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
 	private Controleur controleur;
+	private JFileChooser jFileChooserXML;
 
 
 	/**
@@ -157,7 +160,7 @@ public class Fenetre extends Frame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new UnsupportedOperationException("Not supported yet.");
+			controleur.loadZone(ouvrirFichierXML());
 			}
 		};
 		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
@@ -184,6 +187,21 @@ public class Fenetre extends Frame {
 		barreDeMenu.add(menuFichier);
 		barreDeMenu.add(menuEdition);
 		this.setMenuBar(barreDeMenu);
+	}
+	
+	private File ouvrirFichierXML(){
+        jFileChooserXML = new JFileChooser();
+        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
+        // under the demo/jfc directory in the JDK.
+        ExampleFileFilter filter = new ExampleFileFilter();
+        filter.addExtension("xml");
+        filter.setDescription("Fichier XML");
+        jFileChooserXML.setFileFilter(filter);
+        jFileChooserXML.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        if (jFileChooserXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
+                return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
+        return null;
 	}
 
 	private void ajoutItem(String intitule, Menu menu, ActionListener a){
