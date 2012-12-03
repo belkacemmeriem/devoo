@@ -32,22 +32,22 @@ public class Controleur {
 	public void loadZone(File path) {
 		zonegeo = new ZoneGeo();
     	ParseMapXML parseXml = new ParseMapXML(path, zonegeo);
-    	repaintZoneGeo();
+    	setAndRepaintZoneGeo();
     	etat = Etat.REMPLISSAGE;
 	}
 	
 	public void setViewMain(ViewMain vm) {
-            viewmain = vm;
-            repaintZoneGeo();
+        viewmain = vm;
+        setAndRepaintZoneGeo();
 	}
         
-        public void repaintZoneGeo()
-        {
-            if (viewmain != null && zonegeo != null) {
-    		viewmain.setZoneGeo(zonegeo);
-    		viewmain.repaint();
-            }
+    public void setAndRepaintZoneGeo()
+    {
+        if (viewmain != null && zonegeo != null) {
+			viewmain.setZoneGeo(zonegeo);
+			viewmain.repaint();
         }
+    }
 	
 	public void deselect() {
 		if (selected != null) {
