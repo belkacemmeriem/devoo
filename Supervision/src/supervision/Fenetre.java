@@ -9,10 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 
 
 /**
@@ -21,11 +23,17 @@ import javax.swing.JOptionPane;
  */
 public class Fenetre extends Frame {
 
+        private static enum Mode {CREATION, MODIFICATION};
+        private Mode mode;
 	private final String TITRE = "Supervision des Livraisons Itinérantes Planifiés";
+        private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
+                + " mode création)";
+        private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est sélectionnée";
 	private Fenetre fenetre;
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
 	private Controleur controleur;
+	private JFileChooser jFileChooserXML;
 
 
 	/**
@@ -38,6 +46,31 @@ public class Fenetre extends Frame {
 		creeMenu();
 		setFonts();
 		setPopups();
+                setMode(Mode.CREATION);
+	}
+
+	private void setMode(Mode mode) {
+		switch(mode){
+                    case CREATION:
+                        jLabelAddLivPrec.setEnabled(false);
+                        jLabelAddLivSuiv.setEnabled(false);
+                        jLabelLivPrec.setEnabled(false);
+                        jLabelLivSuiv.setEnabled(false);
+                        jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
+                                " "+CHAMP_INDISP_CREA);
+                        jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
+                                " "+CHAMP_INDISP_CREA);
+                        
+                        break;
+                    case MODIFICATION:
+                        jLabelAddLivPrec.setEnabled(true);
+                        jLabelAddLivSuiv.setEnabled(true);
+                        jLabelLivPrec.setEnabled(true);
+                        jLabelLivSuiv.setEnabled(true);
+                        jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC);
+                        jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC);
+                        break;
+                }
 	}
 
 	public Dessin getDessin() {
@@ -86,6 +119,7 @@ public class Fenetre extends Frame {
 						}
 						else
 						{
+                                                        setMode(Mode.CREATION);
 							selectedZone=jComboBoxZone.getSelectedIndex();
 						}
 					}
@@ -126,7 +160,7 @@ public class Fenetre extends Frame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new UnsupportedOperationException("Not supported yet.");
+			controleur.loadZone(ouvrirFichierXML());
 			}
 		};
 		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
@@ -153,6 +187,21 @@ public class Fenetre extends Frame {
 		barreDeMenu.add(menuFichier);
 		barreDeMenu.add(menuEdition);
 		this.setMenuBar(barreDeMenu);
+	}
+	
+	private File ouvrirFichierXML(){
+        jFileChooserXML = new JFileChooser();
+        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
+        // under the demo/jfc directory in the JDK.
+        ExampleFileFilter filter = new ExampleFileFilter();
+        filter.addExtension("xml");
+        filter.setDescription("Fichier XML");
+        jFileChooserXML.setFileFilter(filter);
+        jFileChooserXML.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        if (jFileChooserXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
+                return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
+        return null;
 	}
 
 	private void ajoutItem(String intitule, Menu menu, ActionListener a){
@@ -192,6 +241,8 @@ public class Fenetre extends Frame {
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ListLivraison = new javax.swing.JList();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -203,14 +254,11 @@ public class Fenetre extends Frame {
 
         jPanelBoutonsGen.setBackground(new java.awt.Color(255, 204, 102));
 
-        jButtonUndo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\undo_mini.png")); // NOI18N
         jButtonUndo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUndoActionPerformed(evt);
             }
         });
-
-        jButtonRedo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\redo_mini.png")); // NOI18N
 
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
@@ -223,6 +271,11 @@ public class Fenetre extends Frame {
         });
 
         jButtonGenTourn.setText("Générer tournée");
+        jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenTournActionPerformed(evt);
+            }
+        });
 
         jButtonFinal.setText("Finaliser tournée");
 
@@ -355,6 +408,15 @@ public class Fenetre extends Frame {
 
         jPaneLivraisons.setBackground(new java.awt.Color(255, 0, 0));
 
+        ListLivraison.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "heure - adresse" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(ListLivraison);
+
+        jPaneLivraisons.add(jScrollPane1);
+
         javax.swing.GroupLayout jPanelDroiteLayout = new javax.swing.GroupLayout(jPanelDroite);
         jPanelDroite.setLayout(jPanelDroiteLayout);
         jPanelDroiteLayout.setHorizontalGroup(
@@ -415,8 +477,14 @@ public class Fenetre extends Frame {
 		// TODO add your handling code here:
 	}//GEN-LAST:event_jButtonUndoActionPerformed
 
+    private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
+        // TODO add your handling code here:
+        setMode(Mode.MODIFICATION);
+    }//GEN-LAST:event_jButtonGenTournActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList ListLivraison;
     private javax.swing.JButton jButtonFinal;
     private javax.swing.JButton jButtonGenTourn;
     private javax.swing.JButton jButtonRedo;
@@ -439,7 +507,8 @@ public class Fenetre extends Frame {
     private javax.swing.JPanel jPanelEditionLivraison;
     private javax.swing.JPanel jPanelGauche;
     private javax.swing.JPanel jPanelHoraires;
-    private Dessin jPanelPlan;
+    private javax.swing.JPanel jPanelPlan;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
 }

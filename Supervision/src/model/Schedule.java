@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -11,28 +12,22 @@ public class Schedule
 {
 	protected
 	int startTime, endTime;	//en minutes
-
+    Color couleur;
 	ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
 
-	
-	
-	
-	public void setDeliveries(ArrayList<Delivery> deliveries)
-	{
-		this.deliveries = deliveries;
-	}
 	
 	public ArrayList<Delivery> getDeliveries()
 	{
 		return deliveries;
 	}
 
-	public Schedule(int start, int end)
+	public Schedule(int start, int end, Color color)
 	{
 		super();
 		
 		this.startTime = start;
 		this.endTime = end;
+		this.couleur = color;
 	}
 
 	public int getStartTime()
@@ -101,3 +96,4 @@ public class Schedule
 	*/
 	
 }
+>>>>>>> 839d5745addd1716cac61312dc04fa63846b00d2
