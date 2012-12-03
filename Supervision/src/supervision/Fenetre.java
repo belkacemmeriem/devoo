@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class Fenetre extends Frame {
 
-	private final String TITRE = "Supervision des Livraisons Itinérantes Planifiés";
+	private final String TITRE = "Supervision des Livraisons Itinerantes Planifies";
 	private Fenetre fenetre;
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
@@ -266,7 +266,7 @@ public class Fenetre extends Frame {
 
         jButtonSupprimerLiv.setText("Supprimer");
 
-        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
+        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
 
         jButtonValiderLiv.setText("Valider");
 
@@ -275,13 +275,13 @@ public class Fenetre extends Frame {
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison précedente :");
+        jLabelLivPrec.setText("Livraison precedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
+        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
+        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
 
         javax.swing.GroupLayout jPanelEditionLivraisonLayout = new javax.swing.GroupLayout(jPanelEditionLivraison);
         jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
