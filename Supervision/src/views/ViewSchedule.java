@@ -14,15 +14,20 @@ public class ViewSchedule {
 	public ViewSchedule(Schedule s, ViewMain m) {
 		schedule = s;
 		mere = m;
-		for (Delivery d : s.getDeliveries()) {
+		update();
+	}
+	
+	public void update() {
+		deliveries.clear();
+		for (Delivery d : schedule.getDeliveries()) {
 			ViewDelivery vd = new ViewDelivery(d, mere);
 			deliveries.add(vd);
 		}
 	}
 	
-	public void paint(Graphics g) {
+	public void paint(Graphics g, boolean onlyNodes) {
 		for (ViewDelivery vd : deliveries) {
-			vd.paint(g);
+			vd.paint(g, onlyNodes);
 		}
 	}
 }

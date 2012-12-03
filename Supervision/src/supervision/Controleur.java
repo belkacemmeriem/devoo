@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import parsexml.*;
 import model.FeuilleDeRoute;
+import model.Node;
 import model.Schedule;
 import model.ZoneGeo;
 import views.ViewArc;
@@ -47,6 +48,7 @@ public class Controleur {
         viewmain.setZoneGeo(zonegeo);
         viewmain.setFeuilleDeRoute(feuilleDeRoute);
 		viewmain.repaint();
+		fenetre.validate();
     	etat = Etat.REMPLISSAGE;
 	}
 	
@@ -86,7 +88,7 @@ public class Controleur {
 				selected = clicked;
 				ViewNode vn = (ViewNode) clicked;
 				vn.setColor(new Color(255, 0, 0));
-				vn.setRadius(9);
+				vn.setRadius(11);
                 retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
@@ -100,6 +102,17 @@ public class Controleur {
                 		
 		viewmain.repaint();
         return retour;
+	}
+	
+	public void add() {
+		Node n = ((ViewNode) selected).getNode();
+		feuilleDeRoute.addNode(n, feuilleDeRoute.getTimeZones().get(1));
+		viewmain.updateFeuilleDeRoute();
+		viewmain.repaint();
+	}
+	
+	public Etat getEtat() {
+		return etat;
 	}
 
 }

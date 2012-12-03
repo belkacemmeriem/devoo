@@ -40,6 +40,10 @@ public class Schedule
 		return endTime;
 	}
 	
+	public Color getColor() {
+		return couleur;
+	}
+	
 	public String startTimeString()
 	{
 		return timeToString(startTime);

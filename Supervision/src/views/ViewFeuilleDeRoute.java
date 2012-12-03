@@ -3,6 +3,7 @@ package views;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import model.EtatFDR;
 import model.FeuilleDeRoute;
 import model.Schedule;
 
@@ -22,7 +23,15 @@ public class ViewFeuilleDeRoute {
 	
 	public void paint(Graphics g) {
 		for (ViewSchedule vs : schedules) {
-			vs.paint(g);
+			System.out.print("X");
+			boolean onlyNodes = (feuilleDeRoute.getEtat() == EtatFDR.INIT);
+			vs.paint(g, onlyNodes);
+		}
+	}
+	
+	public void update() {
+		for (ViewSchedule vs : schedules) {
+			vs.update();
 		}
 	}
 }

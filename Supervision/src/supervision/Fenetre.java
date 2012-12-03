@@ -48,7 +48,7 @@ public class Fenetre extends Frame {
 		creeMenu();
 		setFonts();
 		setPopups();
-                setMode(Mode.CREATION);
+		setMode(Mode.CREATION);
 	}
 
     public void setSchedules(ArrayList<Schedule> aschedules) {
@@ -356,6 +356,11 @@ public class Fenetre extends Frame {
         jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
 
         jButtonValiderLiv.setText("Valider");
+        jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jButtonValiderLivActionPerformed(evt);
+            }
+        });
 
         jPanelHoraires.setBackground(new java.awt.Color(255, 255, 0));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
@@ -515,7 +520,12 @@ public class Fenetre extends Frame {
         // TODO add your handling code here:
         setMode(Mode.MODIFICATION);
     }//GEN-LAST:event_jButtonGenTournActionPerformed
-
+    
+    private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
+    	if (controleur.getEtat() == Etat.REMPLISSAGE) {
+    		controleur.add();
+    	}
+    }//GEN-LAST:event_jButtonValiderLivActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList ListLivraison;
