@@ -69,7 +69,9 @@ public class FeuilleDeRoute
 				if (d.schedule == sch)
 				{
 					//on les insère, dans l'ordre, dans la nouvelle liste du Schedule
+					
 					newDelivs.add(d);
+					
 				}
 			}
 			sch.setDeliveries(newDelivs);
@@ -83,6 +85,7 @@ public class FeuilleDeRoute
 		
 	}
 	
+<<<<<<< HEAD
 	public void generateReport() throws IOException
 	{
 	    PrintWriter writer;
@@ -120,5 +123,18 @@ public class FeuilleDeRoute
 	    }
 
 	    writer.close();
+=======
+	public ArrayList<Delivery> getAllDeliveries()
+	{
+		ArrayList<Delivery> retour = new ArrayList<Delivery>();
+		for (Schedule sch : timeZones)
+		{
+			for (Delivery d : sch.getDeliveries())
+			{
+				retour.add(d);
+			}
+		}
+		return retour;
+>>>>>>> 456ba5ce55e5e5e542d97fa25581228fe4a5758b
 	}
 }

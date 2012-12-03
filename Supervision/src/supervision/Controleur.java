@@ -18,29 +18,36 @@ public class Controleur {
 	ZoneGeo zonegeo;
 	Object selected;
 	Etat etat = Etat.VIDE;
+        Fenetre fenetre;
 	
 	public Controleur() {
 	}
+
+        public void setFenetre(Fenetre fenetre) {
+            this.fenetre = fenetre;
+            ParseDelivTimeXML parser = new ParseDelivTimeXML();
+            fenetre.setSchedules(parser.getPlagesHoraires());
+        }
 	
 	public void loadZone(File path) {
 		zonegeo = new ZoneGeo();
     	ParseMapXML parseXml = new ParseMapXML(path, zonegeo);
-    	repaintZoneGeo();
+    	setAndRepaintZoneGeo();
     	etat = Etat.REMPLISSAGE;
 	}
 	
 	public void setViewMain(ViewMain vm) {
-            viewmain = vm;
-            repaintZoneGeo();
+        viewmain = vm;
+        setAndRepaintZoneGeo();
 	}
         
-        public void repaintZoneGeo()
-        {
-            if (viewmain != null && zonegeo != null) {
-    		viewmain.setZoneGeo(zonegeo);
-    		viewmain.repaint();
-            }
+    public void setAndRepaintZoneGeo()
+    {
+        if (viewmain != null && zonegeo != null) {
+			viewmain.setZoneGeo(zonegeo);
+			viewmain.repaint();
         }
+    }
 	
 	public void deselect() {
 		if (selected != null) {
