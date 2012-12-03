@@ -36,6 +36,8 @@ public class Fenetre extends Frame {
 
         private ArrayList<Schedule> schedules;
         private ArrayList<JToggleButton> jToggleButtonSchedules;
+        
+        private ListLivraison listeLivraison;
 
 	/**
 	 * Creates new form Fenetre
@@ -78,10 +80,14 @@ public class Fenetre extends Frame {
             };
             jToggleButtonSchedules.get(i).addActionListener(a);
             jPanelHoraires.add(jToggleButtonSchedules.get(i));
+            listeLivraison = new ListLivraison();
+            listeLivraison.setSchedule(schedules);
+            jPaneLivraisons.add(listeLivraison);
         }
     }
-
-	private void setMode(Mode amode) {
+    
+ 
+        private void setMode(Mode amode) {
             mode=amode;
 		switch(mode){
                     case CREATION:
@@ -226,6 +232,7 @@ public class Fenetre extends Frame {
 		barreDeMenu.add(menuEdition);
 		this.setMenuBar(barreDeMenu);
 	}
+        
 	private File trouverCheminRapport(){
 		    jFileChooserA = new JFileChooser();
 	        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
@@ -293,8 +300,6 @@ public class Fenetre extends Frame {
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ListLivraison = new javax.swing.JList();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -370,15 +375,15 @@ public class Fenetre extends Frame {
         jLabelEdLivTitre.setText("Edition de livraison");
 
         jButtonSupprimerLiv.setText("Supprimer");
+        jButtonSupprimerLiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSupprimerLivActionPerformed(evt);
+            }
+        });
 
         jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
 
         jButtonValiderLiv.setText("Valider");
-        jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	jButtonValiderLivActionPerformed(evt);
-            }
-        });
 
         jPanelHoraires.setBackground(new java.awt.Color(255, 255, 0));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
@@ -464,15 +469,7 @@ public class Fenetre extends Frame {
         jLabelTitreLivraisons.setText("Liste des livraisons");
 
         jPaneLivraisons.setBackground(new java.awt.Color(255, 0, 0));
-
-        ListLivraison.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "heure - adresse" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(ListLivraison);
-
-        jPaneLivraisons.add(jScrollPane1);
+        jPaneLivraisons.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout jPanelDroiteLayout = new javax.swing.GroupLayout(jPanelDroite);
         jPanelDroite.setLayout(jPanelDroiteLayout);
@@ -545,8 +542,31 @@ public class Fenetre extends Frame {
     	}
     }//GEN-LAST:event_jButtonValiderLivActionPerformed
 
+    private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
+
+            //This method can be called only if
+            //there's a valid selection
+            //so go ahead and remove whatever's selected.
+            int index = listeLivraison.getList().getSelectedIndex();
+            listeLivraison.getListModel().remove(index);
+
+            int size = listeLivraison.getListModel().getSize();
+
+            if (size == 0) { //Nobody's left, disable firing.
+                jButtonSupprimerLiv.setEnabled(false);
+
+            } else { //Select an index.
+                if (index == listeLivraison.getListModel().getSize()) {
+                    //removed item in last position
+                    index--;
+                }
+
+                listeLivraison.getList().setSelectedIndex(index);
+                listeLivraison.getList().ensureIndexIsVisible(index);
+            }
+    }//GEN-LAST:event_jButtonSupprimerLivActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList ListLivraison;
     private javax.swing.JButton jButtonFinal;
     private javax.swing.JButton jButtonGenTourn;
     private javax.swing.JButton jButtonRedo;
@@ -569,8 +589,7 @@ public class Fenetre extends Frame {
     private javax.swing.JPanel jPanelEditionLivraison;
     private javax.swing.JPanel jPanelGauche;
     private javax.swing.JPanel jPanelHoraires;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
     private Dessin jPanelPlan;
+    // End of variables declaration//GEN-END:variables
 
 }
