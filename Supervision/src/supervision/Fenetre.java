@@ -35,8 +35,7 @@ public class Fenetre extends Frame {
 	private JFileChooser jFileChooserA;
 
         private ArrayList<Schedule> schedules;
-        private ArrayList<JButton> jButtonSchedules;
-
+        private ArrayList<JToggleButton> jToggleButtonSchedules;
 
 	/**
 	 * Creates new form Fenetre
@@ -53,18 +52,37 @@ public class Fenetre extends Frame {
 
     public void setSchedules(ArrayList<Schedule> aschedules) {
         this.schedules = aschedules;
-        jButtonSchedules = new ArrayList<JButton>();
+        jToggleButtonSchedules = new ArrayList<JToggleButton>();
         jPanelHoraires.removeAll();
+        
+            System.out.println(schedules.size()+" fe");
         for(int i =0;i<schedules.size();i++)
         {
             String s = ""+(schedules.get(i).getStartTime()/60)+"h - "+
                     +(schedules.get(i).getEndTime()/60)+"h";
-            jButtonSchedules.add(new JButton(s));
-            jPanelHoraires.add(jButtonSchedules.get(i));
+            jToggleButtonSchedules.add(new JToggleButton(s));
+            ActionListener a = new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int j=0;
+                    JToggleButton jtb = (JToggleButton)e.getSource();
+                    for(j=0;j<jToggleButtonSchedules.size();j++)
+                    {
+                        JToggleButton jtb2 = jToggleButtonSchedules.get(j);
+                        if(jtb!=jtb2){
+                            jtb2.setSelected(false);
+                        }
+                    }
+                }
+            };
+            jToggleButtonSchedules.get(i).addActionListener(a);
+            jPanelHoraires.add(jToggleButtonSchedules.get(i));
         }
     }
 
-	private void setMode(Mode mode) {
+	private void setMode(Mode amode) {
+            mode=amode;
 		switch(mode){
                     case CREATION:
                         jLabelAddLivPrec.setEnabled(false);

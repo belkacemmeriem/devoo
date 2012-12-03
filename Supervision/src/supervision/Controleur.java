@@ -24,19 +24,21 @@ public class Controleur {
 	Object selected;
 	Etat etat = Etat.VIDE;
 	Fenetre fenetre;
+        ArrayList<Schedule> schedules;
 	
 	public Controleur() {
 	}
 
     public void setFenetre(Fenetre fenetre) {
         this.fenetre = fenetre;
+        loadSchedules();
     }
-	
-	public void loadZone(File path) {
-		zonegeo = new ZoneGeo();
-    	ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
+    
+    public void loadSchedules()
+    {
+        
     	ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-    	ArrayList<Schedule> schedules = parserSched.getPlagesHoraires();
+    	schedules = parserSched.getPlagesHoraires();
     	/* // A remettre si necessaire, a virer sinon :
     	ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
     	for (Schedule s : schedules) {
@@ -44,6 +46,11 @@ public class Controleur {
     	}
     	*/
     	fenetre.setSchedules(schedules);
+    }
+	
+	public void loadZone(File path) {
+		zonegeo = new ZoneGeo();
+    	ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
         feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
         viewmain.setZoneGeo(zonegeo);
         viewmain.setFeuilleDeRoute(feuilleDeRoute);
