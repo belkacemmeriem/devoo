@@ -18,7 +18,7 @@ public class NodeTest {
 	@BeforeClass
 	public static void init()
 	{
-		//Création d'un graphe 
+		//Creation d'un graphe 
 				Node n1 = new Node(0,0,0);
 				Node n2 = new Node(0,1,1);
 				Node n3 = new Node(1,0,2);
