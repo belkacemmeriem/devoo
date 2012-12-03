@@ -1,6 +1,7 @@
 package model;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -94,12 +95,12 @@ public class FeuilleDeRoute
 		}
 	}
 	
-	public void generateReport() throws IOException
+	public void generateReport(File path) throws IOException
 	{
 	    PrintWriter writer;
 	    int n = 5;
 
-	    writer =  new PrintWriter(new BufferedWriter(new FileWriter("rapport.txt")));
+	    writer =  new PrintWriter(new BufferedWriter(new FileWriter(path)));
 	   
 	    writer.println("Rapport de la feuille de route pour le livreur.");
 	    writer.println("La tournee est divisee en "+timeZones.size()+" creneaux.");

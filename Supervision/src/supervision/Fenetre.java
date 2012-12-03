@@ -32,6 +32,8 @@ public class Fenetre extends Frame {
 	private boolean masquerPopUpZone = false;
 	private Controleur controleur;
 	private JFileChooser jFileChooserXML;
+	private JFileChooser jFileChooserA;
+
         private ArrayList<Schedule> schedules;
         private ArrayList<JButton> jButtonSchedules;
 
@@ -164,11 +166,15 @@ public class Fenetre extends Frame {
 		ActionListener a4 = new ActionListener(){
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				throw new UnsupportedOperationException("Not supported yet.");
+			public void actionPerformed(ActionEvent e) 
+			{
+                controleur.exportReport(trouverCheminRapport());
+                //setControleur(controleur);
+
 			}
 		};
-		ajoutItem("Sauvegarder en XML", menuFichier, a4);
+		ajoutItem("Generer rapport", menuFichier, a4);
+		
 		ActionListener a5 = new ActionListener(){
 
 			@Override
@@ -202,6 +208,20 @@ public class Fenetre extends Frame {
 		barreDeMenu.add(menuEdition);
 		this.setMenuBar(barreDeMenu);
 	}
+	private File trouverCheminRapport(){
+		    jFileChooserA = new JFileChooser();
+	        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
+	        // under the demo/jfc directory in the JDK.
+	        ExampleFileFilter filter = new ExampleFileFilter();
+	        filter.setDescription("Fichier rapport");
+	        jFileChooserA.setFileFilter(filter);
+	        jFileChooserA.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+	        if (jFileChooserA.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
+	                return new File(jFileChooserA.getSelectedFile().getAbsolutePath());
+        return null;
+	}
+	
 	
 	private File ouvrirFichierXML(){
         jFileChooserXML = new JFileChooser();

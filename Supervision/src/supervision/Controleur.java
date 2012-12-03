@@ -35,7 +35,9 @@ public class Controleur {
     	setAndRepaintZoneGeo();
     	etat = Etat.REMPLISSAGE;
 	}
-	
+	public void exportReport(File path) {
+		// feuilleDeRoute.generateReport(path);
+	}
 	public void setViewMain(ViewMain vm) {
         viewmain = vm;
         setAndRepaintZoneGeo();
