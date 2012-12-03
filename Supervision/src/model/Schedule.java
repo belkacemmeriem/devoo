@@ -56,9 +56,13 @@ public class Schedule
 		deliveries.add(delivery);
 	}
 	
-	public void setDeliveries(ArrayList<Delivery> deliveries)
+	public void setDeliveries(ArrayList<Delivery> delivs)
 	{
-		this.deliveries = deliveries;
+		this.deliveries = delivs;
+		for (Delivery d : this.deliveries)
+		{
+			d.setSchedule(this);
+		}
 	}
 
 	static public String timeToString(int time)

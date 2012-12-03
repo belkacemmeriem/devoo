@@ -65,7 +65,9 @@ public class FeuilleDeRoute
 				if (d.schedule == sch)
 				{
 					//on les insère, dans l'ordre, dans la nouvelle liste du Schedule
+					
 					newDelivs.add(d);
+					
 				}
 			}
 			sch.setDeliveries(newDelivs);
@@ -81,7 +83,7 @@ public class FeuilleDeRoute
 	
 	public ArrayList<Delivery> getAllDeliveries()
 	{
-		ArrayList<Delivery> retour = new ArrayList<Node>();
+		ArrayList<Delivery> retour = new ArrayList<Delivery>();
 		for (Schedule sch : timeZones)
 		{
 			for (Delivery d : sch.getDeliveries())
@@ -89,5 +91,6 @@ public class FeuilleDeRoute
 				retour.add(d);
 			}
 		}
+		return retour;
 	}
 }
