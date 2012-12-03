@@ -23,7 +23,7 @@ public class DijkstraTest {
 	@BeforeClass
 	public static void init()
 	{
-		//Création d'un graphe 
+		//Creation d'un graphe 
 				Node n1 = new Node(0,0,0);
 				Node n2 = new Node(0,1,1);
 				Node n3 = new Node(1,0,2);
@@ -73,12 +73,12 @@ public class DijkstraTest {
 		if(solution.get(0).getTrajectory().get(1).getID()==2) sucess ++;
 		if(solution.get(0).getTrajectory().get(2).getID()==4) sucess ++;
 		
-		//Verification du deuxième chemin
+		//Verification du deuxieme chemin
 		if(solution.get(1).getTrajectory().size()==2) sucess ++;
 		if(solution.get(1).getTrajectory().get(0).getID()==0) sucess ++;
 		if(solution.get(1).getTrajectory().get(1).getID()==2) sucess ++;
 
-		//Toutes les vérifications se sont bien passées
+		//Toutes les verifications se sont bien passees
 		if(sucess == 8)
 			return;
 		fail("Not yet implemented");

@@ -4,13 +4,11 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.Arc;
-import model.Chemin;
 import model.Node;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dijkstra.Dijkstra;
 
 
 public class NodeTest {
@@ -40,6 +38,8 @@ public class NodeTest {
 				n4.addInArc(a3);
 				n3.addOutArc(a4);
 				n5.addInArc(a4);
+				
+				nodes = new ArrayList<Node>();
 				nodes.add(n1);
 				nodes.add(n2);
 				nodes.add(n3);
@@ -51,21 +51,20 @@ public class NodeTest {
 	public void testGetters() 
 	{
 		int sucess=0;
-		if(nodes.get(0).getID()==0);
-		if(nodes.get(0).getX()==0);
-		if(nodes.get(0).getY()==0);
-		if(nodes.get(0).getInArcs().get(0).getOrigin().getID() == 0);
+		if(nodes.get(1).getID()==1) sucess++;
+		if(nodes.get(1).getX()==0) sucess++;
+		if(nodes.get(1).getY()==1) sucess++;
+		if(nodes.get(1).getInArcs().get(0).getOrigin().getID() == 0) sucess++;
+		if(nodes.get(1).getInArcs().get(0).getDest().getID() == 1) sucess++;
+		if(nodes.get(1).getOutArcs().get(0).getOrigin().getID() == 1) sucess++;
+		if(nodes.get(1).getOutArcs().get(0).getDest().getID() == 3) sucess++;
+		if(nodes.get(1).getDuration(3) == 1) sucess++;
 
-
-
-		
-		
-
-
-		//Toutes les vérifications se sont bien passées
+				
+		//Toutes les verifications se sont bien passees
 		if(sucess == 8)
 			return;
-		fail("Not yet implemented");
+		fail("test Node failed");
 
 	}
 
