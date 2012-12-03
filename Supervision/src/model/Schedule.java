@@ -42,20 +42,30 @@ public class Schedule
 	
 	public String startTimeString()
 	{
-		return floatToTime(startTime);
+		return timeToString(startTime);
 	}
 	
 	public String endTimeString()
 	{
-		return floatToTime(endTime);
+		return timeToString(endTime);
 	}
 	
+	public void appendDelivery(Delivery delivery)
+	{
+		delivery.setSchedule(this);
+		deliveries.add(delivery);
+	}
 	
-	protected String floatToTime(float value)
+	public void setDeliveries(ArrayList<Delivery> deliveries)
+	{
+		this.deliveries = deliveries;
+	}
+
+	static public String timeToString(int time)
 	{
 		String str = new String();
 		
-		Integer heures = (int) (value/60);
+		Integer heures = (int) (time/60);
 		if (heures > 9)
 			str+=heures.toString();
 		else
@@ -63,7 +73,7 @@ public class Schedule
 		
 		str+= ":";
 		
-		Integer minutes = (int)(value%60);
+		Integer minutes = (int)(time%60);
 		if (minutes > 9)
 			str+=minutes.toString();
 		else
@@ -96,4 +106,3 @@ public class Schedule
 	*/
 	
 }
->>>>>>> 839d5745addd1716cac61312dc04fa63846b00d2
