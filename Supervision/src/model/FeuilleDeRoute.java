@@ -1,6 +1,7 @@
 package model;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -95,12 +96,12 @@ public class FeuilleDeRoute
 		}
 	}
 	
-	public void generateReport() throws IOException
+	public void generateReport(File path) throws IOException
 	{
 	    PrintWriter writer;
 	    int n = 5;
 
-	    writer =  new PrintWriter(new BufferedWriter(new FileWriter("rapport.txt")));
+	    writer =  new PrintWriter(new BufferedWriter(new FileWriter(path)));
 	   
 	    writer.println("Rapport de la feuille de route pour le livreur.");
 	    writer.println("La tournee est divisee en "+timeZones.size()+" creneaux.");
@@ -113,21 +114,12 @@ public class FeuilleDeRoute
 			    writer.println("La prochaine livraison aura lieu a "+d.getDest()+" ." );
 			    writer.println("Arrivee prevue a:"+ d.getHeurePrevue());
 			    Integer previous=d.getPathToDest().getTrajectory().get(0).getID();
-		    	for(Node a :d.getPathToDest().getTrajectory())
+		    	for(Arc a :d.getPathToDest().getArcs())
 		    	{
-		    		writer.print("Passer par le point :"+ a.getID());
-		    		for(Arc i :a.getInArcs())
-		    		{
-		    			if(i.getOrigin().getID()==previous)
-		    			{
-						    writer.print(" en empruntant la rue "+i.getName());
-
-		    			}
-		    		}
-
+		    		writer.print("Passer par le point :"+ a.getDest().getID());
+					writer.println(" en empruntant la rue "+a.getName()+".");
 		    	}
 			    writer.println("Quand vous serez arrive, vous disposez de 15 minutes pour livrer le colis au client.");
-
 		    }
 	    }
 
