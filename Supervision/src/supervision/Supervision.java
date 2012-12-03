@@ -4,8 +4,9 @@
  */
 package supervision;
 
+import java.text.ParseException;
 import model.ZoneGeo;
-import parsexml.ParseXML;
+import parsexml.ParseMapXML;
 import supervision.Fenetre;
 import views.ViewMain;
 
@@ -18,7 +19,7 @@ public class Supervision extends javax.swing.JPanel {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args){
     	// controleur
         Controleur ctrl = new Controleur();
         
@@ -30,6 +31,7 @@ public class Supervision extends javax.swing.JPanel {
         ctrl.setViewMain(vm);
         vm.setControleur(ctrl);
         fenetre.setControleur(ctrl);
+        ctrl.setFenetre(fenetre);
         d.setControleur(ctrl);
         
         fenetre.setVisible(true);

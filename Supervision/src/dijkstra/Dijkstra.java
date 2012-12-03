@@ -55,7 +55,7 @@ public class Dijkstra {
             {
                 for(Node v : u.getOutNodes())
                 {
-                    Integer alt=dist.get(u.getID())+u.getDistance(v.getID() );
+                    Integer alt=dist.get(u.getID())+u.getDuration(v.getID() );
                     if(alt<dist.get(v.getID()))
                     {
                         dist.put(v.getID(),alt);

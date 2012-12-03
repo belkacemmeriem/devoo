@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,8 @@ import java.util.ArrayList;
 public class Schedule
 {
 	protected
-	float startTime, endTime;	//en HEURES! ex: 1,5 = 1h30
+	int startTime, endTime;	//en minutes
+    Color couleur;
 	ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
 
 	
@@ -19,44 +21,73 @@ public class Schedule
 		return deliveries;
 	}
 
-	public Schedule(float start, float end)
+	public Schedule(int start, int end, Color color)
 	{
 		super();
 		
 		this.startTime = start;
 		this.endTime = end;
+		this.couleur = color;
 	}
 
-	public float getStartTime()
+	public int getStartTime()
 	{
 		return startTime;
 	}
 
-	public void setStartTime(float start)
-	{
-		this.startTime = start;
-	}
-
-	public float getEndTime()
+	public int getEndTime()
 	{
 		return endTime;
-	}
-
-	public void setEndTime(float end)
-	{
-		this.endTime = end;
 	}
 	
 	public String startTimeString()
 	{
-		return floatToTime(startTime);
+		return timeToString(startTime);
 	}
 	
 	public String endTimeString()
 	{
-		return floatToTime(endTime);
+		return timeToString(endTime);
 	}
 	
+	public void appendDelivery(Delivery delivery)
+	{
+		delivery.setSchedule(this);
+		deliveries.add(delivery);
+	}
+	
+	public void setDeliveries(ArrayList<Delivery> delivs)
+	{
+		this.deliveries = delivs;
+		for (Delivery d : this.deliveries)
+		{
+			d.setSchedule(this);
+		}
+	}
+
+	static public String timeToString(int time)
+	{
+		String str = new String();
+		
+		Integer heures = (int) (time/60);
+		if (heures > 9)
+			str+=heures.toString();
+		else
+			str+= '0'+heures.toString();
+		
+		str+= ":";
+		
+		Integer minutes = (int)(time%60);
+		if (minutes > 9)
+			str+=minutes.toString();
+		else
+			str+= '0'+minutes.toString();
+		return str;
+	}
+	
+	/*
+	 * ANCIENNE VERSION (en float, heures)
+	 * 
 	protected String floatToTime(float value)
 	{
 		String str = new String();
@@ -76,5 +107,5 @@ public class Schedule
 			str+= '0'+minutes.toString();
 		return str;
 	}
-	
+	*/
 }

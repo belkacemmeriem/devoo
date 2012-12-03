@@ -3,8 +3,9 @@ package supervision;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.io.File;
 
-import parsexml.ParseXML;
+import parsexml.*;
 import model.ZoneGeo;
 import views.ViewArc;
 import views.ViewMain;
@@ -17,28 +18,36 @@ public class Controleur {
 	ZoneGeo zonegeo;
 	Object selected;
 	Etat etat = Etat.VIDE;
+        Fenetre fenetre;
 	
 	public Controleur() {
-		loadZone("./content/plan400.xml");
 	}
+
+        public void setFenetre(Fenetre fenetre) {
+            this.fenetre = fenetre;
+            ParseDelivTimeXML parser = new ParseDelivTimeXML();
+            fenetre.setSchedules(parser.getPlagesHoraires());
+        }
 	
-	public void loadZone(String path) {
+	public void loadZone(File path) {
 		zonegeo = new ZoneGeo();
-    	ParseXML parseXml = new ParseXML(path, zonegeo);
-    	if (viewmain != null) {
-    		viewmain.setZoneGeo(zonegeo);
-    		viewmain.repaint();
-    	}
+    	ParseMapXML parseXml = new ParseMapXML(path, zonegeo);
+    	setAndRepaintZoneGeo();
     	etat = Etat.REMPLISSAGE;
 	}
 	
 	public void setViewMain(ViewMain vm) {
-		viewmain = vm;
-    	if (viewmain != null) {
-    		viewmain.setZoneGeo(zonegeo);
-    		viewmain.repaint();
-    	}
+        viewmain = vm;
+        setAndRepaintZoneGeo();
 	}
+        
+    public void setAndRepaintZoneGeo()
+    {
+        if (viewmain != null && zonegeo != null) {
+			viewmain.setZoneGeo(zonegeo);
+			viewmain.repaint();
+        }
+    }
 	
 	public void deselect() {
 		if (selected != null) {
