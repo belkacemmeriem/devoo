@@ -228,5 +228,10 @@ public class GraphLivraisons implements Graph {
 		}
 		return listeInteger;
 	}
+	
+	public Chemin[][] getListeChemin()
+	{
+		return listeChemins;
+	}
 
 }
