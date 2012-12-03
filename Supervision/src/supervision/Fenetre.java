@@ -10,11 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
+import java.util.ArrayList;
+import javax.swing.*;
+import model.Schedule;
 
 
 /**
@@ -34,6 +32,8 @@ public class Fenetre extends Frame {
 	private boolean masquerPopUpZone = false;
 	private Controleur controleur;
 	private JFileChooser jFileChooserXML;
+        private ArrayList<Schedule> schedules;
+        private ArrayList<JButton> jButtonSchedules;
 
 
 	/**
@@ -48,6 +48,19 @@ public class Fenetre extends Frame {
 		setPopups();
                 setMode(Mode.CREATION);
 	}
+
+    public void setSchedules(ArrayList<Schedule> aschedules) {
+        this.schedules = aschedules;
+        jButtonSchedules = new ArrayList<JButton>();
+        System.out.println(""+schedules.size());
+        for(int i =0;i<schedules.size();i++)
+        {
+            String s = ""+(schedules.get(i).getStartTime()/60)+"h - "+
+                    +(schedules.get(i).getEndTime()/60)+"h";
+            jButtonSchedules.add(new JButton(s));
+            jPanelHoraires.add(jButtonSchedules.get(i));
+        }
+    }
 
 	private void setMode(Mode mode) {
 		switch(mode){

@@ -31,6 +31,7 @@ public class Supervision extends javax.swing.JPanel {
         ctrl.setViewMain(vm);
         vm.setControleur(ctrl);
         fenetre.setControleur(ctrl);
+        ctrl.setFenetre(fenetre);
         d.setControleur(ctrl);
         
         fenetre.setVisible(true);
