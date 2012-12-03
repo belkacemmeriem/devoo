@@ -2,25 +2,38 @@ package model;
 
 public class Delivery
 {
-	private
+	protected
 	Node dest;
-	public void setSchedule(Schedule schedule)
-	{
-		this.schedule = schedule;
-	}
+
 
 
 	Schedule schedule;
 	Chemin pathToDest;
 	
-	protected int heurePrevue;
+	int heurePrevue;
+	public boolean isRetardPrevu()
+	{
+		return retardPrevu;
+	}
+
+	public void setRetardPrevu(boolean retardPrevu)
+	{
+		this.retardPrevu = retardPrevu;
+	}
+
+
+	boolean retardPrevu;
 	
 	public int getHeurePrevue()
 	{
 		return heurePrevue;
 	}
 
-
+	public void setSchedule(Schedule schedule)
+	{
+		this.schedule = schedule;
+	}
+	
 	public void setHeurePrevue(int heurePrevue)
 	{
 		this.heurePrevue = heurePrevue;
