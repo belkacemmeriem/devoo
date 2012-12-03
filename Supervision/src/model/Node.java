@@ -30,16 +30,9 @@ public class Node
 	}
 
 
-
 	public Integer getY() {
 		return y;
 	}
-
-
-	public Integer getId() {
-		return id;
-	}
-
 
 	public Integer getID()
 	{
@@ -88,14 +81,14 @@ public class Node
 		return list;
 	}
 
-	public Integer getDistance(Integer anID)
+	public Integer getDuration(Integer anID)
 	{
 
 		for (Arc a : outArcs)
 		{
 			if (a.getDest().getID() == anID)
 			{
-				return a.lenght;
+				return (int)a.getDuration();
 			}
 		}
 		throw new IllegalStateException("The required id is unexisting");
