@@ -1,7 +1,7 @@
 package model;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * 
@@ -13,10 +13,10 @@ public class Schedule
 	protected
 	int startTime, endTime;	//en minutes
     Color couleur;
-	ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
+    LinkedList<Delivery> deliveries = new LinkedList<Delivery>();
 
 	
-	public ArrayList<Delivery> getDeliveries()
+	public LinkedList<Delivery> getDeliveries()
 	{
 		return deliveries;
 	}
@@ -56,7 +56,7 @@ public class Schedule
 		deliveries.add(delivery);
 	}
 	
-	public void setDeliveries(ArrayList<Delivery> delivs)
+	public void setDeliveries(LinkedList<Delivery> delivs)
 	{
 		this.deliveries = delivs;
 		for (Delivery d : this.deliveries)

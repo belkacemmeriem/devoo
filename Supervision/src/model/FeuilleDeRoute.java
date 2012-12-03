@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import tsp.GraphLivraisons;
 
@@ -63,7 +64,7 @@ public class FeuilleDeRoute
 		// pour chaque Schedule, on cherche les deliveries concernées
 		for (Schedule sch : timeZones)
 		{
-			ArrayList<Delivery> newDelivs = new ArrayList<Delivery>();
+			LinkedList<Delivery> newDelivs = new LinkedList<Delivery>();
 			for (Delivery d : result)
 			{
 				if (d.schedule == sch)
@@ -105,7 +106,7 @@ public class FeuilleDeRoute
 	    writer.println("La tournee est divisee en "+timeZones.size()+" creneaux.");
 	    for(Schedule s: timeZones)
 	    {
-		    writer.println("Le prochain creneau s'�tend de" + Schedule.timeToString(s.startTime)+  " a "+Schedule.timeToString(s.endTime));
+		    writer.println("Le prochain creneau s'�tend de" + Schedule.timeToString(s.startTime)+  " a "+Schedule.timeToString(s.endTime));
 		    writer.println("Dans ce creneau il y a "+s.getDeliveries().size()+ " livraisons a faire." );
 		    for(Delivery d : s.getDeliveries())
 		    {
@@ -145,4 +146,28 @@ public class FeuilleDeRoute
 		}
 		return retour;
 	}
+	
+	// ajoute un node dans un schedule donné
+	// utile seulement à l'init, avant le premier appel de computeWithTSP
+	public void addNode(Node node, Schedule schedule)
+	{
+		Delivery deliv = new Delivery(node, schedule);
+		schedule.appendDelivery(deliv);
+	}
+	
+	/*
+	 * WORK IN PROGRESS
+	protected void insertNode(Node inserted, Delivery reference, boolean before)
+	{
+		for (Schedule sch : timeZones)
+		{
+			LinkedList<Delivery> schDelivs = sch.getDeliveries();
+			if (schDelivs.contains(reference))
+			{
+				int insertIndex = schDelivs.indexOf(o)
+				schDelivs.add(index, element)
+			}
+		}
+	}
+	*/
 }
