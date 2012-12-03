@@ -3,6 +3,7 @@ package views;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import model.FeuilleDeRoute;
 import model.ZoneGeo;
 
 import supervision.Controleur;
@@ -12,11 +13,13 @@ public class ViewMain {
 	Controleur controleur;
 	Dessin dessin;
 	ViewZoneGeo zonegeo;
+	ViewFeuilleDeRoute feuilleDeRoute;
 	int border = 20;
 	
 	public ViewMain(Dessin d) {
 		dessin = d;
 		zonegeo = null;
+		feuilleDeRoute = null;
 	}
 	
 	public void repaint() {
@@ -25,6 +28,10 @@ public class ViewMain {
 	
 	public void setZoneGeo(ZoneGeo zg) {
 		zonegeo = new ViewZoneGeo(zg, this);
+	}
+	
+	public void setFeuilleDeRoute(FeuilleDeRoute f) {
+		feuilleDeRoute = new ViewFeuilleDeRoute(f, this);
 	}
 	
 	public int xpix(int xplan) {

@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.io.File;
+import java.util.ArrayList;
 
 import parsexml.*;
+import model.FeuilleDeRoute;
+import model.Schedule;
 import model.ZoneGeo;
 import views.ViewArc;
 import views.ViewMain;
@@ -16,40 +19,36 @@ public class Controleur {
 	protected
 	ViewMain viewmain;
 	ZoneGeo zonegeo;
+	FeuilleDeRoute feuilleDeRoute;
 	Object selected;
 	Etat etat = Etat.VIDE;
-        Fenetre fenetre;
+	Fenetre fenetre;
 	
 	public Controleur() {
 	}
 
-        public void setFenetre(Fenetre fenetre) {
-            this.fenetre = fenetre;
-            ParseDelivTimeXML parser = new ParseDelivTimeXML();
-            fenetre.setSchedules(parser.getPlagesHoraires());
-        }
+    public void setFenetre(Fenetre fenetre) {
+        this.fenetre = fenetre;
+    }
 	
 	public void loadZone(File path) {
 		zonegeo = new ZoneGeo();
-    	ParseMapXML parseXml = new ParseMapXML(path, zonegeo);
-    	setAndRepaintZoneGeo();
+    	ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
+    	ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
+        feuilleDeRoute = new FeuilleDeRoute(parserSched.getPlagesHoraires(), zonegeo);
+        viewmain.setZoneGeo(zonegeo);
+		viewmain.repaint();
+        fenetre.setSchedules(feuilleDeRoute.getTimeZones());
     	etat = Etat.REMPLISSAGE;
 	}
+	
 	public void exportReport(File path) {
 		// feuilleDeRoute.generateReport(path);
 	}
+	
 	public void setViewMain(ViewMain vm) {
         viewmain = vm;
-        setAndRepaintZoneGeo();
 	}
-        
-    public void setAndRepaintZoneGeo()
-    {
-        if (viewmain != null && zonegeo != null) {
-			viewmain.setZoneGeo(zonegeo);
-			viewmain.repaint();
-        }
-    }
 	
 	public void deselect() {
 		if (selected != null) {

@@ -10,7 +10,8 @@ public class ViewDelivery {
 	ViewMain mere;
 
 	public ViewDelivery(Delivery d, ViewMain m) {
-		
+		delivery = d;
+		mere = m;
 	}
 	
 	public void paint(Graphics g) {
