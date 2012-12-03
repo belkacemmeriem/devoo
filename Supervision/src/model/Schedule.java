@@ -11,8 +11,16 @@ public class Schedule
 {
 	protected
 	int startTime, endTime;	//en minutes
+
 	ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
 
+	
+	
+	
+	public void setDeliveries(ArrayList<Delivery> deliveries)
+	{
+		this.deliveries = deliveries;
+	}
 	
 	public ArrayList<Delivery> getDeliveries()
 	{
