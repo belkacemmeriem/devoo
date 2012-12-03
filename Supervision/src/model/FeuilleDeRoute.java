@@ -78,4 +78,16 @@ public class FeuilleDeRoute
 	{
 		
 	}
+	
+	public ArrayList<Delivery> getAllDeliveries()
+	{
+		ArrayList<Delivery> retour = new ArrayList<Node>();
+		for (Schedule sch : timeZones)
+		{
+			for (Delivery d : sch.getDeliveries())
+			{
+				retour.add(d);
+			}
+		}
+	}
 }
