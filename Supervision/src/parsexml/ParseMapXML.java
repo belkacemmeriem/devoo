@@ -16,13 +16,13 @@ import org.jdom2.xpath.XPath;
  *
  * @author Benoît
  */
-public class ParseXML {
+public class ParseMapXML {
 
     static org.jdom2.Document document;
     static Element racine;
     static ZoneGeo zonegeo;
     
-    public ParseXML(String file, ZoneGeo zone) {
+    public ParseMapXML(String file, ZoneGeo zone) {
         zonegeo = zone;
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)
         SAXBuilder sxb = new SAXBuilder();
@@ -151,7 +151,7 @@ public class ParseXML {
             List results = xpa.selectNodes(racine);
             return results;
         } catch (JDOMException ex) {
-            Logger.getLogger(ParseXML.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ParseMapXML.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Echec du XPath
         return null;

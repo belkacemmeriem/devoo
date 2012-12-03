@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
 
-import parsexml.ParseXML;
+import parsexml.*;
 import model.ZoneGeo;
 import views.ViewArc;
 import views.ViewMain;
@@ -24,7 +24,7 @@ public class Controleur {
 	
 	public void loadZone(String path) {
 		zonegeo = new ZoneGeo();
-    	ParseXML parseXml = new ParseXML(path, zonegeo);
+    	ParseMapXML parseXml = new ParseMapXML(path, zonegeo);
     	if (viewmain != null) {
     		viewmain.setZoneGeo(zonegeo);
     		viewmain.repaint();

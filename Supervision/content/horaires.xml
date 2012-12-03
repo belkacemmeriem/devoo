@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Horaire>
+	<PlageHoraire start="8:00" end="10:00" color="d8323a"/>
+	<PlageHoraire start="10:00" end="12:00" color="b332d8"/>
+	<PlageHoraire start="12:00" end="14:00" color="3265d8"/>
+	<PlageHoraire start="14:00" end="16:00" color="32d8af"/>
+	<PlageHoraire start="16:00" end="18:00" color="e68136"/>
+</Horaire>
