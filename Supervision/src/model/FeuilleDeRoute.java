@@ -85,7 +85,6 @@ public class FeuilleDeRoute
 		
 	}
 	
-<<<<<<< HEAD
 	public void generateReport() throws IOException
 	{
 	    PrintWriter writer;
@@ -123,7 +122,8 @@ public class FeuilleDeRoute
 	    }
 
 	    writer.close();
-=======
+	}
+
 	public ArrayList<Delivery> getAllDeliveries()
 	{
 		ArrayList<Delivery> retour = new ArrayList<Delivery>();
@@ -135,6 +135,5 @@ public class FeuilleDeRoute
 			}
 		}
 		return retour;
->>>>>>> 456ba5ce55e5e5e542d97fa25581228fe4a5758b
 	}
 }
