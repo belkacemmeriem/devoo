@@ -78,7 +78,16 @@ public class FeuilleDeRoute
 	
 	protected void computeArrivalTimes()
 	{
-		
+		int theTime = timeZones.get(0).getStartTime();
+		for (Schedule sch : timeZones)
+		{
+			for (Delivery d : sch.getDeliveries())
+			{
+				theTime+= d.getPathToDest().getDuration();
+				d.setHeurePrevue(theTime);
+				d.setRetardPrevu(theTime > sch.getEndTime());	//si arrive hors schedule
+			}
+		}
 	}
 	
 	public ArrayList<Delivery> getAllDeliveries()
