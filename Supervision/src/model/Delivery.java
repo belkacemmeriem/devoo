@@ -11,6 +11,9 @@ public class Delivery
 	Chemin pathToDest;
 	
 	int heurePrevue;
+	boolean retardPrevu;
+	
+	
 	public boolean isRetardPrevu()
 	{
 		return retardPrevu;
@@ -20,9 +23,6 @@ public class Delivery
 	{
 		this.retardPrevu = retardPrevu;
 	}
-
-
-	boolean retardPrevu;
 	
 	public int getHeurePrevue()
 	{

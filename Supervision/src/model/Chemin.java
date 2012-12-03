@@ -6,6 +6,8 @@ public class Chemin {
 	protected
 	
 	ArrayList<Node> trajectory;
+	ArrayList<Arc> arcs = new ArrayList<Arc>();
+
 	Node start;
 	Node target;
 	float duration;
@@ -17,6 +19,17 @@ public class Chemin {
 		this.start = contenu.get(0);
 		this.target = contenu.get(contenu.size()-1);
 		this.duration = duration;
+		for(int i=1; i<trajectory.size();i++)
+		{
+			for(Arc j : trajectory.get(i).getInArcs())
+			{
+				if(j.getOrigin() ==trajectory.get(i-1))
+				{
+					arcs.add(j);
+
+				}
+			}
+		}
 	}
 	
 	public Node getNoeudDepart()
@@ -37,6 +50,10 @@ public class Chemin {
 	public float getDuration()
 	{
 		return duration;
+	}
+
+	public ArrayList<Arc> getArcs() {
+		return arcs;
 	}
 
 
