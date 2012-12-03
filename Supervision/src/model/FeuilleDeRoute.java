@@ -2,16 +2,20 @@ package model;
 
 import java.util.ArrayList;
 
+import tsp.GraphLivraisons;
+
 public class FeuilleDeRoute
 {
 	protected
 	ArrayList<Schedule> timeZones;
 	
 	protected ZoneGeo zoneGeo;
-	protected Entrepot entrepot;
 
-	public Entrepot getEntrepot() {
-		return entrepot;
+	public FeuilleDeRoute(ArrayList<Schedule> timeZones, ZoneGeo zoneGeo)
+	{
+		super();
+		this.timeZones = timeZones;
+		this.zoneGeo = zoneGeo;
 	}
 
 	public ZoneGeo getZoneGeo() {
@@ -37,5 +41,32 @@ public class FeuilleDeRoute
 		return fullPath;
 	}
 	
+	public void computeWithTSP()
+	{
+		GraphLivraisons gl = new GraphLivraisons(this);
+		gl.createGraph();
+		ArrayList<Delivery> result = gl.calcItineraire();
+		
+		// pour chaque Schedule, on cherche les deliveries concernées
+		for (Schedule sch : timeZones)
+		{
+			ArrayList<Delivery> newDelivs = new ArrayList<Delivery>();
+			for (Delivery d : result)
+			{
+				if (d.schedule == sch)
+				{
+					//on les insère, dans l'ordre, dans la nouvelle liste du Schedule
+					newDelivs.add(d);
+				}
+			}
+			sch.setDeliveries(newDelivs);
+		}
+		computeArrivalTimes();
+	}
 
+	
+	protected void computeArrivalTimes()
+	{
+		
+	}
 }

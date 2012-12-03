@@ -12,7 +12,7 @@ public class Schedule
 {
 	protected
 	int startTime, endTime;	//en minutes
-        Color couleur;
+    Color couleur;
 	ArrayList<Delivery> deliveries = new ArrayList<Delivery>();
 
 	
@@ -27,7 +27,7 @@ public class Schedule
 		
 		this.startTime = start;
 		this.endTime = end;
-                this.couleur = color;
+		this.couleur = color;
 	}
 
 	public int getStartTime()
@@ -96,3 +96,4 @@ public class Schedule
 	*/
 	
 }
+>>>>>>> 839d5745addd1716cac61312dc04fa63846b00d2

@@ -8,6 +8,18 @@ public class Delivery
 	
 	protected int heurePrevue;
 	
+	public int getHeurePrevue()
+	{
+		return heurePrevue;
+	}
+
+
+	public void setHeurePrevue(int heurePrevue)
+	{
+		this.heurePrevue = heurePrevue;
+	}
+
+
 	public Node getDest()
 	{
 		return dest;

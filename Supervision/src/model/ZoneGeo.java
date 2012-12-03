@@ -10,7 +10,7 @@ public class ZoneGeo
 	HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
 	ArrayList<Arc> arcs = new ArrayList<Arc>();
 
-	int warehouseID;
+	int warehouseID = -1;
 	int xmin = Integer.MAX_VALUE, 
 		xmax = Integer.MIN_VALUE, 
 		ymin = Integer.MAX_VALUE, 

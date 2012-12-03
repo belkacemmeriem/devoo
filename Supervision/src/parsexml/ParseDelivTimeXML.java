@@ -72,7 +72,7 @@ public class ParseDelivTimeXML {
         return timeMin;
     }
 
-    public static ArrayList<Schedule> getPlagesHoraires() {
+    public ArrayList<Schedule> getPlagesHoraires() {
         return plagesHoraires;
     }
 }
