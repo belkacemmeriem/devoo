@@ -19,6 +19,7 @@ import model.*;
 public class ParseDelivTimeXML {
     static org.jdom2.Document document;
     static Element racine;
+    static ArrayList<Schedule> plagesHoraires = new ArrayList<Schedule>();
     
     public ParseDelivTimeXML(){
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)
@@ -33,7 +34,7 @@ public class ParseDelivTimeXML {
         }
         catch(Exception e){}
         
-        //Récupération dela racine XML
+        //Récupération de la racine XML
         racine = document.getRootElement();
         getAll();
     }
@@ -51,21 +52,28 @@ public class ParseDelivTimeXML {
             //selectionner un noeud fils, modifier du texte, etc...
             Element courant = (Element)i.next();
             
-            //On crée une nouvelle instance de Node sur l'élément en cours de scan 
-            //dans l'optique de l'insérer dans ZoneGeo
+            //On récupère les attributs de chaque plage horaire dans l'optique
+            //de construire de nouveaux objets de type Schedule
             String start = courant.getAttributeValue("start");
             String end = courant.getAttributeValue("end");
             Color color = Color.decode("#"+courant.getAttributeValue("color"));
+            plagesHoraires.add(new Schedule(GetTimeInMin(start),GetTimeInMin(end),color));
         }
     }
     
     public int GetTimeInMin (String hourIn)
     {
+        //Parse un string au format HH:MM pour le transformer 
+        //en entier représentant le nombre de minutes
         String[] entiers = hourIn.split(":");
         int hour = Integer.parseInt(entiers[0]);
         int minute = Integer.parseInt(entiers[1]);
         int timeMin = hour*60 + minute;
         return timeMin;
+    }
+
+    public static ArrayList<Schedule> getPlagesHoraires() {
+        return plagesHoraires;
     }
 }
 
