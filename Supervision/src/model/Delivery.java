@@ -2,7 +2,14 @@ package model;
 
 public class Delivery
 {
+	private
 	Node dest;
+	public void setSchedule(Schedule schedule)
+	{
+		this.schedule = schedule;
+	}
+
+
 	Schedule schedule;
 	Chemin pathToDest;
 	
@@ -38,12 +45,11 @@ public class Delivery
 	}
 
 
-	public Delivery(Node destination, Schedule schedule, Chemin pathToDest)
+	public Delivery(Node destination, Schedule schedule)
 	{
 		super();
 		this.dest = destination;
 		this.schedule = schedule;
-		this.pathToDest = pathToDest;
 	}
 	
 }

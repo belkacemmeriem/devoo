@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import tsp.GraphLivraisons;
@@ -16,6 +17,13 @@ public class FeuilleDeRoute
 		super();
 		this.timeZones = timeZones;
 		this.zoneGeo = zoneGeo;
+		
+		//ajout d'un schedule réservé au retour à l'entrepot
+		Schedule retourSch = new Schedule(0, 1440, Color.BLACK);
+		Delivery entrepot = new Delivery(zoneGeo.getWarehouse(), retourSch);
+		retourSch.appendDelivery(entrepot);
+		timeZones.add(retourSch);
+		
 	}
 
 	public ZoneGeo getZoneGeo() {
@@ -35,7 +43,7 @@ public class FeuilleDeRoute
 			for (Delivery d : s.getDeliveries())
 			{
 				 fullPath.addAll(d.getPathToDest().getTrajectory());
-				 fullPath.add(d.dest);
+				 fullPath.add(d.getDest());
 			}
 		}
 		return fullPath;
@@ -43,6 +51,7 @@ public class FeuilleDeRoute
 	
 	public void computeWithTSP()
 	{
+		
 		GraphLivraisons gl = new GraphLivraisons(this);
 		gl.createGraph();
 		ArrayList<Delivery> result = gl.calcItineraire();
