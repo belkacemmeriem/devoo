@@ -25,20 +25,22 @@ public class Controleur {
 	public void loadZone(File path) {
 		zonegeo = new ZoneGeo();
     	ParseMapXML parseXml = new ParseMapXML(path, zonegeo);
-    	if (viewmain != null) {
-    		viewmain.setZoneGeo(zonegeo);
-    		viewmain.repaint();
-    	}
+    	repaintZoneGeo();
     	etat = Etat.REMPLISSAGE;
 	}
 	
 	public void setViewMain(ViewMain vm) {
-		viewmain = vm;
-    	if (viewmain != null) {
+            viewmain = vm;
+            repaintZoneGeo();
+	}
+        
+        public void repaintZoneGeo()
+        {
+            if (viewmain != null && zonegeo != null) {
     		viewmain.setZoneGeo(zonegeo);
     		viewmain.repaint();
-    	}
-	}
+            }
+        }
 	
 	public void deselect() {
 		if (selected != null) {

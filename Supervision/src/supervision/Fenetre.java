@@ -160,7 +160,8 @@ public class Fenetre extends Frame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			controleur.loadZone(ouvrirFichierXML());
+                            controleur.loadZone(ouvrirFichierXML());
+                            setControleur(controleur);
 			}
 		};
 		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
