@@ -35,10 +35,18 @@ public class Controleur {
 		zonegeo = new ZoneGeo();
     	ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
     	ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-        feuilleDeRoute = new FeuilleDeRoute(parserSched.getPlagesHoraires(), zonegeo);
+    	ArrayList<Schedule> schedules = parserSched.getPlagesHoraires();
+    	/* // A remettre si necessaire, a virer sinon :
+    	ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
+    	for (Schedule s : schedules) {
+    		fenSchedules.add(s);
+    	}
+    	*/
+    	fenetre.setSchedules(schedules);
+        feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
         viewmain.setZoneGeo(zonegeo);
+        viewmain.setFeuilleDeRoute(feuilleDeRoute);
 		viewmain.repaint();
-        fenetre.setSchedules(feuilleDeRoute.getTimeZones());
     	etat = Etat.REMPLISSAGE;
 	}
 	

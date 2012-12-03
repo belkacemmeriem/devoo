@@ -51,9 +51,11 @@ public class ViewMain {
 	}
 	
 	public void paint(Graphics g) {
-		dessin.setBackground(new Color(230, 230, 230));
+		dessin.setBackground(new Color(240, 240, 240));
 		if (zonegeo != null)
 			zonegeo.paint(g);
+		if (feuilleDeRoute != null)
+			feuilleDeRoute.paint(g);
 	}
 
 	public void setControleur(Controleur ctrl) {

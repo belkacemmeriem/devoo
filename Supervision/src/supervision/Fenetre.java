@@ -54,7 +54,7 @@ public class Fenetre extends Frame {
     public void setSchedules(ArrayList<Schedule> aschedules) {
         this.schedules = aschedules;
         jButtonSchedules = new ArrayList<JButton>();
-        System.out.println(""+schedules.size());
+        jPanelHoraires.removeAll();
         for(int i =0;i<schedules.size();i++)
         {
             String s = ""+(schedules.get(i).getStartTime()/60)+"h - "+
