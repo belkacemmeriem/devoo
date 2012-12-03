@@ -21,7 +21,12 @@ import javax.swing.JOptionPane;
  */
 public class Fenetre extends Frame {
 
+        private static enum Mode {CREATION, MODIFICATION};
+        private Mode mode;
 	private final String TITRE = "Supervision des Livraisons Itinérantes Planifiés";
+        private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
+                + " mode création)";
+        private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est sélectionnée";
 	private Fenetre fenetre;
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
@@ -38,6 +43,31 @@ public class Fenetre extends Frame {
 		creeMenu();
 		setFonts();
 		setPopups();
+                setMode(Mode.CREATION);
+	}
+
+	private void setMode(Mode mode) {
+		switch(mode){
+                    case CREATION:
+                        jLabelAddLivPrec.setEnabled(false);
+                        jLabelAddLivSuiv.setEnabled(false);
+                        jLabelLivPrec.setEnabled(false);
+                        jLabelLivSuiv.setEnabled(false);
+                        jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
+                                " "+CHAMP_INDISP_CREA);
+                        jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
+                                " "+CHAMP_INDISP_CREA);
+                        
+                        break;
+                    case MODIFICATION:
+                        jLabelAddLivPrec.setEnabled(true);
+                        jLabelAddLivSuiv.setEnabled(true);
+                        jLabelLivPrec.setEnabled(true);
+                        jLabelLivSuiv.setEnabled(true);
+                        jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC);
+                        jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC);
+                        break;
+                }
 	}
 
 	public Dessin getDessin() {
@@ -86,6 +116,7 @@ public class Fenetre extends Frame {
 						}
 						else
 						{
+                                                        setMode(Mode.CREATION);
 							selectedZone=jComboBoxZone.getSelectedIndex();
 						}
 					}
@@ -223,6 +254,11 @@ public class Fenetre extends Frame {
         });
 
         jButtonGenTourn.setText("Générer tournée");
+        jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenTournActionPerformed(evt);
+            }
+        });
 
         jButtonFinal.setText("Finaliser tournée");
 
@@ -266,7 +302,7 @@ public class Fenetre extends Frame {
 
         jButtonSupprimerLiv.setText("Supprimer");
 
-        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
+        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
 
         jButtonValiderLiv.setText("Valider");
 
@@ -275,13 +311,13 @@ public class Fenetre extends Frame {
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison précedente :");
+        jLabelLivPrec.setText("Livraison precedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
+        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
+        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
 
         javax.swing.GroupLayout jPanelEditionLivraisonLayout = new javax.swing.GroupLayout(jPanelEditionLivraison);
         jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
@@ -414,6 +450,11 @@ public class Fenetre extends Frame {
 	private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
 		// TODO add your handling code here:
 	}//GEN-LAST:event_jButtonUndoActionPerformed
+
+    private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
+        // TODO add your handling code here:
+        setMode(Mode.MODIFICATION);
+    }//GEN-LAST:event_jButtonGenTournActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
