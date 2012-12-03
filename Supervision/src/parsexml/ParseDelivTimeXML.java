@@ -4,6 +4,7 @@
  */
 package parsexml;
 
+import java.awt.Color;
 import java.io.File;
 import java.text.ParseException;
 import java.util.*;
@@ -52,11 +53,19 @@ public class ParseDelivTimeXML {
             
             //On crée une nouvelle instance de Node sur l'élément en cours de scan 
             //dans l'optique de l'insérer dans ZoneGeo
-            /*horaires.add(new TimeSlice(
-                    courant.getAttributeValue("start"),
-                    courant.getAttributeValue("end"),
-                    courant.getAttributeValue("color")));*/
+            String start = courant.getAttributeValue("start");
+            String end = courant.getAttributeValue("end");
+            Color color = Color.decode("#"+courant.getAttributeValue("color"));
         }
+    }
+    
+    public int GetTimeInMin (String hourIn)
+    {
+        String[] entiers = hourIn.split(":");
+        int hour = Integer.parseInt(entiers[0]);
+        int minute = Integer.parseInt(entiers[1]);
+        int timeMin = hour*60 + minute;
+        return timeMin;
     }
 }
 
