@@ -19,6 +19,7 @@ public class FeuilleDeRoute
 	ArrayList<Schedule> timeZones;
 	ZoneGeo zoneGeo;
 	final int DUREE_LIVRAISON = 15;
+	EtatFDR etat = EtatFDR.INIT;
 	
 	
 	
@@ -59,6 +60,24 @@ public class FeuilleDeRoute
 		return fullPath;
 	}
 	
+	public ArrayList<Delivery> getAllDeliveries()
+	{
+		ArrayList<Delivery> retour = new ArrayList<Delivery>();
+		for (Schedule sch : timeZones)
+		{
+			for (Delivery d : sch.getDeliveries())
+			{
+				retour.add(d);
+			}
+		}
+		return retour;
+	}
+
+	public EtatFDR getEtat()
+	{
+		return etat;
+	}
+
 	public void computeWithTSP()
 	{
 		
@@ -83,6 +102,7 @@ public class FeuilleDeRoute
 			sch.setDeliveries(newDelivs);
 		}
 		computeArrivalTimes();
+		etat = EtatFDR.OPTIM;
 	}
 
 	
@@ -131,19 +151,6 @@ public class FeuilleDeRoute
 	    writer.close();
 	}
 
-	public ArrayList<Delivery> getAllDeliveries()
-	{
-		ArrayList<Delivery> retour = new ArrayList<Delivery>();
-		for (Schedule sch : timeZones)
-		{
-			for (Delivery d : sch.getDeliveries())
-			{
-				retour.add(d);
-			}
-		}
-		return retour;
-	}
-	
 	// ajoute un node dans un schedule donné
 	// utile seulement à l'init, avant le premier appel de computeWithTSP
 	public void addNode(Node node, Schedule schedule)
@@ -152,7 +159,15 @@ public class FeuilleDeRoute
 		schedule.appendDelivery(deliv);
 	}
 	
+	public void insertNodeBefore(Node inserted, Delivery reference)
+	{
+		insertNode(inserted, reference, true);
+	}
 	
+	public void insertNodeAfter(Node inserted, Delivery reference)
+	{
+		insertNode(inserted, reference, false);
+	}
 	
 	protected void insertNode(Node inserted, Delivery reference, boolean before)
 	{
@@ -227,6 +242,7 @@ public class FeuilleDeRoute
 				
 			}
 		}
+		etat = EtatFDR.MODIF;
 	}
 
 }
