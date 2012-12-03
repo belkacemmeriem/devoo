@@ -37,5 +37,10 @@ public class FeuilleDeRoute
 		return fullPath;
 	}
 	
+	public ArrayList<Delivery> getAllDeliveries()
+	{
+		return null;
+	}
+	
 
 }

@@ -10,8 +10,9 @@ public class Entrepot {
 	protected int heureDepart;
 	protected int heureArrivee;
 	
-	Entrepot(){
-		
+	public Entrepot(Node n)
+	{
+		adresse=n;
 	}
 
 	public Node getAdresse() {

@@ -26,11 +26,15 @@ public class Delivery
 	}
 
 
-	public Delivery(Node destination, Schedule schedule, Chemin pathToDest)
+	public Delivery(Node destination, Schedule schedule)
 	{
 		super();
 		this.dest = destination;
 		this.schedule = schedule;
+	}
+
+
+	public void setPathToDest(Chemin pathToDest) {
 		this.pathToDest = pathToDest;
 	}
 	
