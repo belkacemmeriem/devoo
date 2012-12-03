@@ -149,6 +149,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer tourn&#xe9;e"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGenTournActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonFinal">
               <Properties>
