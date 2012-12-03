@@ -51,7 +51,7 @@ public class DijkstraTest {
 				uneZone.addNode(n4);
 				uneZone.addNode(n5);
 				
-				//Cration de la liste des points ˆ atteindre
+				//Creation de la liste des points a atteindre
 				eng= new ArrayList<Node>();
 				eng.add(n5);
 				eng.add(n3);
