@@ -1,5 +1,9 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import tsp.GraphLivraisons;
@@ -68,5 +72,33 @@ public class FeuilleDeRoute
 	protected void computeArrivalTimes()
 	{
 		
+	}
+	
+	public void generateReport() throws IOException
+	{
+	    PrintWriter writer;
+	    int n = 5;
+
+	    writer =  new PrintWriter(new BufferedWriter(new FileWriter("rapport.txt")));
+	   
+	    writer.println("Rapport de la feuille de route pour le livreur.");
+	    writer.println("La tournée est divisée en "+timeZones.size()+" créneaux");
+	    for(Schedule s: timeZones)
+	    {
+		    writer.println("Dans le créneau" + s.startTime+  " "+s.endTime);
+		    for(Delivery d : s.getDeliveries())
+		    {
+		    	for(Node a :d.getPathToDest().getTrajectory())
+		    	{
+				    writer.println("Passer par le noeud:"+ a.getID());
+
+		    	}
+			    writer.println("Arrivee prevue a:"+ d.getHeurePrevue());
+			    writer.println("Arrivee prevue a:"+ d.getHeurePrevue());
+
+		    }
+	    }
+
+	    writer.close();
 	}
 }
