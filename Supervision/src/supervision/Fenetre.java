@@ -160,7 +160,8 @@ public class Fenetre extends Frame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			controleur.loadZone(ouvrirFichierXML());
+                            controleur.loadZone(ouvrirFichierXML());
+                            setControleur(controleur);
 			}
 		};
 		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
@@ -507,8 +508,8 @@ public class Fenetre extends Frame {
     private javax.swing.JPanel jPanelEditionLivraison;
     private javax.swing.JPanel jPanelGauche;
     private javax.swing.JPanel jPanelHoraires;
-    private javax.swing.JPanel jPanelPlan;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    private Dessin jPanelPlan;
 
 }

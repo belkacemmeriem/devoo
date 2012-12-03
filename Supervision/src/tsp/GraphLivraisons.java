@@ -33,7 +33,7 @@ public class GraphLivraisons implements Graph {
 		listeCosts=new int[nbVertices][nbVertices];
 		
 		//index de la liste des schedules de feuilleDeRoute
-		int indexSchedule=0;
+		int indexSchedule = 0;
 		
 		//solveDijkstra pour le point de départ à l'entrepot
 		Node depart=feuilleDeRoute.getEntrepot().getAdresse();
