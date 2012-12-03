@@ -223,6 +223,8 @@ public class Fenetre extends Frame {
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ListLivraison = new javax.swing.JList();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -234,14 +236,11 @@ public class Fenetre extends Frame {
 
         jPanelBoutonsGen.setBackground(new java.awt.Color(255, 204, 102));
 
-        jButtonUndo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\undo_mini.png")); // NOI18N
         jButtonUndo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUndoActionPerformed(evt);
             }
         });
-
-        jButtonRedo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mignot\\Documents\\GitHub\\devoo\\Supervision\\images\\icons\\redo_mini.png")); // NOI18N
 
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
@@ -302,7 +301,7 @@ public class Fenetre extends Frame {
 
         jButtonSupprimerLiv.setText("Supprimer");
 
-        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
+        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
 
         jButtonValiderLiv.setText("Valider");
 
@@ -311,13 +310,13 @@ public class Fenetre extends Frame {
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison precedente :");
+        jLabelLivPrec.setText("Livraison précedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
+        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
+        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
 
         javax.swing.GroupLayout jPanelEditionLivraisonLayout = new javax.swing.GroupLayout(jPanelEditionLivraison);
         jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
@@ -391,6 +390,15 @@ public class Fenetre extends Frame {
 
         jPaneLivraisons.setBackground(new java.awt.Color(255, 0, 0));
 
+        ListLivraison.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "heure - adresse" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(ListLivraison);
+
+        jPaneLivraisons.add(jScrollPane1);
+
         javax.swing.GroupLayout jPanelDroiteLayout = new javax.swing.GroupLayout(jPanelDroite);
         jPanelDroite.setLayout(jPanelDroiteLayout);
         jPanelDroiteLayout.setHorizontalGroup(
@@ -458,6 +466,7 @@ public class Fenetre extends Frame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList ListLivraison;
     private javax.swing.JButton jButtonFinal;
     private javax.swing.JButton jButtonGenTourn;
     private javax.swing.JButton jButtonRedo;
@@ -480,7 +489,8 @@ public class Fenetre extends Frame {
     private javax.swing.JPanel jPanelEditionLivraison;
     private javax.swing.JPanel jPanelGauche;
     private javax.swing.JPanel jPanelHoraires;
-    private Dessin jPanelPlan;
+    private javax.swing.JPanel jPanelPlan;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
 }
