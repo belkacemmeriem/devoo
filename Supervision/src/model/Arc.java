@@ -7,6 +7,10 @@ public class Arc
 	protected int		lenght;
 	protected String	name;
 
+	public String getName() {
+		return name;
+	}
+
 	public Arc(Node origin, Node dest, int speed, int lenght, String name)
 	{
 		super();

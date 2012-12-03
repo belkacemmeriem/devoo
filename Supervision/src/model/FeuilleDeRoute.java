@@ -1,5 +1,9 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -90,6 +94,45 @@ public class FeuilleDeRoute
 		}
 	}
 	
+<<<<<<< HEAD
+	public void generateReport() throws IOException
+	{
+	    PrintWriter writer;
+	    int n = 5;
+
+	    writer =  new PrintWriter(new BufferedWriter(new FileWriter("rapport.txt")));
+	   
+	    writer.println("Rapport de la feuille de route pour le livreur.");
+	    writer.println("La tournŽe est divisŽe en "+timeZones.size()+" crŽneaux.");
+	    for(Schedule s: timeZones)
+	    {
+		    writer.println("Le prochain crŽneau s'Žtend de" + Schedule.timeToString(s.startTime)+  " a "+Schedule.timeToString(s.endTime));
+		    writer.println("Dans ce crŽneau il y a "+s.getDeliveries().size()+ " livraisons ˆ faire." );
+		    for(Delivery d : s.getDeliveries())
+		    {
+			    writer.println("La prochaine livraison aura lieu a "+d.getDest()+" ." );
+			    writer.println("Arrivee prevue a:"+ d.getHeurePrevue());
+			    Integer previous=d.getPathToDest().getTrajectory().get(0).getID();
+		    	for(Node a :d.getPathToDest().getTrajectory())
+		    	{
+		    		writer.print("Passer par le point :"+ a.getID());
+		    		for(Arc i :a.getInArcs())
+		    		{
+		    			if(i.getOrigin().getID()==previous)
+		    			{
+						    writer.print(" en empruntant la rue "+i.getName());
+
+		    			}
+		    		}
+
+		    	}
+			    writer.println("Quand vous serez arrivŽ, vous disposez de 15 minutes pour livrer le colis au client.");
+
+		    }
+	    }
+
+	    writer.close();
+=======
 	public ArrayList<Delivery> getAllDeliveries()
 	{
 		ArrayList<Delivery> retour = new ArrayList<Delivery>();
@@ -101,5 +144,6 @@ public class FeuilleDeRoute
 			}
 		}
 		return retour;
+>>>>>>> 456ba5ce55e5e5e542d97fa25581228fe4a5758b
 	}
 }
