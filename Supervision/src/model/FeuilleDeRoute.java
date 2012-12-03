@@ -102,11 +102,11 @@ public class FeuilleDeRoute
 	    writer =  new PrintWriter(new BufferedWriter(new FileWriter("rapport.txt")));
 	   
 	    writer.println("Rapport de la feuille de route pour le livreur.");
-	    writer.println("La tournée est divisée en "+timeZones.size()+" créneaux.");
+	    writer.println("La tournee est divisee en "+timeZones.size()+" creneaux.");
 	    for(Schedule s: timeZones)
 	    {
-		    writer.println("Le prochain créneau s'étend de" + Schedule.timeToString(s.startTime)+  " a "+Schedule.timeToString(s.endTime));
-		    writer.println("Dans ce créneau il y a "+s.getDeliveries().size()+ " livraisons à faire." );
+		    writer.println("Le prochain creneau s'étend de" + Schedule.timeToString(s.startTime)+  " a "+Schedule.timeToString(s.endTime));
+		    writer.println("Dans ce creneau il y a "+s.getDeliveries().size()+ " livraisons a faire." );
 		    for(Delivery d : s.getDeliveries())
 		    {
 			    writer.println("La prochaine livraison aura lieu a "+d.getDest()+" ." );
@@ -125,7 +125,7 @@ public class FeuilleDeRoute
 		    		}
 
 		    	}
-			    writer.println("Quand vous serez arrivé, vous disposez de 15 minutes pour livrer le colis au client.");
+			    writer.println("Quand vous serez arrive, vous disposez de 15 minutes pour livrer le colis au client.");
 
 		    }
 	    }
