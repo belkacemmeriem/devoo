@@ -64,5 +64,10 @@ public class Delivery
 		this.dest = destination;
 		this.schedule = schedule;
 	}
+
+
+	public void setPathToDest(Chemin pathToDest) {
+		this.pathToDest = pathToDest;
+	}
 	
 }
