@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package parsexml;
+import Exception.NodeIDInexistant;
 import java.io.*;
 import org.jdom2.*;
 import org.jdom2.input.*;
@@ -11,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
 import org.jdom2.xpath.XPath;
+import views.ViewError;
 
 /**
  *
@@ -22,7 +24,7 @@ public class ParseMapXML {
     static Element racine;
     static ZoneGeo zonegeo;
     
-    public ParseMapXML(File file, ZoneGeo zone) {
+    public ParseMapXML(File file, ZoneGeo zone) throws NodeIDInexistant {
         zonegeo = zone;
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)
         SAXBuilder sxb = new SAXBuilder();
@@ -95,7 +97,7 @@ public class ParseMapXML {
         }
     }
 
-    public static void getArcs() 
+    public static void getArcs() throws NodeIDInexistant 
     {
         //Récupération de tous les noeuds contenus dans l'objet de type ZoneGeo
         HashMap<Integer, Node> nodes = zonegeo.getNodes();
@@ -136,6 +138,14 @@ public class ParseMapXML {
                                 Integer.parseInt(actuel.getAttributeValue("longueur")), 
                                 actuel.getAttributeValue("nomRue"));
                         
+                    }
+                    else
+                    {
+                        String message = "La structure du fichier XML "
+                                + "est corrompue.\n\n Le noeud distant d'id "
+                                +destId+" rattaché à l'un des tonçons du noeud d'id "
+                                +id+" n'existe pas.";
+                        throw new NodeIDInexistant(message);
                     }
                 }
             }

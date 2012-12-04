@@ -5,7 +5,6 @@
 package views;
 
 import javax.swing.JOptionPane;
-import supervision.Fenetre;
 
 /**
  *
@@ -13,9 +12,11 @@ import supervision.Fenetre;
  */
 public class ViewError {
     
-    public ViewError (Fenetre fenetre, String errorMessage, Boolean fatal)
+    public ViewError (String errorMessage, Boolean fatal)
     {
-        JOptionPane.showMessageDialog(null,errorMessage,
+        String message = errorMessage;
+        if(fatal) message=message+"\n\n Appuyez sur OK pour fermer le programme";
+        JOptionPane.showMessageDialog(null,message,
                 "Une erreur est survenue",JOptionPane.ERROR_MESSAGE);
         if(fatal)
         {
