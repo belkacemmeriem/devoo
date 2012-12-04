@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package parsexml;
-import Exception.NodeIDInexistant;
+import Exception.*;
 import java.io.*;
 import org.jdom2.*;
 import org.jdom2.input.*;
@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
 import org.jdom2.xpath.XPath;
-import views.ViewError;
 
 /**
  *
@@ -24,7 +23,7 @@ public class ParseMapXML {
     static Element racine;
     static ZoneGeo zonegeo;
     
-    public ParseMapXML(File file, ZoneGeo zone) throws NodeIDInexistant {
+    public ParseMapXML(File file, ZoneGeo zone) throws ReadMapXMLException {
         zonegeo = zone;
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)
         SAXBuilder sxb = new SAXBuilder();
@@ -44,11 +43,31 @@ public class ParseMapXML {
         getArcs();
     }
     
-    public static void setEntrepot()
+    public static void setEntrepot() throws ReadMapXMLException
     //récupère l'id associé à la balise XML 'Entrepot' et l'envoie 
     //dans l'objet de type ZoneGeo
     {
-        zonegeo.setWarehouse(Integer.parseInt(racine.getChild("Entrepot").getAttributeValue("id")));
+        try{
+            Integer id = Integer.parseInt(racine.getChild("Entrepot").getAttributeValue("id"));
+            List isThereaNode = xpathNodeQuery(id);
+            if(!isThereaNode.isEmpty())
+            {
+            zonegeo.setWarehouse(id);
+            }
+            else
+            {
+                //Si l'id associé à l'entrepôt n'existe pas
+                throw new ReadMapXMLException(getErrorMessage(6,id,null));
+            }
+        }
+        catch(NullPointerException ex){
+            //les attributs x et y d'un noeud sont nuls ou non numériques
+            throw new ReadMapXMLException(getErrorMessage(7,null,null));
+        }
+        catch(NumberFormatException ex){
+            //les attributs x et y d'un noeud sont nuls ou non numériques
+            throw new ReadMapXMLException(getErrorMessage(7,null,null));
+        }
     }
             
     public static void afficheALL()
@@ -71,33 +90,61 @@ public class ParseMapXML {
         }
     }
 
-    public static void getNodes() 
+    public static void getNodes() throws ReadMapXMLException 
     //Récupération de tous les Noeuds et sauvegarde sous forme d'objet Node dans l'objet de type ZoneGeo
     {
         //Récupération de toutes les balises 'Noeud' contenues dans 
         //la balise 'Noeuds'
         List listNoeud = racine.getChild("Noeuds").getChildren("Noeud");
-        
-        //On crée un Iterator sur notre liste
-        Iterator i = listNoeud.iterator();
-        while(i.hasNext())
+        if(!listNoeud.isEmpty())
         {
-            //On recrée l'Element courant à chaque tour de boucle afin de
-            //pouvoir utiliser les méthodes propres aux Element comme :
-            //selectionner un noeud fils, modifier du texte, etc...
-            Element courant = (Element)i.next();
-            
-            //On crée une nouvelle instance de Node sur l'élément en cours de scan 
-            //dans l'optique de l'insérer dans ZoneGeo
-            Node nodeBuffer = new Node(
-                    Integer.parseInt(courant.getAttributeValue("x")),
-                    Integer.parseInt(courant.getAttributeValue("y")),
-                    Integer.parseInt(courant.getAttributeValue("id")));
-            zonegeo.addNode(nodeBuffer);
+            //On crée un Iterator sur notre liste
+            Iterator i = listNoeud.iterator();
+            Integer cpt = 0;
+            while(i.hasNext())
+            {
+                //On recrée l'Element courant à chaque tour de boucle afin de
+                //pouvoir utiliser les méthodes propres aux Element comme :
+                //selectionner un noeud fils, modifier du texte, etc...
+                Element courant = (Element)i.next();
+
+                //On teste la lecture de l'ID afin d'adapter le message d'erreur potentiel associé
+                Integer id;
+                try {
+                id = Integer.parseInt(courant.getAttributeValue("id"));
+                }
+                catch(Exception ex){
+                    //id de noeud nul
+                    throw new ReadMapXMLException(getErrorMessage(3,cpt,null));
+                }
+
+                //On crée une nouvelle instance de Node sur l'élément en cours de scan 
+                //dans l'optique de l'insérer dans ZoneGeo                
+                try {
+                    Node nodeBuffer = new Node(
+                        Integer.parseInt(courant.getAttributeValue("x")),
+                        Integer.parseInt(courant.getAttributeValue("y")),
+                        id);
+                    zonegeo.addNode(nodeBuffer);
+                }
+                catch(NullPointerException ex){
+                    //les attributs x et y d'un noeud sont nuls ou non numériques
+                    throw new ReadMapXMLException(getErrorMessage(4,id,null));
+                }
+                catch(NumberFormatException ex){
+                    //les attributs x et y d'un noeud sont nuls ou non numériques
+                    throw new ReadMapXMLException(getErrorMessage(4,id,null));
+                }
+                cpt++;
+            }
+        }
+        else
+        {
+            throw new ReadMapXMLException(getErrorMessage(0,null,null));
         }
     }
 
-    public static void getArcs() throws NodeIDInexistant 
+    public static void getArcs() throws ReadMapXMLException
     {
         //Récupération de tous les noeuds contenus dans l'objet de type ZoneGeo
         HashMap<Integer, Node> nodes = zonegeo.getNodes();
@@ -121,32 +168,49 @@ public class ParseMapXML {
                 //retourné par la requête XPath
                 List troncon = noeudCourant.getChildren("TronconSortant");
                 
-                //Parcours des troncons trouvés
-                Iterator j = troncon.iterator();
-                while(j.hasNext())
+                if(!troncon.isEmpty())
                 {
-                    Element actuel = (Element)j.next();
-                    
-                    //Récupération de l'indice du Noeud de destination dans le but de tester son existance
-                    Integer destId = Integer.parseInt(actuel.getAttributeValue("destination"));
-                    List isThereaNode = xpathNodeQuery(destId);
-                    if(!isThereaNode.isEmpty() && nodes.get(destId)!=null)
+                    //Parcours des troncons trouvés
+                    Iterator j = troncon.iterator();
+                    while(j.hasNext())
                     {
-                        //troncon valide pour ajout dans ZoneGeo
-                        zonegeo.addArc(id, destId, 
-                                Integer.parseInt(actuel.getAttributeValue("vitesse")), 
-                                Integer.parseInt(actuel.getAttributeValue("longueur")), 
-                                actuel.getAttributeValue("nomRue"));
-                        
+                        Element actuel = (Element)j.next();
+
+                        try {
+                            //Récupération de l'indice du Noeud de destination dans le but de tester son existance
+                            Integer destId = Integer.parseInt(actuel.getAttributeValue("destination"));
+                            List isThereaNode = xpathNodeQuery(destId);
+                            if(!isThereaNode.isEmpty() && nodes.get(destId)!=null)
+                            {
+                                //troncon valide pour ajout dans ZoneGeo
+                                zonegeo.addArc(id, destId, 
+                                        Integer.parseInt(actuel.getAttributeValue("vitesse")), 
+                                        Integer.parseInt(actuel.getAttributeValue("longueur")), 
+                                        actuel.getAttributeValue("nomRue"));
+
+                            }
+                            else
+                            {
+                                //Le noeud de destination n'existe pas
+                                throw new ReadMapXMLException(getErrorMessage(1,destId,id));
+                            }
+                        }
+                        catch(NullPointerException ex){
+                            //les attributs destination, vitesse et position d'un tronçon sont nuls ou 
+                            //les attributs nomRue, destination, vitesse et position d'un tronçon sont non numériques
+                            throw new ReadMapXMLException(getErrorMessage(5,id,null));
+                        }
+                        catch(NumberFormatException ex){
+                            //les attributs destination, vitesse et position d'un tronçon sont nuls ou 
+                            //les attributs nomRue, destination, vitesse et position d'un tronçon sont non numériques
+                            throw new ReadMapXMLException(getErrorMessage(5,id,null));
+                        }
                     }
-                    else
-                    {
-                        String message = "La structure du fichier XML "
-                                + "est corrompue.\n\n Le noeud distant d'id "
-                                +destId+" rattaché à l'un des tonçons du noeud d'id "
-                                +id+" n'existe pas.";
-                        throw new NodeIDInexistant(message);
-                    }
+                }
+                else
+                {
+                    //Pas de tronçons associés au noeuds considéré
+                    throw new ReadMapXMLException(getErrorMessage(2,id,null));
                 }
             }
         }
@@ -165,6 +229,47 @@ public class ParseMapXML {
         }
         //Echec du XPath
         return null;
+    }
+    
+    static String getErrorMessage(Integer codeErreur, Object element1, Object element2)
+    {
+        String message="La structure du fichier XML est incohérente ou corrompue.\n\n ";
+        switch(codeErreur)
+        {
+            //fichier vide
+            case 0: message = "La structure du fichier XML est vide ou corrompue.\n\n Aucun "
+                    + "noeud n'a pu être trouvé dans le fichier.";break;
+                
+            //id de noeud inexistant
+            case 1: message = message+"Le noeud distant d'id "+element1+" rattaché à l'un "
+                    + "des tonçons du noeud d'id "+element2+" n'existe pas.";break;
+                
+            //pas de tronçons pour un noeud donné
+            case 2: message = message+"Le noeud d'id "+element1+" n'est rattaché à aucun "
+                    + "tronçon.";break;
+                
+            //id de noeud nul
+            case 3: message = message+"L'ID du noeud d'indice "
+                                    +element1+" est nul ou n'est pas un chiffre.";break;
+                
+            //les attributs x et y d'un noeud sont nuls ou non numériques
+            case 4: message = message+"Le noeud d'ID "+element1+" possède un attribut x"
+                    + " ou y nul ou qui n'est pas un chiffre.";break;
+                
+            //les attributs destination, vitesse et position d'un tronçon sont nuls ou 
+            //les attributs nomRue, destination, vitesse et position d'un tronçon sont non numériques
+            case 5: message = message+"Le noeud d'ID "+element1+" possède un "
+                    + "attribut d'un ses tronçons nul ou qui n'est pas un chiffre.";break;
+                
+            //Le noeud associé à l'entrepot n'existe pas
+            case 6: message = message+"Le noeud d'id "+element1+" associé à l'entrepot est inexistant";break;
+                
+            //id incorrect pour l'entrepôt
+            case 7: message = message+"l'attribut id de l'entrepot n'est pas "
+                    + "un chiffre ou est nul";break;
+        }
+        message=message+"\n\n Veuillez corriger ou changer de fichier XML";
+        return message;
     }
 
 }
