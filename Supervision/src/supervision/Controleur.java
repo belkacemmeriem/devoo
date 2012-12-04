@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.logging.Level;
@@ -67,7 +68,10 @@ public class Controleur {
 	}
 	
 	public void exportReport(File path) {
-		// feuilleDeRoute.generateReport(path);
+		try {
+			feuilleDeRoute.generateReport(path);
+		} catch (IOException e) {
+		}
 	}
 	
 	public void setViewMain(ViewMain vm) {

@@ -9,8 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import javax.swing.*;
 import model.Schedule;
 
@@ -193,7 +199,7 @@ public class Fenetre extends Frame {
 			public void actionPerformed(ActionEvent e) 
 			{
                 controleur.exportReport(trouverCheminRapport());
-                //setControleur(controleur);
+                setControleur(controleur);
 
 			}
 		};
@@ -234,20 +240,61 @@ public class Fenetre extends Frame {
 	}
         
 	private File trouverCheminRapport(){
-		    jFileChooserA = new JFileChooser();
-	        // Note: source for ExampleFileFilter can be found in FileChooserDemo,
-	        // under the demo/jfc directory in the JDK.
-	        ExampleFileFilter filter = new ExampleFileFilter();
-	        filter.setDescription("Fichier rapport");
-	        jFileChooserA.setFileFilter(filter);
-	        jFileChooserA.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-	        if (jFileChooserA.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
-	                return new File(jFileChooserA.getSelectedFile().getAbsolutePath());
-        return null;
+		//Opens filechooser
+		jFileChooserA  = new JFileChooser(JFileChooser.FILE_FILTER_CHANGED_PROPERTY); 
+		jFileChooserA.setDialogTitle("Choisir le dossier ou enregister le rapport");
+		jFileChooserA.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+		
+        if (jFileChooserA.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
+        	return fileSaver(jFileChooserA);
+return null;
 	}
 	
-	
+	private File fileSaver(JFileChooser fc)
+	//Saves string to file, pass in FileChooser
+	{
+		File file = fc.getSelectedFile();
+		String textToSave = " ";
+		BufferedWriter writer = null;
+
+		//Check for legal file extension (.txt)	
+		String fileExtension = file.getPath();
+		
+		//Set extension to .txt if not already	
+		if(!fileExtension.toLowerCase().endsWith(".txt"))
+		{
+			Calendar c = Calendar.getInstance ();
+			file = new File(fileExtension + "/Rapport - "+ c.getTime().toString()+".txt");
+		}
+		
+		try
+		{
+			writer = new BufferedWriter( new FileWriter(file));
+			writer.write(textToSave.replaceAll("\n", System.getProperty("line.seperator")));
+			
+			JOptionPane.showMessageDialog(this, "Message saved. (" + file.getName() + ")", "Page Saved Successfully", JOptionPane.INFORMATION_MESSAGE);
+		}
+		catch (IOException e)
+		{ }
+
+		//Close writer
+		finally
+		{
+			try
+			{
+				if(writer != null)
+				{
+					writer.close();
+				}
+			}
+			catch (IOException e)
+			{e.printStackTrace(); }
+		}
+		return file;
+	}
+	//End fileSaver
 	private File ouvrirFichierXML(){
         jFileChooserXML = new JFileChooser();
         // Note: source for ExampleFileFilter can be found in FileChooserDemo,
