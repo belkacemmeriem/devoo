@@ -1,6 +1,6 @@
 package supervision;
 
-import Exception.NodeIDInexistant;
+import Exception.ReadMapXMLException;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
@@ -55,7 +55,7 @@ public class Controleur {
             zonegeo = new ZoneGeo();
             try {
                 ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
-            } catch (NodeIDInexistant ex) {
+            } catch (ReadMapXMLException ex) {
                 new ViewError(ex.getMessage(), true);
             }
             feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);

@@ -8,23 +8,23 @@ package Exception;
  *
  * @author Sherlock
  */
-public class NodeIDInexistant extends Exception {
+public class ReadMapXMLException extends Exception {
         /** 
 	* Crée une nouvelle instance de NodeIDInexistant 
 	*/  
-	public NodeIDInexistant() {}  
+	public ReadMapXMLException() {}  
 	/** 
 	* Crée une nouvelle instance de NodeIDInexistant 
 	* @param message Le message détaillant exception 
 	*/  
-	public NodeIDInexistant(String message) {  
+	public ReadMapXMLException(String message) {  
 		super(message); 
 	}  
 	/** 
 	* Crée une nouvelle instance de NodeIDInexistant 
 	* @param cause L'exception à l'origine de cette exception 
 	*/  
-	public NodeIDInexistant(Throwable cause) {  
+	public ReadMapXMLException(Throwable cause) {  
 		super(cause); 
 	}  
 	/** 
@@ -32,7 +32,7 @@ public class NodeIDInexistant extends Exception {
 	* @param message Le message détaillant exception 
 	* @param cause L'exception à l'origine de cette exception 
 	*/  
-	public NodeIDInexistant(String message, Throwable cause) {  
+	public ReadMapXMLException(String message, Throwable cause) {  
 		super(message, cause); 
 	} 
 }
