@@ -74,7 +74,13 @@ public class ZoneGeo
 	
 	public Node getNode(Integer anID)
 	{
+            try{
 		return nodes.get(anID);
+            }
+            catch(NullPointerException ex)
+            {
+                return null;
+            }
 	}
 	
 	public Node getWarehouse()

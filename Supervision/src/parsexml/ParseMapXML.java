@@ -35,8 +35,14 @@ public class ParseMapXML {
         }
         catch(Exception e){}
         
+        try{
         //Récupération dela racine XML
         racine = document.getRootElement();
+        }
+        catch(NullPointerException ex){
+            //récupération de l'erreur générée par un fichier corrompu ou inapproprié
+            throw new ReadMapXMLException(getErrorMessage(9,null,null));
+        }
         
         setEntrepot();
         getNodes();
@@ -111,29 +117,38 @@ public class ParseMapXML {
                 //On teste la lecture de l'ID afin d'adapter le message d'erreur potentiel associé
                 Integer id;
                 try {
-                id = Integer.parseInt(courant.getAttributeValue("id"));
-                }
-                catch(Exception ex){
-                    //id de noeud nul
-                    throw new ReadMapXMLException(getErrorMessage(3,cpt,null));
-                }
-
-                //On crée une nouvelle instance de Node sur l'élément en cours de scan 
-                //dans l'optique de l'insérer dans ZoneGeo                
-                try {
-                    Node nodeBuffer = new Node(
-                        Integer.parseInt(courant.getAttributeValue("x")),
-                        Integer.parseInt(courant.getAttributeValue("y")),
-                        id);
-                    zonegeo.addNode(nodeBuffer);
+                    id = Integer.parseInt(courant.getAttributeValue("id"));
+                    if(zonegeo.getNode(id)==null) {
+                        //On crée une nouvelle instance de Node sur l'élément en cours de scan 
+                        //dans l'optique de l'insérer dans ZoneGeo                
+                        try {
+                            Node nodeBuffer = new Node(
+                                Integer.parseInt(courant.getAttributeValue("x")),
+                                Integer.parseInt(courant.getAttributeValue("y")),
+                                id);
+                            zonegeo.addNode(nodeBuffer);
+                        }
+                        catch(NullPointerException ex){
+                            //les attributs x et y d'un noeud sont nuls ou non numériques
+                            throw new ReadMapXMLException(getErrorMessage(4,id,null));
+                        }
+                        catch(NumberFormatException ex){
+                            //les attributs x et y d'un noeud sont nuls ou non numériques
+                            throw new ReadMapXMLException(getErrorMessage(4,id,null));
+                        }
+                    }
+                    else
+                    {
+                        throw new ReadMapXMLException(getErrorMessage(8,id,null));
+                    }
                 }
                 catch(NullPointerException ex){
-                    //les attributs x et y d'un noeud sont nuls ou non numériques
-                    throw new ReadMapXMLException(getErrorMessage(4,id,null));
+                            //les attributs x et y d'un noeud sont nuls ou non numériques
+                    throw new ReadMapXMLException(getErrorMessage(3,cpt,null));
                 }
                 catch(NumberFormatException ex){
-                    //les attributs x et y d'un noeud sont nuls ou non numériques
-                    throw new ReadMapXMLException(getErrorMessage(4,id,null));
+                            //les attributs x et y d'un noeud sont nuls ou non numériques
+                    throw new ReadMapXMLException(getErrorMessage(3,cpt,null));
                 }
                 cpt++;
             }
@@ -267,6 +282,12 @@ public class ParseMapXML {
             //id incorrect pour l'entrepôt
             case 7: message = message+"l'attribut id de l'entrepot n'est pas "
                     + "un chiffre ou est nul";break;
+                
+            //identifiant de noeud en double
+            case 8: message = message+"L'attribut de noeud id="+element1+" est multiple.";break;
+                
+            //La structure du fichier XML est corrompue ou le fichier n'est pas un fichier XML
+            case 9: message = "La structure du fichier XML est corrompue ou le fichier n'est pas un fichier XML.";break;
         }
         message=message+"\n\n Veuillez corriger ou changer de fichier XML";
         return message;
