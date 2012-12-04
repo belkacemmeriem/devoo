@@ -61,4 +61,8 @@ public class ViewMain {
 	public void setControleur(Controleur ctrl) {
 		controleur = ctrl;
 	}
+
+	public void updateFeuilleDeRoute() {
+		feuilleDeRoute.update();
+	}
 }

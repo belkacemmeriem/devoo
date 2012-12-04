@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import parsexml.*;
 import model.FeuilleDeRoute;
+import model.Node;
 import model.Schedule;
 import model.ZoneGeo;
 import views.ViewArc;
@@ -23,19 +24,21 @@ public class Controleur {
 	Object selected;
 	Etat etat = Etat.VIDE;
 	Fenetre fenetre;
+        ArrayList<Schedule> schedules;
 	
 	public Controleur() {
 	}
 
     public void setFenetre(Fenetre fenetre) {
         this.fenetre = fenetre;
+        loadSchedules();
     }
-	
-	public void loadZone(File path) {
-		zonegeo = new ZoneGeo();
-    	ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
+    
+    public void loadSchedules()
+    {
+        
     	ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-    	ArrayList<Schedule> schedules = parserSched.getPlagesHoraires();
+    	schedules = parserSched.getPlagesHoraires();
     	/* // A remettre si necessaire, a virer sinon :
     	ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
     	for (Schedule s : schedules) {
@@ -43,10 +46,16 @@ public class Controleur {
     	}
     	*/
     	fenetre.setSchedules(schedules);
+    }
+	
+	public void loadZone(File path) {
+		zonegeo = new ZoneGeo();
+    	ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
         feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
         viewmain.setZoneGeo(zonegeo);
         viewmain.setFeuilleDeRoute(feuilleDeRoute);
 		viewmain.repaint();
+		fenetre.validate();
     	etat = Etat.REMPLISSAGE;
 	}
 	
@@ -86,7 +95,7 @@ public class Controleur {
 				selected = clicked;
 				ViewNode vn = (ViewNode) clicked;
 				vn.setColor(new Color(255, 0, 0));
-				vn.setRadius(9);
+				vn.setRadius(11);
                 retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
@@ -100,6 +109,17 @@ public class Controleur {
                 		
 		viewmain.repaint();
         return retour;
+	}
+	
+	public void add() {
+		Node n = ((ViewNode) selected).getNode();
+		feuilleDeRoute.addNode(n, feuilleDeRoute.getTimeZones().get(1));
+		viewmain.updateFeuilleDeRoute();
+		viewmain.repaint();
+	}
+	
+	public Etat getEtat() {
+		return etat;
 	}
 
 }
