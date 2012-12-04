@@ -20,6 +20,7 @@ public class FeuilleDeRoute
 	ZoneGeo zoneGeo;
 	final int DUREE_LIVRAISON = 15;
 	EtatFDR etat = EtatFDR.INIT;
+	Delivery warehouseDelivery;
 	
 	
 	
@@ -31,8 +32,8 @@ public class FeuilleDeRoute
 		
 		//ajout d'un schedule réservé au retour à l'entrepot
 		Schedule retourSch = new Schedule(0, 1440, Color.BLACK);
-		Delivery entrepot = new Delivery(zoneGeo.getWarehouse(), retourSch);
-		retourSch.appendDelivery(entrepot);
+		warehouseDelivery = new Delivery(zoneGeo.getWarehouse(), retourSch);
+		retourSch.appendDelivery(warehouseDelivery);
 		timeZones.add(retourSch);
 		
 	}
@@ -169,13 +170,13 @@ public class FeuilleDeRoute
 		insertNode(inserted, reference, false);
 	}
 	
+	
+	
 	protected void insertNode(Node inserted, Delivery reference, boolean before)
 	{
 		//recherche du bon schedule
-		int idxSch = -1;
 		for (Schedule sch : timeZones)
 		{
-			idxSch++;
 			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
 
 			if (schDeliveries.contains(reference))	//si le schedule contient la livraison de reference
@@ -193,56 +194,96 @@ public class FeuilleDeRoute
 				{
 					insertIndex = schDeliveries.indexOf(reference) +1;
 				}
-				schDeliveries.add(insertIndex, newDelivery);
+				sch.insert(newDelivery, insertIndex);
 				
 				
 				
 			//re-calcul du chemin précedent
-				Node start;
-				if (insertIndex != 0)	//cas interieur a un schedule
-				{
-					start = schDeliveries.get(insertIndex-1).getDest();
-				}
-				else	//cas de l'insertion en début de schedule
-				{
-					if (idxSch == 0)	//cas particulier 1er schedule: start = warehouse
-					{
-						start = zoneGeo.getWarehouse();
-					}
-					else							//sinon start = fin du schedule précédent
-					{
-						start = timeZones.get(idxSch-1).getDeliveries().getLast().getDest();
-					}
-
-				}
-				
-				ArrayList<Node> singleton = new ArrayList<Node>();
-				singleton.add(inserted);
-				ArrayList<Chemin> result = Dijkstra.solve(zoneGeo, start, singleton);
-				newDelivery.pathToDest = result.get(0);
-
-				
-				
+				recalcPathTo(newDelivery);
 			//re-calcul du chemin suivant
-				Delivery end;
-				if (insertIndex != schDeliveries.size()-1)	//cas interieur a un schedule
-				{
-					end = schDeliveries.get(insertIndex+1);
-				}
-				else	//cas de l'insertion en fin de schedule
-				{
-					end = timeZones.get(idxSch+1).getDeliveries().getLast();
-				}
+				recalcPathTo(nextDelivery(newDelivery));
 				
-				//appel à Dijsktra
-				ArrayList<Node> singleton2 = new ArrayList<Node>();
-				singleton.add(end.getDest());
-				ArrayList<Chemin> result2 = Dijkstra.solve(zoneGeo, inserted, singleton2);
-				end.pathToDest = result2.get(0);
-				
+				etat = EtatFDR.MODIF;
 			}
 		}
-		etat = EtatFDR.MODIF;
+	}
+	
+	
+	
+	protected Delivery previousDelivery(Delivery delivery)
+	{
+		int idxSch = -1;
+		Delivery returned = null;
+		for (Schedule sch : timeZones)
+		{
+			idxSch++;
+			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
+
+			if (schDeliveries.contains(delivery))	//si le schedule contient la livraison de reference
+			{
+				int idx = schDeliveries.indexOf(delivery);
+				if (idx == 0)	//si premier element du schedule
+				{
+					if (idxSch == 0)						//et premier schedule
+					{
+						returned = warehouseDelivery;
+					}
+					else									
+					{
+						returned = timeZones.get(idxSch-1).getDeliveries().getLast();	//dernier node du sch précédent
+					}
+				}
+				else
+				{
+					returned = schDeliveries.get(idx-1);
+				}
+			}
+		}
+		return returned;
+	}
+	
+	
+	protected Delivery nextDelivery(Delivery delivery)
+	{
+		int idxSch = -1;
+		Delivery returned = null;
+		for (Schedule sch : timeZones)
+		{
+			idxSch++;
+			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
+
+			if (schDeliveries.contains(delivery))	//si le schedule contient la livraison de reference
+			{
+				int idx = schDeliveries.indexOf(delivery);
+				if (delivery == schDeliveries.getLast())	//si dernier element du schedule
+				{
+					if (idxSch == 0)						//et dernier schedule
+					{
+						returned = warehouseDelivery;
+					}
+					else									
+					{
+						returned = timeZones.get(idxSch+1).getDeliveries().getFirst();	//dernier node du sch précédent
+					}
+				}
+				else
+				{
+					returned = schDeliveries.get(idx+1);
+				}
+			}
+		}
+		return returned;
+	}
+
+
+
+	protected void recalcPathTo(Delivery delivery)
+	{
+		//recherche chemin
+		ArrayList<Node> singleton = new ArrayList<Node>();
+		singleton.add(delivery.getDest());
+		ArrayList<Chemin> result = Dijkstra.solve(zoneGeo, previousDelivery(delivery).getDest(), singleton);
+		delivery.pathToDest = result.get(0);
 	}
 
 }

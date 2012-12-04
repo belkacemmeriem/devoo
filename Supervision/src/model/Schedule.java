@@ -69,6 +69,13 @@ public class Schedule
 		}
 	}
 
+	public void insert(Delivery delivery, int index)
+	{
+		delivery.setSchedule(this);
+		deliveries.add(index, delivery);
+		
+	}
+	
 	static public String timeToString(int time)
 	{
 		String str = new String();
