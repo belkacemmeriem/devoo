@@ -44,6 +44,11 @@ public class GraphLivraisonsTest {
 		zoneGeo.addArc(5, 4, 1, 10, "temp");
 		zoneGeo.addArc(5, 4, 1, 30, "temp");
 		
+		//ajout de l'entrepot
+		zoneGeo.setWarehouse(0);
+		
+		
+		/*
 		ArrayList<Schedule> listeSchedules=new ArrayList<Schedule>();
 		Schedule schedule=new Schedule(600,720,Color.BLACK);
 		Delivery delivery=new Delivery(zoneGeo.getNode(1),schedule);
@@ -59,12 +64,22 @@ public class GraphLivraisonsTest {
 		schedule.getDeliveries().add(delivery);
 		delivery=new Delivery(zoneGeo.getNode(5), schedule);
 		schedule.getDeliveries().add(delivery);
-		listeSchedules.add(schedule);
+		listeSchedules.add(schedule);*/
 		
-		//ajout de l'entrepot
-		zoneGeo.setWarehouse(0);
+		
+		ArrayList<Schedule> listeSchedules=new ArrayList<Schedule>();
+		Schedule schedule1=new Schedule(600,800,Color.GREEN);
+		listeSchedules.add(schedule1);
+		Schedule schedule2=new Schedule(900,1200,Color.RED);
+		listeSchedules.add(schedule2);		
 		
 		feuilleDeRoute=new FeuilleDeRoute(listeSchedules, zoneGeo);
+		
+		feuilleDeRoute.addNode(zoneGeo.getNode(1), schedule1);
+		feuilleDeRoute.addNode(zoneGeo.getNode(2), schedule1);
+		feuilleDeRoute.addNode(zoneGeo.getNode(3), schedule1);
+		feuilleDeRoute.addNode(zoneGeo.getNode(4), schedule2);
+		feuilleDeRoute.addNode(zoneGeo.getNode(5), schedule2);
 	}
 	
 	@Test
