@@ -81,17 +81,16 @@ public class Node
 		return list;
 	}
 
-	public Integer getDuration(Integer anID)
+	public float getDuration(Integer anID)
 	{
-
 		for (Arc a : outArcs)
 		{
 			if (a.getDest().getID() == anID)
 			{
-				return (int)a.getDuration();
+				return a.getDuration();
 			}
 		}
-		throw new IllegalStateException("The required id is unexisting");
+		return 0;
 	}
 
 }
