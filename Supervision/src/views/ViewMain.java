@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.sun.medialib.mlib.Image;
 
 import model.FeuilleDeRoute;
 import model.ZoneGeo;
