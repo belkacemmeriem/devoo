@@ -43,11 +43,12 @@ public class ViewMain {
 	
 	public void repaint() {
 		dessin.repaint();
+
 	}
 	
 	public void setZoneGeo(ZoneGeo zg) {
 		zonegeo = new ViewZoneGeo(zg, this);
-		image=  img.getScaledInstance(zonegeo.getWidth(),zonegeo.getHeight(),BufferedImage.SCALE_DEFAULT);
+		image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
 
 	}
 	
@@ -73,6 +74,8 @@ public class ViewMain {
 	
 	public void paint(Graphics g) {
 		dessin.setBackground(new Color(250, 250, 250));
+		image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
+
 		g.drawImage(image, 0, 0, null);
 		if (zonegeo != null)
 			zonegeo.paint(g);

@@ -32,12 +32,17 @@ public class ParseMapXML {
         try
         {
             document = sxb.build(file);
+            
+            //Récupération dela racine XML
+            racine = document.getRootElement();
         }
-        catch(Exception e){}
-        
-        try{
-        //Récupération dela racine XML
-        racine = document.getRootElement();
+        catch(IOException ex){
+            //récupération de l'erreur générée par un fichier corrompu ou inapproprié
+            throw new ReadMapXMLException(getErrorMessage(9,null,null));
+        }
+        catch(JDOMException ex){
+            //récupération de l'erreur générée par un fichier corrompu ou inapproprié
+            throw new ReadMapXMLException(getErrorMessage(9,null,null));
         }
         catch(NullPointerException ex){
             //récupération de l'erreur générée par un fichier corrompu ou inapproprié
@@ -150,7 +155,6 @@ public class ParseMapXML {
                             //les attributs x et y d'un noeud sont nuls ou non numériques
                     throw new ReadMapXMLException(getErrorMessage(3,cpt,null));
                 }
-                
                 cpt++;
             }
         }
@@ -275,10 +279,11 @@ public class ParseMapXML {
             //les attributs destination, vitesse et position d'un tronçon sont nuls ou 
             //les attributs nomRue, destination, vitesse et position d'un tronçon sont non numériques
             case 5: message = message+"Le noeud d'ID "+element1+" possède un "
-                    + "attribut d'un ses tronçons nul ou qui n'est pas un chiffre.";break;
+                    + "attribut d'un de ses tronçons nul ou qui n'est pas un chiffre.";break;
                 
             //Le noeud associé à l'entrepot n'existe pas
-            case 6: message = message+"Le noeud d'id "+element1+" associé à l'entrepot est inexistant";break;
+            case 6: message = message+"Le noeud d'id "+element1+" associé à l'entrepot est inexistant."
+                    + "\n\n Votre fichier est incomplet ou vide";break;
                 
             //id incorrect pour l'entrepôt
             case 7: message = message+"l'attribut id de l'entrepot n'est pas "

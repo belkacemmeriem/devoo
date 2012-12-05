@@ -23,6 +23,7 @@ public class ViewFeuilleDeRoute {
 	
 	public void paint(Graphics g) {
 		for (ViewSchedule vs : schedules) {
+			System.out.print("X");
 			boolean onlyNodes = (feuilleDeRoute.getEtat() == EtatFDR.INIT);
 			vs.paint(g, onlyNodes);
 		}
