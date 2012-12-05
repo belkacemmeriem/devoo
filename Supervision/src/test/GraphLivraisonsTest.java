@@ -25,24 +25,24 @@ public class GraphLivraisonsTest {
 			zoneGeo.addNode(node);
 		}
 		zoneGeo.addArc(0, 1, 1, 10, "temp");
-		zoneGeo.addArc(0, 2, 1, 30, "temp");
-		zoneGeo.addArc(0, 3, 1, 30, "temp");
+		zoneGeo.addArc(0, 2, 1, 20, "temp");
+		zoneGeo.addArc(0, 3, 1, 20, "temp");
 		zoneGeo.addArc(1, 2, 1, 10, "temp");
 		zoneGeo.addArc(1, 3, 1, 10, "temp");
-		zoneGeo.addArc(1, 4, 1, 30, "temp");
-		zoneGeo.addArc(1, 5, 1, 30, "temp");
+		zoneGeo.addArc(1, 4, 1, 20, "temp");
+		zoneGeo.addArc(1, 5, 1, 20, "temp");
 		zoneGeo.addArc(2, 1, 1, 10, "temp");
 		zoneGeo.addArc(2, 3, 1, 10, "temp");
-		zoneGeo.addArc(2, 4, 1, 30, "temp");
-		zoneGeo.addArc(2, 5, 1, 30, "temp");
+		zoneGeo.addArc(2, 4, 1, 20, "temp");
+		zoneGeo.addArc(2, 5, 1, 20, "temp");
 		zoneGeo.addArc(3, 1, 1, 10, "temp");
 		zoneGeo.addArc(3, 2, 1, 10, "temp");
-		zoneGeo.addArc(3, 4, 1, 30, "temp");
+		zoneGeo.addArc(3, 4, 1, 20, "temp");
 		zoneGeo.addArc(3, 5, 1, 10, "temp");
 		zoneGeo.addArc(4, 5, 1, 10, "temp");
 		zoneGeo.addArc(4, 0, 1, 10, "temp");
 		zoneGeo.addArc(5, 4, 1, 10, "temp");
-		zoneGeo.addArc(5, 4, 1, 30, "temp");
+		zoneGeo.addArc(5, 4, 1, 20, "temp");
 		
 		//ajout de l'entrepot
 		zoneGeo.setWarehouse(0);
@@ -89,23 +89,41 @@ public class GraphLivraisonsTest {
 		
 		int[][]listeCosts=graphLivraisons.getCost();
 		assertEquals(10, listeCosts[0][1]);
-		assertEquals(30, listeCosts[0][2]);
-		assertEquals(30, listeCosts[0][3]);
+		assertEquals(20, listeCosts[0][2]);
+		assertEquals(20, listeCosts[0][3]);
 		assertEquals(10, listeCosts[1][2]);
 		assertEquals(10, listeCosts[1][3]);
-		assertEquals(30, listeCosts[1][4]);
-		assertEquals(30, listeCosts[1][5]);
+		assertEquals(20, listeCosts[1][4]);
+		assertEquals(20, listeCosts[1][5]);
 		assertEquals(10, listeCosts[2][1]);
 		assertEquals(10, listeCosts[2][3]);
-		assertEquals(30, listeCosts[2][4]);
-		assertEquals(30, listeCosts[2][5]);
+		assertEquals(20, listeCosts[2][4]);
+		assertEquals(20, listeCosts[2][5]);
 		assertEquals(10, listeCosts[3][1]);
 		assertEquals(10, listeCosts[3][2]);
-		assertEquals(30, listeCosts[3][4]);
+		assertEquals(20, listeCosts[3][4]);
 		assertEquals(10, listeCosts[3][5]);
 		assertEquals(10, listeCosts[4][5]);
 		assertEquals(10, listeCosts[4][0]);
 		assertEquals(10, listeCosts[5][4]);
-		assertEquals(30, listeCosts[5][0]);
+		assertEquals(20, listeCosts[5][0]);
+	}
+	
+	@Test
+	public void testCalcItineraire()
+	{
+		graphLivraisons=new GraphLivraisons(feuilleDeRoute);
+		graphLivraisons.createGraph();
+		ArrayList<Delivery> listeLivraisons=
+				graphLivraisons.calcItineraire();
+		assertEquals(listeLivraisons.size(),6);
+		assertEquals(listeLivraisons.get(0).getDest().getID().intValue(),1);
+		assertEquals(listeLivraisons.get(1).getDest().getID().intValue(),2);
+		assertEquals(listeLivraisons.get(2).getDest().getID().intValue(),3);
+		assertEquals(listeLivraisons.get(3).getDest().getID().intValue(),5);
+		assertEquals(listeLivraisons.get(4).getDest().getID().intValue(),4);
+		assertEquals(listeLivraisons.get(5).getDest().getID().intValue(),0);
+		
+		
 	}
 }
