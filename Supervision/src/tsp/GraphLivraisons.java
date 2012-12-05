@@ -160,9 +160,9 @@ public class GraphLivraisons implements Graph {
 	}
 	
 	/**
-	 * Crée un graphe utilisable par la classe TSP. Les sommets des graphes sont les livraisons à effectuer.
-	 * Les arcs sont les plus courts chemins entre les livraisons. L'entrepôt est considéré comme une livraison.
-	 * @return void.
+	 * Calcule un itinéraire par le biais de la classe TSP.
+	 * La fonction doit être appelée après avoir appelée <code>createGraphe</code>
+	 * @return ArrayList<Delivery>. Il s'agit d'une liste ordonnée de livraison. La dernière livraison est l'entrepôt
 	 * @author arnaud MDM
 	 */
 	public ArrayList<Delivery> calcItineraire(){
