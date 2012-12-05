@@ -150,6 +150,7 @@ public class ParseMapXML {
                             //les attributs x et y d'un noeud sont nuls ou non numériques
                     throw new ReadMapXMLException(getErrorMessage(3,cpt,null));
                 }
+                
                 cpt++;
             }
         }

@@ -45,7 +45,6 @@ public class ViewArc {
 			return Math.sqrt(dist2(x1, y1, x2, y2));
 		if (t > 1)
 			return Math.sqrt(dist2(x1, y1, x3, y3));
-		System.out.println("OW");
 		double x = x2 + t * (x3 - x2);
 		double y = y2 + t * (y3 - y2);
 		return Math.sqrt(dist2(x1, y1, x, y));
