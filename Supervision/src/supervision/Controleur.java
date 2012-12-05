@@ -29,42 +29,43 @@ public class Controleur {
 	Object selected;
 	Etat etat = Etat.VIDE;
 	Fenetre fenetre;
-        ArrayList<Schedule> schedules;
+    ArrayList<Schedule> schedules;
 	
 	public Controleur() {
 	}
 
-        public void setFenetre(Fenetre fenetre) {
-            this.fenetre = fenetre;
-            loadSchedules();
+    public void setFenetre(Fenetre fenetre) {
+        this.fenetre = fenetre;
+        loadSchedules();
+    }
+
+    public void loadSchedules()
+    {
+        ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
+        schedules = parserSched.getPlagesHoraires();
+        /* // A remettre si necessaire, a virer sinon :
+        ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
+        for (Schedule s : schedules) {
+                fenSchedules.add(s);
         }
-    
-        public void loadSchedules()
-        {
-            ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-            schedules = parserSched.getPlagesHoraires();
-            /* // A remettre si necessaire, a virer sinon :
-            ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
-            for (Schedule s : schedules) {
-                    fenSchedules.add(s);
-            }
-            */
-            fenetre.setSchedules(schedules);
+        */
+        fenetre.setSchedules(schedules);
+    }
+
+    public void loadZone(File path) {
+    	loadSchedules();
+        zonegeo = new ZoneGeo();
+        try {
+            ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
+        } catch (ReadMapXMLException ex) {
+            new ViewError(ex.getMessage(), true);
         }
-	
-        public void loadZone(File path) {
-            zonegeo = new ZoneGeo();
-            try {
-                ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
-            } catch (ReadMapXMLException ex) {
-                new ViewError(ex.getMessage(), true);
-            }
-            feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
-            viewmain.setZoneGeo(zonegeo);
-            viewmain.setFeuilleDeRoute(feuilleDeRoute);
-                    viewmain.repaint();
-                    fenetre.validate();
-            etat = Etat.REMPLISSAGE;
+        feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
+        viewmain.setZoneGeo(zonegeo);
+        viewmain.setFeuilleDeRoute(feuilleDeRoute);
+        viewmain.repaint();
+        fenetre.validate();
+        etat = Etat.REMPLISSAGE;
 	}
 	
 	public void exportReport(File path) {
