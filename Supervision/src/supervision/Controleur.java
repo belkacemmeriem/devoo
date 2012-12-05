@@ -53,18 +53,19 @@ public class Controleur {
         }
 	
         public void loadZone(File path) {
-            zonegeo = new ZoneGeo();
             try {
+                zonegeo = new ZoneGeo();
                 ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
+                feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
+                viewmain.setZoneGeo(zonegeo);
+                viewmain.setFeuilleDeRoute(feuilleDeRoute);
+                        viewmain.repaint();
+                        fenetre.validate();
+                etat = Etat.REMPLISSAGE;
             } catch (ReadMapXMLException ex) {
-                new ViewError(ex.getMessage(), true);
+                new ViewError(ex.getMessage());
+                zonegeo = null;
             }
-            feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
-            viewmain.setZoneGeo(zonegeo);
-            viewmain.setFeuilleDeRoute(feuilleDeRoute);
-                    viewmain.repaint();
-                    fenetre.validate();
-            etat = Etat.REMPLISSAGE;
 	}
 	
 	public void exportReport(File path) {
