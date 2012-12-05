@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import sun.awt.Mutex;
-import java.util.concurrent;
 import java.util.concurrent.locks.ReadWriteLock;
 
 import model.EtatFDR;
@@ -53,5 +52,6 @@ public class ViewFeuilleDeRoute {
 		mtx_pulsingArcs.writeLock().lock();
 		pulsingArcs = list;
 		mtx_pulsingArcs.writeLock().unlock();
+		return list;
 	}
 }

@@ -33,6 +33,7 @@ public class Arc
 	
 	public float getDuration()
 	{
-		return lenght/speed;
+		//System.out.println(lenght+" "+speed+" "+((float)lenght/speed));
+		return ((float)lenght/speed);
 	}
 }
