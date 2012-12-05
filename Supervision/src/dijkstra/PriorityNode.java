@@ -11,8 +11,8 @@ package dijkstra;
 public class PriorityNode {
     protected
             Integer id;
-            Integer distance;
-            public PriorityNode(Integer aDistance,Integer anID)
+            float distance;
+            public PriorityNode(float aDistance,Integer anID)
             {
                 id=anID;
                 distance= aDistance;

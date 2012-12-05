@@ -16,7 +16,8 @@ public class ViewArc {
 	int epaisseur;
 	static int defaultEpaisseur = 1;
 	Color color;
-	static Color defaultColor = new Color(150, 150, 150);
+	static Color defaultColor = new Color(150, 150, 150); 
+	static Color defaultRoadColor = new Color(255,255,40);
 	int dx1, dy1, dx2, dy2;
 	
 	public ViewArc(Arc a, ViewMain m) {
@@ -97,9 +98,17 @@ public class ViewArc {
 		int y2 = mere.ypix(arc.getDest().getY()) + dy2;
 		
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(color);
+		g2d.setColor(defaultRoadColor);
 		g2d.setStroke(new BasicStroke(epaisseur));
-		g2d.drawLine(x1, y1, x2, y2);
+		float normalX = (float) ((float)(y2-y1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
+		float normalY = (float) ((float)(x2-x1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
+	
+		int[] x = new int[]{x1,x2,x2+(int)(normalX*3),x1+(int)(normalX*3)};
+	    int[] y = new int[]{y1,y2,y2-(int)(normalY*3),y1-(int)(normalY*3)};
+	    g.fillPolygon(x, y, x.length);
+		g2d.setColor(defaultColor);
+	    g.drawPolygon(x, y, x.length);
+		//g2d.drawLine(x1, y1, x2, y2);
 		g2d.setStroke(new BasicStroke(1));
 	}
 }
