@@ -24,12 +24,13 @@ public class ViewDelivery {
 		dest.setMyDefaultRadius(8);
 		dest.setDefault();
 		
-		for (Arc a : delivery.getPathToDest().getArcs()) {
-			ViewArc va = new ViewArc(a, mere);
-			va.setColor(delivery.getSchedule().getColor());
-			va.setEpaisseur(3);
-			arcs.add(va);
-		}
+		
+//		for (Arc a : delivery.getPathToDest().getArcs()) {
+//			ViewArc va = new ViewArc(a, mere);
+//			va.setColor(delivery.getSchedule().getColor());
+//			va.setEpaisseur(3);
+//			arcs.add(va);
+//		}
 	}
 	
 	public void paint(Graphics g, boolean onlyDest) {
