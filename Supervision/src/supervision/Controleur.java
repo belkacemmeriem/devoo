@@ -130,6 +130,11 @@ public class Controleur {
 		viewmain.repaint();
 	}
 	
+	public void del() {
+		Node n = ((ViewNode) selected).getNode();
+		
+	}
+	
 	public Etat getEtat() {
 		return etat;
 	}

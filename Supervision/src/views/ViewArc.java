@@ -16,12 +16,14 @@ public class ViewArc {
 	int epaisseur;
 	static int defaultEpaisseur = 1;
 	Color color;
-	static Color defaultColor = new Color(150, 150, 150); 
+	static Color defaultColor = new Color(150, 150, 150);
+	int dx1, dy1, dx2, dy2;
 	
 	public ViewArc(Arc a, ViewMain m) {
 		arc = a;
 		mere = m;
 		setDefault();
+		dx1 = dx2 = dy1 = dy2 = 0;
 	}
 	
 	public Arc getArc() {
@@ -76,16 +78,23 @@ public class ViewArc {
 		color = c;
 	}
 	
+	public void setDiff() {
+		dx1 = (int) Math.random()*4 - 2;
+		dy1 = (int) Math.random()*4 - 2;
+		dx2 = (int) Math.random()*4 - 2;
+		dy2 = (int) Math.random()*4 - 2;
+	}
+	
 	public void setDefault() {
 		epaisseur = defaultEpaisseur;
 		color = defaultColor;
 	}
 	
 	public void paint(Graphics g) {
-		int x1 = mere.xpix(arc.getOrigin().getX());
-		int y1 = mere.ypix(arc.getOrigin().getY());
-		int x2 = mere.xpix(arc.getDest().getX());
-		int y2 = mere.ypix(arc.getDest().getY());
+		int x1 = mere.xpix(arc.getOrigin().getX()) + dx1;
+		int y1 = mere.ypix(arc.getOrigin().getY()) + dy1;
+		int x2 = mere.xpix(arc.getDest().getX()) + dx2;
+		int y2 = mere.ypix(arc.getDest().getY()) + dy2;
 		
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(color);
