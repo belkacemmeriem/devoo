@@ -49,6 +49,18 @@ public class ListLivraison extends JPanel
         super(new BorderLayout());
     }
     
+    public void addLiv(int addr, Schedule schedule){
+        int i;
+        boolean trouve=false;
+        for(i=0;i<listModel.getSize()&&!trouve;i++){
+            if(listModel.get(i).toString().equals(""+(schedule.getStartTime()/60)+"h - "
+                    +(schedule.getEndTime()/60)+"h")){
+                listModel.add(i+1, ""+addr);
+                trouve=true;
+            }
+        }
+    }
+    
     public void setSchedule(ArrayList<Schedule> aschedules) {
         schedules = aschedules;
 

@@ -96,6 +96,11 @@ public class Schedule
 		return str;
 	}
 	
+	public void removeDelivery(Delivery deliv)
+	{
+		deliveries.remove(deliv);
+	}
+	
 	/*
 	 * ANCIENNE VERSION (en float, heures)
 	 * 
