@@ -249,12 +249,12 @@ public class Fenetre extends Frame {
 		jFileChooserA.setDialogTitle("Choisir le dossier ou enregister le rapport");
 		jFileChooserA.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		
+
         if (jFileChooserA.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
         	return fileSaver(jFileChooserA);
 return null;
 	}
-	
+
 	private File fileSaver(JFileChooser fc)
 	//Saves string to file, pass in FileChooser
 	{
@@ -264,19 +264,19 @@ return null;
 
 		//Check for legal file extension (.txt)	
 		String fileExtension = file.getPath();
-		
+
 		//Set extension to .txt if not already	
 		if(!fileExtension.toLowerCase().endsWith(".txt"))
 		{
 			Calendar c = Calendar.getInstance ();
 			file = new File(fileExtension + "/Rapport - "+ c.getTime().toString()+".txt");
 		}
-		
+
 		try
 		{
 			writer = new BufferedWriter( new FileWriter(file));
 			writer.write(textToSave.replaceAll("\n", System.getProperty("line.seperator")));
-			
+
 			JOptionPane.showMessageDialog(this, "Message saved. (" + file.getName() + ")", "Page Saved Successfully", JOptionPane.INFORMATION_MESSAGE);
 		}
 		catch (IOException e)
@@ -356,17 +356,18 @@ return null;
         jPanelGauche.setBackground(new java.awt.Color(51, 51, 51));
 
         jPanelBoutonsGen.setBackground(new java.awt.Color(51, 51, 51));
-        jPanelBoutonsGen.setForeground(new java.awt.Color(51, 51, 51));        jPanelBoutonsGen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelBoutonsGen.setForeground(new java.awt.Color(51, 51, 51));        
+        //jPanelBoutonsGen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
-        jPanelBoutonsGen.add(jComboBoxZone, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 109, -1));
+        //jPanelBoutonsGen.add(jComboBoxZone, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 109, -1));
         jButtonGenTourn.setText("Générer tournée");
         jButtonGenTourn.setPreferredSize(new java.awt.Dimension(113, 20));        jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGenTournActionPerformed(evt);
             }
         });
-        jPanelBoutonsGen.add(jButtonGenTourn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 139, -1));
+        //jPanelBoutonsGen.add(jButtonGenTourn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 139, -1));
         jPanelPlan.setFenetre(this);
         jPanelPlan.setBackground(new java.awt.Color(51, 51, 51));
         jPanelPlan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
