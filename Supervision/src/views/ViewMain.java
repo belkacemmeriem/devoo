@@ -2,6 +2,13 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import com.sun.medialib.mlib.Image;
 
 import model.FeuilleDeRoute;
 import model.ZoneGeo;
@@ -15,11 +22,23 @@ public class ViewMain {
 	ViewZoneGeo zonegeo;
 	ViewFeuilleDeRoute feuilleDeRoute;
 	int border = 20;
+	java.awt.Image image;
+	BufferedImage img;
+
 	
-	public ViewMain(Dessin d) {
+	public ViewMain(Dessin d) 
+	{
 		dessin = d;
 		zonegeo = null;
 		feuilleDeRoute = null;
+		 try {
+			 img= ImageIO.read(new File("content/plan.png"));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void repaint() {
@@ -28,6 +47,8 @@ public class ViewMain {
 	
 	public void setZoneGeo(ZoneGeo zg) {
 		zonegeo = new ViewZoneGeo(zg, this);
+		image=  img.getScaledInstance(zonegeo.getWidth(),zonegeo.getHeight(),BufferedImage.SCALE_DEFAULT);
+
 	}
 	
 	public void setFeuilleDeRoute(FeuilleDeRoute f) {
@@ -51,7 +72,8 @@ public class ViewMain {
 	}
 	
 	public void paint(Graphics g) {
-		dessin.setBackground(new Color(240, 240, 240));
+		dessin.setBackground(new Color(250, 250, 250));
+		g.drawImage(image, 0, 0, null);
 		if (zonegeo != null)
 			zonegeo.paint(g);
 		if (feuilleDeRoute != null)

@@ -56,13 +56,14 @@ public class ViewZoneGeo {
 		return zonegeo.getHeight();
 	}
 	
-	public void paint(Graphics g) {		
-		for (ViewNode vn : nodes) {
-			vn.paint(g);
-		}
+	public void paint(Graphics g) {	
 		for (ViewArc va : arcs) {
 			va.paint(g);
 		}
+		for (ViewNode vn : nodes) {
+			vn.paint(g);
+		}
+
 	}
 
 	public Object findAt(int x, int y, boolean onlyArcs) {
