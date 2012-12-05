@@ -27,5 +27,10 @@ public class ViewDelivery {
 			// affichage des arcs de delivery.getPathToDest() 
 		}
 	}
+	
+	public List<ViewArc> getViewArcs()
+	{
+		return arcs;
+	}
 
 }
