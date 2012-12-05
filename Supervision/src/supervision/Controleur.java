@@ -56,9 +56,9 @@ public class Controleur {
         	loadSchedules();
             try {
                 zonegeo = new ZoneGeo();
-                ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
+                new ParseMapXML(path, zonegeo);
                 feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
-                viewmain.setZoneGeo(zonegeo);
+                viewmain.setZoneGeo(zonegeo,path);
                 viewmain.setFeuilleDeRoute(feuilleDeRoute);
                         viewmain.repaint();
                         fenetre.validate();
