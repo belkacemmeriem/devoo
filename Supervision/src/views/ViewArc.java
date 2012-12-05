@@ -98,7 +98,9 @@ public class ViewArc {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(color);
 		g2d.setStroke(new BasicStroke(epaisseur));
-		g2d.drawLine(x1, y1, x2, y2);
+		int[] x = new int[]{x1,x2,x2,x1};
+	    int[] y = new int[]{y1,y2,y2,y1};
+	    g.drawPolygon (x, y, x.length);
 		g2d.setStroke(new BasicStroke(1));
 	}
 }

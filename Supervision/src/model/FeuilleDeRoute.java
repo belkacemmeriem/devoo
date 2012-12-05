@@ -170,6 +170,21 @@ public class FeuilleDeRoute
 		insertNode(inserted, reference, false);
 	}
 	
+	public void removeNode(Node removedNode)
+	{
+		for (Schedule sch : timeZones)
+		{
+			for (Delivery d : sch.getDeliveries())
+			{
+				if (d.getDest() == removedNode)
+				{
+					Delivery next = nextDelivery(d);
+					sch.removeDelivery(d);
+					recalcPathTo(next);
+				}
+			}
+		}
+	}
 	
 	
 	protected void insertNode(Node inserted, Delivery reference, boolean before)
