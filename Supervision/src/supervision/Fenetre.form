@@ -57,7 +57,7 @@
               <Group type="102" attributes="0">
                   <Component id="jPanelBoutonsGen" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanelPlan" pref="503" max="32767" attributes="0"/>
+                  <Component id="jPanelPlan" pref="510" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanelEditionLivraison" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -77,43 +77,24 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonUndo" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonRedo" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBoxZone" min="-2" pref="88" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jFormattedTextFieldDate" min="-2" pref="110" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="jComboBoxZone" min="-2" pref="109" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="316" max="-2" attributes="0"/>
                       <Component id="jButtonGenTourn" pref="139" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButtonFinal" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButtonRedo" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jButtonUndo" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jComboBoxZone" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jFormattedTextFieldDate" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jComboBoxZone" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonGenTourn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonFinal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButtonUndo">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUndoActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonRedo">
-            </Component>
             <Component class="javax.swing.JComboBox" name="jComboBoxZone">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -127,14 +108,6 @@
                 <Property name="toolTipText" type="java.lang.String" value="Changer de zone"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldDate">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Date de la tourn&#xe9;e"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFormattedTextFieldDateActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="jButtonGenTourn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer tourn&#xe9;e"/>
@@ -142,11 +115,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGenTournActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonFinal">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Finaliser tourn&#xe9;e"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>

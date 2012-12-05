@@ -329,12 +329,8 @@ return null;
 
         jPanelGauche = new javax.swing.JPanel();
         jPanelBoutonsGen = new javax.swing.JPanel();
-        jButtonUndo = new javax.swing.JButton();
-        jButtonRedo = new javax.swing.JButton();
         jComboBoxZone = new javax.swing.JComboBox();
-        jFormattedTextFieldDate = new javax.swing.JFormattedTextField();
         jButtonGenTourn = new javax.swing.JButton();
-        jButtonFinal = new javax.swing.JButton();
         jPanelPlan = new Dessin();
         jPanelEditionLivraison = new javax.swing.JPanel();
         jLabelEdLivTitre = new javax.swing.JLabel();
@@ -361,21 +357,8 @@ return null;
 
         jPanelBoutonsGen.setBackground(new java.awt.Color(255, 204, 102));
 
-        jButtonUndo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonUndoActionPerformed(evt);
-            }
-        });
-
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
-
-        jFormattedTextFieldDate.setText("Date de la tournée");
-        jFormattedTextFieldDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldDateActionPerformed(evt);
-            }
-        });
 
         jButtonGenTourn.setText("Générer tournée");
         jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
@@ -384,36 +367,22 @@ return null;
             }
         });
 
-        jButtonFinal.setText("Finaliser tournée");
-
         javax.swing.GroupLayout jPanelBoutonsGenLayout = new javax.swing.GroupLayout(jPanelBoutonsGen);
         jPanelBoutonsGen.setLayout(jPanelBoutonsGenLayout);
         jPanelBoutonsGenLayout.setHorizontalGroup(
             jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBoutonsGenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(33, 33, 33)
+                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(316, 316, 316)
                 .addComponent(jButtonGenTourn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelBoutonsGenLayout.setVerticalGroup(
             jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButtonRedo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jButtonUndo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jFormattedTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonGenTourn)
-                .addComponent(jButtonFinal))
+                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonGenTourn))
         );
 
         jPanelPlan.setFenetre(this);
@@ -507,7 +476,7 @@ return null;
             .addGroup(jPanelGaucheLayout.createSequentialGroup()
                 .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -573,14 +542,6 @@ return null;
 		System.exit(0);
 	}//GEN-LAST:event_exitForm
 
-	private void jFormattedTextFieldDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDateActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_jFormattedTextFieldDateActionPerformed
-
-	private void jButtonUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUndoActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_jButtonUndoActionPerformed
-
     private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
         setMode(Mode.MODIFICATION);
         //controleur.genererTournee();
@@ -619,14 +580,10 @@ return null;
     }//GEN-LAST:event_jButtonSupprimerLivActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonFinal;
     private javax.swing.JButton jButtonGenTourn;
-    private javax.swing.JButton jButtonRedo;
     private javax.swing.JButton jButtonSupprimerLiv;
-    private javax.swing.JButton jButtonUndo;
     private javax.swing.JButton jButtonValiderLiv;
     private javax.swing.JComboBox jComboBoxZone;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDate;
     private javax.swing.JLabel jLabelAddLivCurr;
     private javax.swing.JLabel jLabelAddLivPrec;
     private javax.swing.JLabel jLabelAddLivSuiv;
