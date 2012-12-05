@@ -55,7 +55,6 @@ public class GraphLivraisonsTest {
 		listeSchedules.add(schedule);
 		
 		schedule=new Schedule(720,840,Color.BLACK);
-		schedule.getDeliveries().add(delivery);
 		delivery=new Delivery(zoneGeo.getNode(4), schedule);
 		schedule.getDeliveries().add(delivery);
 		delivery=new Delivery(zoneGeo.getNode(5), schedule);
@@ -63,10 +62,7 @@ public class GraphLivraisonsTest {
 		listeSchedules.add(schedule);
 		
 		//ajout de l'entrepot
-		schedule=new Schedule(840, 960, Color.BLACK);
-		schedule.getDeliveries().add(delivery);
-		delivery=new Delivery(zoneGeo.getNode(0), schedule);
-		listeSchedules.add(schedule);
+		zoneGeo.setWarehouse(0);
 		
 		feuilleDeRoute=new FeuilleDeRoute(listeSchedules, zoneGeo);
 	}
