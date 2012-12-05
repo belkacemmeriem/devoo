@@ -39,6 +39,9 @@ public class Fenetre extends Frame {
 	private Controleur controleur;
 	private JFileChooser jFileChooserXML;
 	private JFileChooser jFileChooserA;
+	private Menu menuFichier;
+	private Menu menuEdition;
+
 
         private ArrayList<Schedule> schedules;
         private ArrayList<JToggleButton> jToggleButtonSchedules;
@@ -191,8 +194,8 @@ public class Fenetre extends Frame {
 		// Creation de deux menus, chaque menu ayant plusieurs items
 		// et association d'un ecouteur d'action a chacun de ces items
 
-		Menu menuFichier = new Menu("Fichier");
-		Menu menuEdition = new Menu("Edition");
+		menuFichier = new Menu("Fichier");
+		menuEdition = new Menu("Edition");
 		ActionListener a4 = new ActionListener(){
 
 			@Override
@@ -204,7 +207,7 @@ public class Fenetre extends Frame {
 			}
 		};
 		ajoutItem("Generer rapport", menuFichier, a4);
-		
+		menuFichier.getItem(0).disable();
 		ActionListener a5 = new ActionListener(){
 
 			@Override
@@ -579,8 +582,9 @@ return null;
 	}//GEN-LAST:event_jButtonUndoActionPerformed
 
     private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
-        // TODO add your handling code here:
         setMode(Mode.MODIFICATION);
+        //controleur.genererTournee();
+        menuFichier.getItem(0).enable();
     }//GEN-LAST:event_jButtonGenTournActionPerformed
     
     private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
@@ -589,6 +593,7 @@ return null;
     	}
     }//GEN-LAST:event_jButtonValiderLivActionPerformed
 
+    
     private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
 
             //This method can be called only if
