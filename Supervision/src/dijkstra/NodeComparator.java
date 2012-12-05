@@ -17,7 +17,7 @@ public class NodeComparator implements Comparator<PriorityNode>
     @Override
     public int compare(PriorityNode x, PriorityNode y)
     {
-        return (int)(x.distance-y.distance);
+        return (x.distance.compareTo(y.distance));
     }
 
 

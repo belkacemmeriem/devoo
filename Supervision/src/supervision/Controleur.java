@@ -29,43 +29,43 @@ public class Controleur {
 	Object selected;
 	Etat etat = Etat.VIDE;
 	Fenetre fenetre;
-    ArrayList<Schedule> schedules;
+        ArrayList<Schedule> schedules;
 	
 	public Controleur() {
 	}
 
-    public void setFenetre(Fenetre fenetre) {
-        this.fenetre = fenetre;
-        loadSchedules();
-    }
-
-    public void loadSchedules()
-    {
-        ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-        schedules = parserSched.getPlagesHoraires();
-        /* // A remettre si necessaire, a virer sinon :
-        ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
-        for (Schedule s : schedules) {
-                fenSchedules.add(s);
+        public void setFenetre(Fenetre fenetre) {
+            this.fenetre = fenetre;
+            loadSchedules();
         }
-        */
-        fenetre.setSchedules(schedules);
-    }
-
-    public void loadZone(File path) {
-    	loadSchedules();
-        zonegeo = new ZoneGeo();
-        try {
-            ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
-        } catch (ReadMapXMLException ex) {
-            new ViewError(ex.getMessage(), true);
+    
+        public void loadSchedules()
+        {
+            ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
+            schedules = parserSched.getPlagesHoraires();
+            /* // A remettre si necessaire, a virer sinon :
+            ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
+            for (Schedule s : schedules) {
+                    fenSchedules.add(s);
+            }
+            */
+            fenetre.setSchedules(schedules);
         }
-        feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
-        viewmain.setZoneGeo(zonegeo);
-        viewmain.setFeuilleDeRoute(feuilleDeRoute);
-        viewmain.repaint();
-        fenetre.validate();
-        etat = Etat.REMPLISSAGE;
+	
+        public void loadZone(File path) {
+            try {
+                zonegeo = new ZoneGeo();
+                ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
+                feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
+                viewmain.setZoneGeo(zonegeo);
+                viewmain.setFeuilleDeRoute(feuilleDeRoute);
+                        viewmain.repaint();
+                        fenetre.validate();
+                etat = Etat.REMPLISSAGE;
+            } catch (ReadMapXMLException ex) {
+                new ViewError(ex.getMessage());
+                zonegeo = null;
+            }
 	}
 	
 	public void exportReport(File path) {
@@ -128,6 +128,11 @@ public class Controleur {
 		feuilleDeRoute.addNode(n, feuilleDeRoute.getTimeZones().get(1));
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
+	}
+	
+	public void del() {
+		Node n = ((ViewNode) selected).getNode();
+		
 	}
 	
 	public Etat getEtat() {
