@@ -30,10 +30,10 @@ public class DijkstraTest {
 				Node n4 = new Node(1,1,3);
 				Node n5 = new Node(20,20,4);
 				
-				Arc a1 = new Arc(n1,n2,10,3,"n1");
-				Arc a2 = new Arc(n1,n3,10,2,"n2");
+				Arc a1 = new Arc(n1,n2,10,10,"n1");
+				Arc a2 = new Arc(n1,n3,15,15,"n2");
 				Arc a3 = new Arc(n2,n4,7,7,"n3");
-				Arc a4 = new Arc(n3,n5,10,40,"n4");
+				Arc a4 = new Arc(n3,n5,40,40,"n4");
 				
 				n1.addOutArc(a1);
 				n2.addInArc(a1);
@@ -77,7 +77,6 @@ public class DijkstraTest {
 		if(solution.get(1).getTrajectory().size()==2) sucess ++;
 		if(solution.get(1).getTrajectory().get(0).getID()==0) sucess ++;
 		if(solution.get(1).getTrajectory().get(1).getID()==2) sucess ++;
-		
 
 		//Toutes les verifications se sont bien passees
 		if(sucess == 8)

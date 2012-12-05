@@ -434,11 +434,6 @@ return null;
         jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
 
         jButtonValiderLiv.setText("Valider");
-        jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonValiderLivActionPerformed(evt);
-            }
-        });
 
         jPanelHoraires.setBackground(new java.awt.Color(255, 255, 0));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
@@ -567,10 +562,6 @@ return null;
     public void nodeClicked(int id)
     {
         jLabelAddLivCurr.setText(""+id);
-        int i;
-        for(i=0;i<schedules.size();i++){
-            jToggleButtonSchedules.get(i).setSelected(false);
-        }
     }
     
     
@@ -597,25 +588,17 @@ return null;
     }//GEN-LAST:event_jButtonGenTournActionPerformed
     
     private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
-    	int addr = Integer.parseInt(jLabelAddLivCurr.getText());
-        if (controleur.getEtat() == Etat.REMPLISSAGE&&(addr!=-1)) {
-            int i;
-            boolean trouve=false;
-            for(i=0;i<jToggleButtonSchedules.size()&&!trouve;i++){
-                if(jToggleButtonSchedules.get(i).isSelected()){
-                    listeLivraison.addLiv(addr, schedules.get(i));
-                    controleur.add();
-                    
-                    trouve=true;
-                }
-            }
-                
+    	if (controleur.getEtat() == Etat.REMPLISSAGE) {
+    		controleur.add();
     	}
     }//GEN-LAST:event_jButtonValiderLivActionPerformed
 
     
     private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
 
+            //This method can be called only if
+            //there's a valid selection
+            //so go ahead and remove whatever's selected.
             int index = listeLivraison.getList().getSelectedIndex();
             listeLivraison.getListModel().remove(index);
 

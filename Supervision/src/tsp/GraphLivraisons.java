@@ -18,6 +18,12 @@ public class GraphLivraisons implements Graph {
 		feuilleDeRoute=f;
 	}
 	
+	/**
+	 * Crée un graphe utilisable par la classe TSP. Les sommets des graphes sont les livraisons à effectuer.
+	 * Les arcs sont les plus courts chemins entre les livraisons. L'entrepôt est considéré comme une livraison.
+	 * @return void.
+	 * @author arnaud MDM
+	 */
 	public void createGraph(){
 		//on ajoute l'entrepot au livraisons pour connaitre le nombre de sommets
 		nbVertices=feuilleDeRoute.getAllDeliveries().size();
@@ -79,14 +85,14 @@ public class GraphLivraisons implements Graph {
 		int indexSchedule2=indexSchedule+1;
 		
 		//tant qu'on est pas à la fin de la liste des schedules
-		while(indexSchedule<feuilleDeRoute.getTimeZones().size())
+		while(indexSchedule<feuilleDeRoute.getTimeZones().size()-1)
 		{
 			Schedule s1=feuilleDeRoute.getTimeZones().get(indexSchedule);
 			
 			//on prend toutes les livraions d'un schedule
 			for(int j=0;j<s1.getDeliveries().size();j++)
 			{
-				depart=s1.getDeliveries().get(0).getDest();
+				depart=s1.getDeliveries().get(j).getDest();
 				listeArrivees.clear();
 				
 				//on ajoute comme point d'arrivée les livraions du même schedule que la livraison de départ
@@ -153,7 +159,12 @@ public class GraphLivraisons implements Graph {
 		}
 	}
 	
-	
+	/**
+	 * Crée un graphe utilisable par la classe TSP. Les sommets des graphes sont les livraisons à effectuer.
+	 * Les arcs sont les plus courts chemins entre les livraisons. L'entrepôt est considéré comme une livraison.
+	 * @return void.
+	 * @author arnaud MDM
+	 */
 	public ArrayList<Delivery> calcItineraire(){
 		TSP tsp=new TSP();
 		int bound=(nbVertices+1)*maxArcCost;
@@ -177,8 +188,8 @@ public class GraphLivraisons implements Graph {
 		ArrayList<Delivery> itineraire=new ArrayList<Delivery>();
 		for(int i=0;i<tabPos.length-1;i++)
 		{
-			feuilleDeRoute.getAllDeliveries().get(i).setPathToDest(listeChemins[tabPos[i]][tabPos[i+1]]);
-			itineraire.add(feuilleDeRoute.getAllDeliveries().get(i));
+			feuilleDeRoute.getAllDeliveries().get(tabPos[i+1]-1).setPathToDest(listeChemins[tabPos[i]][tabPos[i+1]]);
+			itineraire.add(feuilleDeRoute.getAllDeliveries().get(tabPos[i+1]-1));
 		}
 		feuilleDeRoute.getAllDeliveries().get(feuilleDeRoute.getAllDeliveries().size()-1)
 			.setPathToDest(listeChemins[tabPos[tabPos.length-1]][tabPos[0]]);

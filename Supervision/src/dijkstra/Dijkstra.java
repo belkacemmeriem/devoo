@@ -19,13 +19,13 @@ import java.util.*;
 public class Dijkstra {
 
     protected
-            static float Infinity =1000;
+            static Integer Infinity =1000;
     
     public  static ArrayList<Chemin> solve(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
 
     {
     	ArrayList<Node> toCompute= (ArrayList<Node>) toEnglobe.clone();
-        HashMap<Integer,Float> dist = new HashMap<Integer, Float>(); 
+        HashMap<Integer,Integer> dist = new HashMap<Integer, Integer>(); 
         HashMap<Integer,Integer> previous = new HashMap<Integer, Integer>(); 
         
         for(Node v : theGraph.getNodes().values())
@@ -33,9 +33,9 @@ public class Dijkstra {
             dist.put(v.getID(),Infinity);
             previous.put(v.getID(),-1);
         }
-        dist.put(source.getID(),new Float(0));
+        dist.put(source.getID(),0);
          Comparator<PriorityNode> comparator = new NodeComparator();
-        PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>((int)Infinity, comparator);
+        PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>(Infinity, comparator);
         for(Node v : theGraph.getNodes().values())
         {
             PriorityNode newNode = new PriorityNode(Infinity,v.getID());
@@ -55,7 +55,7 @@ public class Dijkstra {
             {
                 for(Node v : u.getOutNodes())
                 {
-                    float alt=dist.get(u.getID())+u.getDuration(v.getID() );
+                    Integer alt=dist.get(u.getID())+u.getDuration(v.getID() );
                     if(alt<dist.get(v.getID()))
                     {
                         dist.put(v.getID(),alt);
@@ -78,9 +78,8 @@ public class Dijkstra {
         ArrayList<Chemin> solution= new ArrayList<Chemin>();
         for(Node n : toCompute)
         {
-        	float distance=0;
+        	Integer distance=0;
         	ArrayList<Node> contenu = new ArrayList<Node>();
-        	
         	Node temp=theGraph.getNode(n.getID());
         	contenu.add(temp);
         	while(temp.getID()!=source.getID())
@@ -88,9 +87,8 @@ public class Dijkstra {
         		Integer theID =previous.get(temp.getID());
         		Node toADD=theGraph.getNode(theID);
         		contenu.add(toADD);
-            	distance+=toADD.getDuration(temp.getID());
             	temp=theGraph.getNode(theID);
-
+            	distance+=toADD.getDuration(temp.getID());
         	}
         	Collections.reverse(contenu);
         	Chemin newChemin = new Chemin(contenu,distance);        
