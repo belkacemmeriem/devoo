@@ -347,48 +347,30 @@ return null;
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
+        setBackground(new java.awt.Color(51, 51, 51));        setPreferredSize(new java.awt.Dimension(900, 670));        addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 exitForm(evt);
             }
         });
 
-        jPanelGauche.setBackground(new java.awt.Color(102, 0, 153));
+        jPanelGauche.setBackground(new java.awt.Color(51, 51, 51));
 
-        jPanelBoutonsGen.setBackground(new java.awt.Color(255, 204, 102));
-
+        jPanelBoutonsGen.setBackground(new java.awt.Color(51, 51, 51));
+        jPanelBoutonsGen.setForeground(new java.awt.Color(51, 51, 51));        jPanelBoutonsGen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
-
+        jPanelBoutonsGen.add(jComboBoxZone, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 109, -1));
         jButtonGenTourn.setText("Générer tournée");
-        jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGenTourn.setPreferredSize(new java.awt.Dimension(113, 20));        jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGenTournActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanelBoutonsGenLayout = new javax.swing.GroupLayout(jPanelBoutonsGen);
-        jPanelBoutonsGen.setLayout(jPanelBoutonsGenLayout);
-        jPanelBoutonsGenLayout.setHorizontalGroup(
-            jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBoutonsGenLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(316, 316, 316)
-                .addComponent(jButtonGenTourn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanelBoutonsGenLayout.setVerticalGroup(
-            jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonGenTourn))
-        );
-
+        jPanelBoutonsGen.add(jButtonGenTourn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 139, -1));
         jPanelPlan.setFenetre(this);
-        jPanelPlan.setBackground(new java.awt.Color(102, 102, 255));
-
-        jPanelEditionLivraison.setBackground(new java.awt.Color(0, 153, 153));
+        jPanelPlan.setBackground(new java.awt.Color(51, 51, 51));
+        jPanelPlan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelEditionLivraison.setBackground(new java.awt.Color(51, 51, 51));
 
         jLabelEdLivTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelEdLivTitre.setText("Edition de livraison");
@@ -404,7 +386,7 @@ return null;
 
         jButtonValiderLiv.setText("Valider");
 
-        jPanelHoraires.setBackground(new java.awt.Color(255, 255, 0));
+        jPanelHoraires.setBackground(new java.awt.Color(51, 51, 51));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabelLivCurr.setText("Adresse de livraison :");
@@ -423,11 +405,10 @@ return null;
             jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelHoraires, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                        .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelLivPrec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelLivPrec, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)                            .addComponent(jLabelLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -435,7 +416,6 @@ return null;
                             .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonValiderLiv)
@@ -467,27 +447,26 @@ return null;
         jPanelGauche.setLayout(jPanelGaucheLayout);
         jPanelGaucheLayout.setHorizontalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
             .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+            .addGroup(jPanelGaucheLayout.createSequentialGroup()                .addGap(10, 10, 10)                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))        );
         jPanelGaucheLayout.setVerticalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGaucheLayout.createSequentialGroup()
                 .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanelDroite.setBackground(new java.awt.Color(51, 255, 51));
-
+        jPanelDroite.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelDroite.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabelTitreLivraisons.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitreLivraisons.setText("Liste des livraisons");
 
-        jPaneLivraisons.setBackground(new java.awt.Color(255, 0, 0));
+        jPaneLivraisons.setBackground(new java.awt.Color(255, 255, 255));
         jPaneLivraisons.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout jPanelDroiteLayout = new javax.swing.GroupLayout(jPanelDroite);
@@ -499,7 +478,7 @@ return null;
                 .addComponent(jLabelTitreLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
-                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelDroiteLayout.setVerticalGroup(
@@ -507,7 +486,7 @@ return null;
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jLabelTitreLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -516,8 +495,8 @@ return null;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
