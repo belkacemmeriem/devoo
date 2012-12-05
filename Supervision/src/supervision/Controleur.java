@@ -53,6 +53,7 @@ public class Controleur {
         }
 	
         public void loadZone(File path) {
+        	loadSchedules();
             try {
                 zonegeo = new ZoneGeo();
                 ParseMapXML parserMap = new ParseMapXML(path, zonegeo);

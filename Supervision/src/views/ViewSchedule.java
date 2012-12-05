@@ -2,6 +2,8 @@ package views;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import model.Delivery;
 import model.Schedule;
@@ -29,5 +31,15 @@ public class ViewSchedule {
 		for (ViewDelivery vd : deliveries) {
 			vd.paint(g, onlyNodes);
 		}
+	}
+	
+	public List<ViewArc> getViewArcs()
+	{
+		LinkedList<ViewArc> list = new LinkedList<ViewArc>();
+		for (ViewDelivery deliv: deliveries)
+		{
+			list.addAll(deliv.getViewArcs());
+		}
+		return list;
 	}
 }
