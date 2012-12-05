@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Arc;
 import model.Delivery;
@@ -38,6 +39,11 @@ public class ViewDelivery {
 		if (! onlyDest) {
 			// affichage des arcs de delivery.getPathToDest() 
 		}
+	}
+	
+	public List<ViewArc> getViewArcs()
+	{
+		return arcs;
 	}
 
 }

@@ -66,8 +66,10 @@ public class Delivery
 	}
 
 
-	public void setPathToDest(Chemin pathToDest) {
+	public void setPathToDest(Chemin pathToDest)
+	{
 		this.pathToDest = pathToDest;
 	}
+	
 	
 }
