@@ -27,15 +27,16 @@ public class GraphLivraisons implements Graph {
 	 * Les arcs sont les plus courts chemins entre les livraisons. L'entrepôt est considéré comme une livraison.
 	 * @return void.
 	 * @author arnaud MDM
+	 * @throws GraphException 
 	 */
-	public void createGraph(){
+	public void createGraph() throws GraphException{
 		//on ajoute l'entrepot au livraisons pour connaitre le nombre de sommets
 		nbVertices=feuilleDeRoute.getAllDeliveries().size();
 		
 		//si aucune livraison n'a été saisie
 		if(nbVertices==1)
 		{
-			//envoyer une exception
+			throw new GraphException(GraphException.NO_DELIVERIES);
 		}
 		
 		listeChemins=new Chemin[nbVertices][nbVertices];
@@ -168,8 +169,9 @@ public class GraphLivraisons implements Graph {
 	 * La fonction doit être appelée après avoir appelée <code>createGraphe</code>
 	 * @return ArrayList<Delivery>. Il s'agit d'une liste ordonnée de livraison. La dernière livraison est l'entrepôt
 	 * @author arnaud MDM
+	 * @throws GraphException 
 	 */
-	public ArrayList<Delivery> calcItineraire(){
+	public ArrayList<Delivery> calcItineraire() throws GraphException{
 		TSP tsp=new TSP();
 		int bound=(nbVertices+1)*maxArcCost;
 		SolutionState retour;
@@ -182,11 +184,11 @@ public class GraphLivraisons implements Graph {
 		
 		if(retour==SolutionState.INCONSISTENT)
 		{
-			//throw new GraphException(GraphException.INCONSISTENT);
+			throw new GraphException(GraphException.INCONSISTENT);
 		}
 		else if(retour==SolutionState.NO_SOLUTION_FOUND)
 		{
-			//lancer une exception
+			throw new GraphException(GraphException.NO_SOLUTION_FOUND);
 		}
 		
 		int[] tabPos=tsp.getPos();
