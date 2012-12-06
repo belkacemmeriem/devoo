@@ -48,24 +48,6 @@ public class GraphLivraisonsTest {
 		zoneGeo.setWarehouse(0);
 		
 		
-		/*
-		ArrayList<Schedule> listeSchedules=new ArrayList<Schedule>();
-		Schedule schedule=new Schedule(600,720,Color.BLACK);
-		Delivery delivery=new Delivery(zoneGeo.getNode(1),schedule);
-		schedule.getDeliveries().add(delivery);
-		delivery=new Delivery(zoneGeo.getNode(2), schedule);
-		schedule.getDeliveries().add(delivery);
-		delivery=new Delivery(zoneGeo.getNode(3), schedule);
-		schedule.getDeliveries().add(delivery);
-		listeSchedules.add(schedule);
-		
-		schedule=new Schedule(720,840,Color.BLACK);
-		delivery=new Delivery(zoneGeo.getNode(4), schedule);
-		schedule.getDeliveries().add(delivery);
-		delivery=new Delivery(zoneGeo.getNode(5), schedule);
-		schedule.getDeliveries().add(delivery);
-		listeSchedules.add(schedule);*/
-		
 		
 		ArrayList<Schedule> listeSchedules=new ArrayList<Schedule>();
 		Schedule schedule1=new Schedule(600,800,Color.GREEN);

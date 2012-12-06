@@ -154,8 +154,12 @@ public class FeuilleDeRoute
 
 	// ajoute un node dans un schedule donné
 	// utile seulement à l'init, avant le premier appel de computeWithTSP
-	public void addNode(Node node, Schedule schedule)
+	public void addNode(Node node, Schedule schedule) throws RuntimeException
 	{
+		if (etat != EtatFDR.INIT)
+		{
+			throw new RuntimeException("trying to FeuilleDeRoute.addNode() while already initialized");
+		}
 		Delivery deliv = new Delivery(node, schedule);
 		schedule.appendDelivery(deliv);
 	}
