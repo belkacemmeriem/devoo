@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
+import model.Delivery;
 import model.EtatFDR;
 import model.FeuilleDeRoute;
 import model.Node;
@@ -111,9 +110,51 @@ public class FeuilleDeRouteTest
 			fail("L'exception sur addNode n'est pas déclenchée, alors que feuilleDeRoute est déjà initialisée");
 		} catch (Exception e)
 		{
-			// OK
+			//OK
 		}
+		Delivery lastOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getLast();
+		Delivery firstOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getFirst();
 		
+	//insertion 4 entre 2 et 6
+		feuilleDeRoute.insertNodeBefore(zoneGeo.getNode(4), lastOf1);
+		
+		Delivery inserted = feuilleDeRoute.getTimeZones().get(0).getDeliveries().get(1);
+		assertEquals(inserted.getDest(), zoneGeo.getNode(4));
+		
+		//verif maj chemin 4->6
+		assertEquals(lastOf1.getPathToDest().getNoeudDepart(), zoneGeo.getNode(4));
+		assertEquals(lastOf1.getPathToDest().getNoeudArrivee(), lastOf1.getDest());
+		
+		//verif maj chemin 2->4
+		assertEquals(inserted.getPathToDest().getNoeudDepart(), firstOf1.getDest());
+		assertEquals(inserted.getPathToDest().getNoeudArrivee(), inserted.getDest());
+		
+	//insertion de 1 entre 2 et l'entrepot
+		feuilleDeRoute.insertNodeBefore(zoneGeo.getNode(1), firstOf1);
+		
+		lastOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getLast();
+		firstOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getFirst();
+		
+		//verif 1 bien 1er Deliv du 1er schedule
+		assertEquals(firstOf1.getDest(), zoneGeo.getNode(1));
+		//pointeur vers schedule ok?
+		assertEquals(firstOf1.getSchedule(), feuilleDeRoute.getTimeZones().get(0));
+		
+		//verif chemin entrepot->1
+		assertEquals(firstOf1.getPathToDest().getNoeudDepart(), zoneGeo.getWarehouse());
+		assertEquals(firstOf1.getPathToDest().getNoeudArrivee(), firstOf1.getDest());
+		
+		//schedule 1 contient 4 deliveries
+		assertEquals(feuilleDeRoute.getTimeZones().get(0).getDeliveries().size(), 4);
+		
+		//schedule 1 contient 2 deliveries
+		assertEquals(feuilleDeRoute.getTimeZones().get(1).getDeliveries().size(), 2);
+		
+		assertEquals(feuilleDeRoute.getEtat(), EtatFDR.MODIF);
+		feuilleDeRoute.computeWithTSP();
+		assertEquals(feuilleDeRoute.getEtat(), EtatFDR.OPTIM);
+		
+
 	}
 
 }
