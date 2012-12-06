@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.sun.medialib.mlib.Image;
 
 import model.FeuilleDeRoute;
 import model.ZoneGeo;
@@ -31,14 +30,6 @@ public class ViewMain {
 		dessin = d;
 		zonegeo = null;
 		feuilleDeRoute = null;
-		 try {
-			 img= ImageIO.read(new File("content/plan.png"));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 	
 	public void repaint() {
@@ -46,9 +37,13 @@ public class ViewMain {
 
 	}
 	
-	public void setZoneGeo(ZoneGeo zg) {
+	public void setZoneGeo(ZoneGeo zg,File path) {
 		zonegeo = new ViewZoneGeo(zg, this);
-		image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
+		 try {
+			  img= ImageIO.read(new File(path.toString().substring(0, path.toString().length()-3)+"png"));
+			  image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
+		} catch (IOException e) {
+		}
 
 	}
 	
@@ -74,11 +69,17 @@ public class ViewMain {
 	
 	public void paint(Graphics g) {
 		dessin.setBackground(new Color(250, 250, 250));
-		image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
 
-		g.drawImage(image, 0, 0, null);
 		if (zonegeo != null)
+		{
+			if(img!=null)
+			{
+				image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
+				g.drawImage(image, 0, 0, null);
+			}
 			zonegeo.paint(g);
+
+		}
 		if (feuilleDeRoute != null)
 			feuilleDeRoute.paint(g);
 	}

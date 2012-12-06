@@ -53,20 +53,23 @@ public class Controleur {
         }
 	
         public void loadZone(File path) {
-        	loadSchedules();
-            try {
-                zonegeo = new ZoneGeo();
-                ParseMapXML parserMap = new ParseMapXML(path, zonegeo);
-                feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
-                viewmain.setZoneGeo(zonegeo);
-                viewmain.setFeuilleDeRoute(feuilleDeRoute);
-                        viewmain.repaint();
-                        fenetre.validate();
-                etat = Etat.REMPLISSAGE;
-            } catch (ReadMapXMLException ex) {
-                new ViewError(ex.getMessage());
-                zonegeo = null;
-            }
+                if (path != null)
+                {
+                    loadSchedules();
+                    try {
+                        zonegeo = new ZoneGeo();
+                        new ParseMapXML(path, zonegeo);
+                        feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
+                        viewmain.setZoneGeo(zonegeo,path);
+                        viewmain.setFeuilleDeRoute(feuilleDeRoute);
+                                viewmain.repaint();
+                                fenetre.validate();
+                        etat = Etat.REMPLISSAGE;
+                    } catch (ReadMapXMLException ex) {
+                        new ViewError(ex.getMessage());
+                        zonegeo = null;
+                    }
+                }
 	}
 	
 	public void exportReport(File path) {
