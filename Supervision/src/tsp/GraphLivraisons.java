@@ -1,12 +1,16 @@
 package tsp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import dijkstra.*;
 import model.*;
+import Exception.*;
 
 public class GraphLivraisons implements Graph {
 
 	private final int timeLimit=10000;//milliseconds
+	private final int timeLimitTotal=60000;//milliseconds indique le temps total accordé pour trouver une solution optimale
 	private Chemin[][] listeChemins;
 	private int[][] listeCosts;
 	private FeuilleDeRoute feuilleDeRoute;
@@ -169,14 +173,16 @@ public class GraphLivraisons implements Graph {
 		TSP tsp=new TSP();
 		int bound=(nbVertices+1)*maxArcCost;
 		SolutionState retour;
-		while((retour=tsp.solve(timeLimit, bound, this))==SolutionState.SOLUTION_FOUND)
+		
+		long timeStart=Calendar.getInstance().getTimeInMillis();
+		while((retour=tsp.solve(timeLimit, bound, this))==SolutionState.SOLUTION_FOUND && (Calendar.getInstance().getTimeInMillis()-timeStart)< timeLimitTotal)
 		{
 			bound=tsp.getTotalCost();
 		}
 		
 		if(retour==SolutionState.INCONSISTENT)
 		{
-			//lancer une exception
+			//throw new GraphException(GraphException.INCONSISTENT);
 		}
 		else if(retour==SolutionState.NO_SOLUTION_FOUND)
 		{
