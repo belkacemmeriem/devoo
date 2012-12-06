@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import Exception.GraphException;
 import tsp.*;
 import model.*;
 
@@ -67,7 +69,11 @@ public class GraphLivraisonsTest {
 	@Test
 	public void testCreateGraph(){
 		graphLivraisons=new GraphLivraisons(feuilleDeRoute);
-		graphLivraisons.createGraph();
+		try {
+			graphLivraisons.createGraph();
+		} catch (GraphException e) {
+			assertTrue(false);
+		}
 		
 		int[][]listeCosts=graphLivraisons.getCost();
 		assertEquals(10, listeCosts[0][1]);
@@ -95,17 +101,22 @@ public class GraphLivraisonsTest {
 	public void testCalcItineraire()
 	{
 		graphLivraisons=new GraphLivraisons(feuilleDeRoute);
-		graphLivraisons.createGraph();
-		ArrayList<Delivery> listeLivraisons=
-				graphLivraisons.calcItineraire();
-		assertEquals(listeLivraisons.size(),6);
-		assertEquals(listeLivraisons.get(0).getDest().getID().intValue(),1);
-		assertEquals(listeLivraisons.get(1).getDest().getID().intValue(),2);
-		assertEquals(listeLivraisons.get(2).getDest().getID().intValue(),3);
-		assertEquals(listeLivraisons.get(3).getDest().getID().intValue(),5);
-		assertEquals(listeLivraisons.get(4).getDest().getID().intValue(),4);
-		assertEquals(listeLivraisons.get(5).getDest().getID().intValue(),0);
-		
+		try {
+			graphLivraisons.createGraph();
+
+			ArrayList<Delivery> listeLivraisons;
+			listeLivraisons = graphLivraisons.calcItineraire();
+
+			assertEquals(listeLivraisons.size(),6);
+			assertEquals(listeLivraisons.get(0).getDest().getID().intValue(),1);
+			assertEquals(listeLivraisons.get(1).getDest().getID().intValue(),2);
+			assertEquals(listeLivraisons.get(2).getDest().getID().intValue(),3);
+			assertEquals(listeLivraisons.get(3).getDest().getID().intValue(),5);
+			assertEquals(listeLivraisons.get(4).getDest().getID().intValue(),4);
+			assertEquals(listeLivraisons.get(5).getDest().getID().intValue(),0);
+		} catch (GraphException e) {
+			assertTrue(false);
+		}		
 		
 	}
 }
