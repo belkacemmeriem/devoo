@@ -38,6 +38,11 @@ public class ViewDelivery {
 		dest.paint(g);
 		if (! onlyDest) {
 			// affichage des arcs de delivery.getPathToDest() 
+			for(Arc a : delivery.getPathToDest().getArcs())
+			{
+				ViewArcChemin vac = new ViewArcChemin(a,mere,delivery.isRetardPrevu());
+				vac.paint(g);
+			}
 		}
 	}
 	

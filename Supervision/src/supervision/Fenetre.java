@@ -29,7 +29,7 @@ public class Fenetre extends Frame {
 
         private static enum Mode {CREATION, MODIFICATION};
         private Mode mode;
-	private final String TITRE = "Supervision des Livraisons Itinérantes Planifiés";
+	private final String TITRE = "Supervision des Livraisons Itinerantes Planifies";
         private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
                 + " mode création)";
         private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est sélectionnée";
@@ -361,7 +361,7 @@ return null;
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
 
-        jButtonGenTourn.setText("Générer tournée");
+        jButtonGenTourn.setText("Generer tournee");
         jButtonGenTourn.setPreferredSize(new java.awt.Dimension(113, 20));
         jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGenTournActionPerformed(evt);
@@ -383,7 +383,7 @@ return null;
             }
         });
 
-        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
+        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
 
         jButtonValiderLiv.setText("Valider");
 
@@ -392,13 +392,13 @@ return null;
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison précedente :");
+        jLabelLivPrec.setText("Livraison precedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
+        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
+        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
 
         javax.swing.GroupLayout jPanelEditionLivraisonLayout = new javax.swing.GroupLayout(jPanelEditionLivraison);
         jPanelEditionLivraison.setLayout(jPanelEditionLivraisonLayout);
