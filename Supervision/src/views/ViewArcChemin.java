@@ -102,6 +102,8 @@ public class ViewArcChemin {
 		g2d.setColor(color);
 		g2d.setStroke(new BasicStroke(epaisseur));
 		g.setColor(defaultColor);
-		g2d.drawLine(x1, y1, x2, y2);
+		float normalX = (float) ((float)(y2-y1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
+		float normalY = (float) ((float)(x2-x1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
+		g2d.drawLine(x1+(int)(normalX*2), y1+(int)(normalY*2), x2+(int)(normalX*2), y2+(int)(normalY*2));
 	}
 }
