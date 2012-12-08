@@ -70,18 +70,17 @@ public class ViewMain {
 	public void paint(Graphics g) {
 		dessin.setBackground(new Color(250, 250, 250));
 
-		if (zonegeo != null)
-		{
-			if(img!=null)
-			{
+		if (zonegeo != null) {
+			if (img != null) {
 				image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
 				g.drawImage(image, 0, 0, null);
 			}
 			zonegeo.paint(g);
 
 		}
-		if (feuilleDeRoute != null)
+		if (feuilleDeRoute != null) {
 			feuilleDeRoute.paint(g);
+		}
 	}
 
 	public void setControleur(Controleur ctrl) {

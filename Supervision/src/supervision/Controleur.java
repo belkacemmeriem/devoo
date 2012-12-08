@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import parsexml.*;
+import model.Delivery;
 import model.FeuilleDeRoute;
 import model.Node;
 import model.Schedule;
@@ -27,62 +28,81 @@ public class Controleur {
 	ZoneGeo zonegeo;
 	FeuilleDeRoute feuilleDeRoute;
 	Object selected;
+	Schedule selectedSchedule;
+
 	Etat etat = Etat.VIDE;
 	Fenetre fenetre;
-        ArrayList<Schedule> schedules;
-	
+	ArrayList<Schedule> schedules;
+
 	public Controleur() {
 	}
+	
+	public boolean nodeSelected() {
+		return (selected != null && selected instanceof ViewNode);
+	}
+	
+	public boolean deliverySelected() {
+		return (nodeSelected() && feuilleDeRoute.getDelivery(((ViewNode) selected).getNode()) != null);
+	}
+	
+	public Schedule getSelectedSchedule() {
+		return selectedSchedule;
+	}
 
-        public void setFenetre(Fenetre fenetre) {
-            this.fenetre = fenetre;
-            loadSchedules();
-        }
-    
-        public void loadSchedules()
-        {
-            ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-            schedules = parserSched.getPlagesHoraires();
-            /* // A remettre si necessaire, a virer sinon :
+	public void setSelectedSchedule(Schedule selectedSchedule) {
+		this.selectedSchedule = selectedSchedule;
+	}
+
+	public void setFenetre(Fenetre fenetre) {
+		this.fenetre = fenetre;
+		// loadSchedules(); <-- pas necessaire
+	}
+
+	public void loadSchedules()
+	{
+		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
+		schedules = parserSched.getPlagesHoraires();
+		/* // A remettre si necessaire, a virer sinon :
             ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
             for (Schedule s : schedules) {
                     fenSchedules.add(s);
             }
-            */
-            fenetre.setSchedules(schedules);
-        }
-	
-        public void loadZone(File path) {
-                if (path != null)
-                {
-                    loadSchedules();
-                    try {
-                        zonegeo = new ZoneGeo();
-                        new ParseMapXML(path, zonegeo);
-                        feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
-                        viewmain.setZoneGeo(zonegeo,path);
-                        viewmain.setFeuilleDeRoute(feuilleDeRoute);
-                                viewmain.repaint();
-                                fenetre.validate();
-                        etat = Etat.REMPLISSAGE;
-                    } catch (ReadMapXMLException ex) {
-                        new ViewError(ex.getMessage());
-                        zonegeo = null;
-                    }
-                }
+		 */
+		fenetre.setSchedules(schedules);
 	}
-	
+
+	public void loadZone(File path) {
+		if (path != null)
+		{
+			loadSchedules();
+			try {
+				zonegeo = new ZoneGeo();
+				new ParseMapXML(path, zonegeo);
+				feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
+				etat = Etat.REMPLISSAGE;
+				viewmain.setZoneGeo(zonegeo,path);
+				viewmain.setFeuilleDeRoute(feuilleDeRoute);
+				viewmain.repaint();
+				fenetre.validate();
+				fenetre.update();
+			} catch (ReadMapXMLException ex) {
+				new ViewError(ex.getMessage());
+				zonegeo = null;
+			}
+		}
+	}
+
 	public void exportReport(File path) {
 		try {
 			feuilleDeRoute.generateReport(path);
 		} catch (IOException e) {
 		}
 	}
-	
+
 	public void setViewMain(ViewMain vm) {
-        viewmain = vm;
+		viewmain = vm;
 	}
-	
+
 	public void deselect() {
 		if (selected != null) {
 			if (selected instanceof ViewNode) {
@@ -98,8 +118,8 @@ public class Controleur {
 	}
 
 	public int click(int x, int y, int button) {
-        int retour = -1;
-        boolean onlyArcs = (button == 3);
+		int retour = -1;
+		boolean onlyArcs = (button == 3);
 		if (etat == Etat.REMPLISSAGE)
 		{
 			Object clicked = viewmain.findAt(x, y, onlyArcs);
@@ -112,7 +132,12 @@ public class Controleur {
 				ViewNode vn = (ViewNode) clicked;
 				vn.setColor(new Color(255, 0, 0));
 				vn.setRadius(11);
-                retour = vn.getNode().getID();
+				Delivery deliv = feuilleDeRoute.getDelivery(vn.getNode());
+				if (deliv != null) {
+					selectedSchedule = deliv.getSchedule();
+					fenetre.setSchedule(selectedSchedule);
+				}
+				retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
 				deselect();
@@ -122,23 +147,35 @@ public class Controleur {
 				va.setEpaisseur(3);
 			}
 		}
-                		
+
 		viewmain.repaint();
-        return retour;
+		fenetre.update();
+		return retour;
 	}
-	
+
 	public void add() {
-		Node n = ((ViewNode) selected).getNode();
-		feuilleDeRoute.addNode(n, feuilleDeRoute.getTimeZones().get(1));
-		viewmain.updateFeuilleDeRoute();
-		viewmain.repaint();
+		if (selected != null && selected instanceof ViewNode && selectedSchedule != null) {
+			Node n = ((ViewNode) selected).getNode();
+			Delivery d = feuilleDeRoute.getDelivery(n);
+			if (d != null)
+				feuilleDeRoute.delNode(n);
+			feuilleDeRoute.addNode(n, selectedSchedule);
+			viewmain.updateFeuilleDeRoute();
+			viewmain.repaint();
+			fenetre.update();
+		}
 	}
-	
+
 	public void del() {
-		Node n = ((ViewNode) selected).getNode();
-		
+		if (selected != null && selected instanceof ViewNode) {
+			Node n = ((ViewNode) selected).getNode();
+			feuilleDeRoute.delNode(n);
+			viewmain.updateFeuilleDeRoute();
+			viewmain.repaint();
+			fenetre.update();
+		}
 	}
-	
+
 	public Etat getEtat() {
 		return etat;
 	}

@@ -34,6 +34,7 @@ public class Supervision extends javax.swing.JPanel {
         ctrl.setFenetre(fenetre);
         d.setControleur(ctrl);
         
+        fenetre.update();
         fenetre.setVisible(true);
     }
 }

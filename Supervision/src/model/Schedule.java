@@ -60,6 +60,11 @@ public class Schedule
 		deliveries.add(delivery);
 	}
 	
+	public void removeDelivery(Delivery delivery)
+	{
+		deliveries.remove(delivery);
+	}
+	
 	public void setDeliveries(LinkedList<Delivery> delivs)
 	{
 		this.deliveries = delivs;

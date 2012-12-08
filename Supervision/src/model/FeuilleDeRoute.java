@@ -73,6 +73,15 @@ public class FeuilleDeRoute
 		}
 		return retour;
 	}
+	
+	public Delivery getDelivery(Node n) {
+		for (Delivery d : getAllDeliveries()) {
+			if (d.getDest().getID() == n.getID()) {
+				return d;
+			}
+		}
+		return null;
+	}
 
 	public EtatFDR getEtat()
 	{
@@ -162,6 +171,16 @@ public class FeuilleDeRoute
 		}
 		Delivery deliv = new Delivery(node, schedule);
 		schedule.appendDelivery(deliv);
+	}
+	
+	public void delNode(Node node) throws RuntimeException
+	{
+		if (etat != EtatFDR.INIT)
+		{
+			throw new RuntimeException("trying to FeuilleDeRoute.delNode() while already initialized");
+		}
+		Delivery deliv = getDelivery(node);
+		deliv.getSchedule().removeDelivery(deliv);
 	}
 	
 	public void insertNodeBefore(Node inserted, Delivery reference)

@@ -39,7 +39,6 @@ public class ViewFeuilleDeRoute {
 		for (ViewSchedule vs : schedules) {
 			vs.update();
 		}
-		
 	}
 	
 	protected List<ViewArc> updateViewArcs()

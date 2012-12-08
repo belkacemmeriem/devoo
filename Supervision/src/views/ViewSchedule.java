@@ -23,6 +23,7 @@ public class ViewSchedule {
 		deliveries.clear();
 		for (Delivery d : schedule.getDeliveries()) {
 			ViewDelivery vd = new ViewDelivery(d, mere);
+			System.out.println("DELIVERY "+ Schedule.timeToString(d.getSchedule().getStartTime()) + " +1"); 
 			deliveries.add(vd);
 		}
 	}
