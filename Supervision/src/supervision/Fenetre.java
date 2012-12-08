@@ -579,6 +579,7 @@ public class Fenetre extends Frame {
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
 		if (controleur.getEtat() == Etat.REMPLISSAGE) {
 			controleur.add();
+			listeLivraison.addLiv(controleur.getSelectedSchedule(), jLabelAddLivCurr.getText());
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 

@@ -44,21 +44,43 @@ public class ListLivraison extends JPanel
     private JList list;
     private DefaultListModel listModel;
     private ArrayList<Schedule> schedules;
+    private ArrayList<Integer> idSchedules; /*numero de ligne de la Jlist 
+    ou commence la liste des livraisons de la plage horaire*/
 
     public ListLivraison(){
         super(new BorderLayout());
     }
     
+    private Integer getIdSchedule(Schedule schedule){
+    	for(int i = 0;i<schedules.size();i++){
+    		if(schedule.getEndTime()==schedules.get(i).getEndTime()){
+    			return i;
+    		}
+    	}
+    	return -1;
+    }
+    
+    public void addLiv (Schedule schedule, String addr){
+    	Integer idSchedule=getIdSchedule(schedule);
+    	listModel.add(idSchedules.get(idSchedule)+1, addr);
+    	
+    	//MAJ de idschedules
+    	for(int i =idSchedule+1;i<idSchedules.size();i++){
+    		idSchedules.set(i, idSchedules.get(i)+1);
+    	}
+    }
+    
     public void setSchedule(ArrayList<Schedule> aschedules) {
         schedules = aschedules;
-
+        idSchedules= new ArrayList<Integer>();
         listModel = new DefaultListModel();
         int i;
         for(i=0;i<schedules.size();i++){
+        	idSchedules.add(i, i);
             listModel.addElement(""+(schedules.get(i).getStartTime()/60)+"h - "
                     +(schedules.get(i).getEndTime()/60)+"h");
         }
-
+        
         //Create the list and put it in a scroll pane.
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
