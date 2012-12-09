@@ -70,6 +70,22 @@ public class ListLivraison extends JPanel
     	}
     }
     
+    public void remLiv (){
+    	int j = list.getSelectedIndex();
+    	System.out.println("j "+j);
+    	
+    	//MAJ de idschedules
+    	for(int i =0;i<idSchedules.size();i++){
+    		if(idSchedules.get(i)==j){
+    			return;
+    		}
+    		else if (idSchedules.get(i)>j){
+    			idSchedules.set(i, idSchedules.get(i)+1);
+    		}
+    	}
+    	listModel.remove(j);
+    }
+    
     public void setSchedule(ArrayList<Schedule> aschedules) {
         schedules = aschedules;
         idSchedules= new ArrayList<Integer>();
@@ -103,7 +119,6 @@ public class ListLivraison extends JPanel
 
         //Required by ActionListener.
         public void actionPerformed(ActionEvent e) {
-            //String name = employeeName.getText();
             String name="";
             //User didn't type in a unique name...
             if (name.equals("") || alreadyInList(name)) {
