@@ -51,6 +51,15 @@ public class ListLivraison extends JPanel
         super(new BorderLayout());
     }
     
+    public boolean livExists(String addr){
+    	for(int i = 0;i<listModel.size();i++){
+    		if(addr.equals(listModel.get(i))){
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     private Integer getIdSchedule(Schedule schedule){
     	for(int i = 0;i<schedules.size();i++){
     		if(schedule.getEndTime()==schedules.get(i).getEndTime()){
@@ -70,6 +79,7 @@ public class ListLivraison extends JPanel
     	}
     }
     
+    /*Supprimer une livraison de la liste*/
     public void remLiv (){
     	int j = list.getSelectedIndex();
     	System.out.println("j "+j);

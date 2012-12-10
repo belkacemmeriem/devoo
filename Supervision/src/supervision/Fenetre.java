@@ -29,8 +29,8 @@ public class Fenetre extends Frame {
 
 	private final String TITRE = "Supervision des Livraisons Itinerantes Planifies";
 	private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
-			+ " mode création)";
-	private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est sélectionnée";
+			+ " mode creation)";
+	private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est selectionnee";
 	private Fenetre fenetre;
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
@@ -76,7 +76,7 @@ public class Fenetre extends Frame {
 		
 		case REMPLISSAGE:
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
+			jButtonSupprimerLiv.setEnabled(false);
 			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(controleur.nodeSelected());
@@ -180,7 +180,7 @@ public class Fenetre extends Frame {
 						int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
 								"Etes-vous sur de vouloir changer de zone ?"
 										+ "\n (les donnees de la tournee en cours seront définitivement effacées)",
-										"Confirmation de changement de zone"+(masquerPopUpZone==true),
+										"Confirmation de changement de zone",
 										JOptionPane.OK_CANCEL_OPTION, 
 										JOptionPane.WARNING_MESSAGE, null,
 										options, options[1]);
@@ -563,8 +563,20 @@ public class Fenetre extends Frame {
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
 		if (controleur.getEtat() == Etat.REMPLISSAGE) {
-			controleur.add();
-			listeLivraison.addLiv(controleur.getSelectedSchedule(), jLabelAddLivCurr.getText());
+			String addr = jLabelAddLivCurr.getText();
+			if(listeLivraison.livExists(addr)){
+				Object[] options = { "Ok" };
+				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
+						"Addresse existante",
+								"Confirmation de changement de zone",
+								JOptionPane.ERROR_MESSAGE, 
+								JOptionPane.ERROR_MESSAGE, null,
+								options, options[1]);
+			}
+			else{
+				controleur.add();
+				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
+			}
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 
