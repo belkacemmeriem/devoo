@@ -27,12 +27,10 @@ import model.Schedule;
  */
 public class Fenetre extends Frame {
 
-	private static enum Mode {CREATION, MODIFICATION};
-	private Mode mode;
 	private final String TITRE = "Supervision des Livraisons Itinerantes Planifies";
 	private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
-			+ " mode création)";
-	private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est sélectionnée";
+			+ " mode creation)";
+	private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est selectionnee";
 	private Fenetre fenetre;
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
@@ -57,7 +55,6 @@ public class Fenetre extends Frame {
 		creeMenu();
 		setFonts();
 		setPopups();
-		setMode(Mode.CREATION);
 	}
 	
 	public void update() {
@@ -79,14 +76,26 @@ public class Fenetre extends Frame {
 		
 		case REMPLISSAGE:
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
+			jButtonSupprimerLiv.setEnabled(false);
 			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(controleur.nodeSelected());
+			jLabelAddLivPrec.setEnabled(false);
+			jLabelAddLivSuiv.setEnabled(false);
+			jLabelLivPrec.setEnabled(false);
+			jLabelLivSuiv.setEnabled(false);
+			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
+					" "+CHAMP_INDISP_CREA);
+			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
+					" "+CHAMP_INDISP_CREA);
 			break;
-			
 		case MODIFICATION:
-			
+			jLabelAddLivPrec.setEnabled(true);
+			jLabelAddLivSuiv.setEnabled(true);
+			jLabelLivPrec.setEnabled(true);
+			jLabelLivSuiv.setEnabled(true);
+			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC);
+			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC);
 			break;
 		}
 	}
@@ -138,32 +147,6 @@ public class Fenetre extends Frame {
 		}
 	}
 
-
-	private void setMode(Mode amode) {
-		mode=amode;
-		switch(mode){
-		case CREATION:
-			jLabelAddLivPrec.setEnabled(false);
-			jLabelAddLivSuiv.setEnabled(false);
-			jLabelLivPrec.setEnabled(false);
-			jLabelLivSuiv.setEnabled(false);
-			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
-					" "+CHAMP_INDISP_CREA);
-			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
-					" "+CHAMP_INDISP_CREA);
-
-			break;
-		case MODIFICATION:
-			jLabelAddLivPrec.setEnabled(true);
-			jLabelAddLivSuiv.setEnabled(true);
-			jLabelLivPrec.setEnabled(true);
-			jLabelLivSuiv.setEnabled(true);
-			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC);
-			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC);
-			break;
-		}
-	}
-
 	public Dessin getDessin() {
 		return (Dessin)jPanelPlan;
 	}
@@ -195,9 +178,9 @@ public class Fenetre extends Frame {
 					{
 						Object[] options = { "Confirmer", "Annuler" };
 						int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-								"Etes-vous sûr de vouloir changer de zone ?"
-										+ "\n (les données de la tournée en cours seront définitivement effacées)",
-										"Confirmation de changement de zone"+(masquerPopUpZone==true),
+								"Etes-vous sur de vouloir changer de zone ?"
+										+ "\n (les donnees de la tournee en cours seront définitivement effacées)",
+										"Confirmation de changement de zone",
 										JOptionPane.OK_CANCEL_OPTION, 
 										JOptionPane.WARNING_MESSAGE, null,
 										options, options[1]);
@@ -210,7 +193,8 @@ public class Fenetre extends Frame {
 						}
 						else
 						{
-							setMode(Mode.CREATION);
+							controleur.setEtat(Etat.REMPLISSAGE);
+							update();
 							selectedZone=jComboBoxZone.getSelectedIndex();
 						}
 					}
@@ -571,20 +555,35 @@ public class Fenetre extends Frame {
 	}//GEN-LAST:event_exitForm
 
 	private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
-		setMode(Mode.MODIFICATION);
+		controleur.setEtat(Etat.MODIFICATION);
+		update();
 		//controleur.genererTournee();
 		menuFichier.getItem(0).enable();
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
 		if (controleur.getEtat() == Etat.REMPLISSAGE) {
-			controleur.add();
+			String addr = jLabelAddLivCurr.getText();
+			if(listeLivraison.livExists(addr)){
+				Object[] options = { "Ok" };
+				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
+						"Addresse existante",
+								"Confirmation de changement de zone",
+								JOptionPane.ERROR_MESSAGE, 
+								JOptionPane.ERROR_MESSAGE, null,
+								options, options[1]);
+			}
+			else{
+				controleur.add();
+				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
+			}
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 
 	private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
 		if (controleur.getEtat() == Etat.REMPLISSAGE) {
 			controleur.del();
+			listeLivraison.remLiv();
 		}
 	}//GEN-LAST:event_jButtonSupprimerLivActionPerformed
 

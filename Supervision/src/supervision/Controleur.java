@@ -37,6 +37,10 @@ public class Controleur {
 	public Controleur() {
 	}
 	
+	public void setEtat(Etat aetat){
+		etat=aetat;
+	}
+	
 	public boolean nodeSelected() {
 		return (selected != null && selected instanceof ViewNode);
 	}
