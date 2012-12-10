@@ -1,17 +1,18 @@
 package model;
 
+import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import dijkstra.Dijkstra;
+import Exception.GraphException;
 
 import tsp.GraphLivraisons;
+import dijkstra.Dijkstra;
 
 public class FeuilleDeRoute
 {
@@ -88,9 +89,9 @@ public class FeuilleDeRoute
 		return etat;
 	}
 
-	public void computeWithTSP()
+	
+	public void computeWithTSP() throws GraphException
 	{
-		
 		GraphLivraisons gl = new GraphLivraisons(this);
 		gl.createGraph();
 		ArrayList<Delivery> result = gl.calcItineraire();
@@ -121,6 +122,10 @@ public class FeuilleDeRoute
 		int theTime = timeZones.get(0).getStartTime();
 		for (Schedule sch : timeZones)
 		{
+			//pause attente début livraison
+			if (theTime<sch.getStartTime())
+				theTime = sch.getStartTime();
+			
 			for (Delivery d : sch.getDeliveries())
 			{
 				theTime+= d.getPathToDest().getDuration();
@@ -173,14 +178,20 @@ public class FeuilleDeRoute
 		schedule.appendDelivery(deliv);
 	}
 	
-	public void delNode(Node node) throws RuntimeException
+	public void delNode(Node node)
 	{
-		if (etat != EtatFDR.INIT)
-		{
-			throw new RuntimeException("trying to FeuilleDeRoute.delNode() while already initialized");
-		}
 		Delivery deliv = getDelivery(node);
-		deliv.getSchedule().removeDelivery(deliv);
+		if (etat == EtatFDR.INIT)
+		{
+			deliv.getSchedule().removeDelivery(deliv);
+		}
+		else	//already init
+		{
+			Delivery next = nextDelivery(deliv);
+			deliv.getSchedule().removeDelivery(deliv);
+			recalcPathTo(next);
+		}
+
 	}
 	
 	public void insertNodeBefore(Node inserted, Delivery reference)
@@ -229,6 +240,7 @@ public class FeuilleDeRoute
 				etat = EtatFDR.MODIF;
 			}
 		}
+		throw new RuntimeException("FeuilleDeRoute.insertNode(): reference delivery not found");
 	}
 	
 	
@@ -262,6 +274,9 @@ public class FeuilleDeRoute
 				}
 			}
 		}
+		if (returned == null)
+			throw new RuntimeException("FeuilleDeRoute.previousDelivery(): delivery not found");
+		
 		return returned;
 	}
 	
@@ -295,6 +310,8 @@ public class FeuilleDeRoute
 				}
 			}
 		}
+		if (returned == null)
+			throw new RuntimeException("FeuilleDeRoute.nextDelivery(): delivery not found");
 		return returned;
 	}
 
