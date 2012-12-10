@@ -23,20 +23,19 @@ public class ViewSchedule {
 		deliveries.clear();
 		for (Delivery d : schedule.getDeliveries()) {
 			ViewDelivery vd = new ViewDelivery(d, mere);
-			System.out.println("DELIVERY "+ Schedule.timeToString(d.getSchedule().getStartTime()) + " +1"); 
 			deliveries.add(vd);
 		}
 	}
 	
-	public void paint(Graphics g, boolean onlyNodes) {
+	public void paint(Graphics g) {
 		for (ViewDelivery vd : deliveries) {
-			vd.paint(g, onlyNodes);
+			vd.paint(g);
 		}
 	}
 	
-	public List<ViewArc> getViewArcs()
+	public List<ViewArcChemin> getViewArcs()
 	{
-		LinkedList<ViewArc> list = new LinkedList<ViewArc>();
+		LinkedList<ViewArcChemin> list = new LinkedList<ViewArcChemin>();
 		for (ViewDelivery deliv: deliveries)
 		{
 			list.addAll(deliv.getViewArcs());

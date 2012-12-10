@@ -34,7 +34,6 @@ public class ViewMain {
 	
 	public void repaint() {
 		dessin.repaint();
-
 	}
 	
 	public void setZoneGeo(ZoneGeo zg,File path) {
@@ -44,7 +43,6 @@ public class ViewMain {
 			  image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
 		} catch (IOException e) {
 		}
-
 	}
 	
 	public void setFeuilleDeRoute(FeuilleDeRoute f) {
@@ -68,15 +66,13 @@ public class ViewMain {
 	}
 	
 	public void paint(Graphics g) {
-		dessin.setBackground(new Color(250, 250, 250));
-
+		dessin.setBackground(new Color(255, 255, 255));
 		if (zonegeo != null) {
 			if (img != null) {
 				image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
 				g.drawImage(image, 0, 0, null);
 			}
 			zonegeo.paint(g);
-
 		}
 		if (feuilleDeRoute != null) {
 			feuilleDeRoute.paint(g);
@@ -85,6 +81,10 @@ public class ViewMain {
 
 	public void setControleur(Controleur ctrl) {
 		controleur = ctrl;
+	}
+	
+	public Controleur getControleur() {
+		return controleur;
 	}
 
 	public void updateFeuilleDeRoute() {

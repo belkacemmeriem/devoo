@@ -1,8 +1,11 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+
+import supervision.Etat;
 
 import model.Arc;
 import model.Delivery;
@@ -13,7 +16,7 @@ public class ViewDelivery {
 	Delivery delivery;
 	ViewMain mere;
 	ViewNode dest;
-	ArrayList<ViewArc> arcs = new ArrayList<ViewArc>();
+	ArrayList<ViewArcChemin> arcs = new ArrayList<ViewArcChemin>();
 
 	public ViewDelivery(Delivery d, ViewMain m) {
 		delivery = d;
@@ -25,28 +28,23 @@ public class ViewDelivery {
 		dest.setMyDefaultRadius(8);
 		dest.setDefault();
 		
-		
-//		for (Arc a : delivery.getPathToDest().getArcs()) {
-//			ViewArc va = new ViewArc(a, mere);
-//			va.setColor(delivery.getSchedule().getColor());
-//			va.setEpaisseur(3);
-//			arcs.add(va);
-//		}
-	}
-	
-	public void paint(Graphics g, boolean onlyDest) {
-		dest.paint(g);
-		if (! onlyDest) {
-			// affichage des arcs de delivery.getPathToDest() 
-			for(Arc a : delivery.getPathToDest().getArcs())
-			{
-				ViewArcChemin vac = new ViewArcChemin(a,mere,delivery.isRetardPrevu());
-				vac.paint(g);
+		if (mere.getControleur().getEtat() == Etat.MODIFICATION) {
+			for(Arc a : delivery.getPathToDest().getArcs()) {
+				Color c = delivery.getSchedule().getColor();
+				ViewArcChemin vac = new ViewArcChemin(a, mere, c, delivery.isRetardPrevu());
+				arcs.add(vac);
 			}
 		}
 	}
 	
-	public List<ViewArc> getViewArcs()
+	public void paint(Graphics g) {
+		dest.paint(g);
+		for(ViewArcChemin vac : arcs) {
+			vac.paint(g);
+		}
+	}
+	
+	public List<ViewArcChemin> getViewArcs()
 	{
 		return arcs;
 	}

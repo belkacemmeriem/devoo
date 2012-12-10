@@ -16,8 +16,8 @@ public class ViewArc {
 	int epaisseur;
 	static int defaultEpaisseur = 1;
 	Color color;
-	static Color defaultColor = new Color(150, 150, 150); 
-	static Color defaultRoadColor = new Color(255,255,40);
+	static Color defaultColor = new Color(200, 200, 200); 
+	static Color defaultRoadColor = new Color(255, 255, 150);
 	int dx1, dy1, dx2, dy2;
 	
 	public ViewArc(Arc a, ViewMain m) {

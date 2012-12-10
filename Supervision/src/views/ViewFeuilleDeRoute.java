@@ -16,7 +16,7 @@ public class ViewFeuilleDeRoute {
 	protected FeuilleDeRoute feuilleDeRoute;
 	protected ViewMain mere;
 	protected ArrayList<ViewSchedule> schedules = new ArrayList<ViewSchedule>();
-	protected LinkedList<ViewArc> pulsingArcs;
+	protected LinkedList<ViewArcChemin> pulsingArcs;
 	protected ReadWriteLock mtx_pulsingArcs;
 	
 	public ViewFeuilleDeRoute(FeuilleDeRoute f, ViewMain vm) {
@@ -30,8 +30,7 @@ public class ViewFeuilleDeRoute {
 	
 	public void paint(Graphics g) {
 		for (ViewSchedule vs : schedules) {
-			boolean onlyNodes = (feuilleDeRoute.getEtat() == EtatFDR.INIT);
-			vs.paint(g, onlyNodes);
+			vs.paint(g);
 		}
 	}
 	
@@ -41,9 +40,9 @@ public class ViewFeuilleDeRoute {
 		}
 	}
 	
-	protected List<ViewArc> updateViewArcs()
+	protected List<ViewArcChemin> updateViewArcs()
 	{
-		LinkedList<ViewArc> list = new LinkedList<ViewArc>();
+		LinkedList<ViewArcChemin> list = new LinkedList<ViewArcChemin>();
 		for (ViewSchedule sch: schedules)
 		{
 			list.addAll(sch.getViewArcs());

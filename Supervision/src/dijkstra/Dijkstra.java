@@ -91,7 +91,6 @@ public class Dijkstra {
             	distance+=toADD.getDuration(temp.getID());
             	System.out.println(distance);
             	temp=theGraph.getNode(theID);
-
         	}
         	Collections.reverse(contenu);
         	Chemin newChemin = new Chemin(contenu,distance);        

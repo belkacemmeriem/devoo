@@ -76,7 +76,7 @@ public class Fenetre extends Frame {
 		
 		case REMPLISSAGE:
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(false);
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
 			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(controleur.nodeSelected());
@@ -89,13 +89,21 @@ public class Fenetre extends Frame {
 			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
 					" "+CHAMP_INDISP_CREA);
 			break;
+			
 		case MODIFICATION:
-			jLabelAddLivPrec.setEnabled(true);
-			jLabelAddLivSuiv.setEnabled(true);
-			jLabelLivPrec.setEnabled(true);
-			jLabelLivSuiv.setEnabled(true);
-			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC);
-			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC);
+			jButtonGenTourn.setEnabled(true);
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
+			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
+			for (JToggleButton jtb : jToggleButtonSchedules)
+				jtb.setEnabled(controleur.nodeSelected());
+			jLabelAddLivPrec.setEnabled(false);
+			jLabelAddLivSuiv.setEnabled(false);
+			jLabelLivPrec.setEnabled(false);
+			jLabelLivSuiv.setEnabled(false);
+			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
+					" "+CHAMP_INDISP_CREA);
+			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
+					" "+CHAMP_INDISP_CREA);
 			break;
 		}
 	}
@@ -555,7 +563,7 @@ public class Fenetre extends Frame {
 	}//GEN-LAST:event_exitForm
 
 	private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
-		controleur.setEtat(Etat.MODIFICATION);
+		controleur.genererTournee();
 		update();
 		//controleur.genererTournee();
 		menuFichier.getItem(0).enable();

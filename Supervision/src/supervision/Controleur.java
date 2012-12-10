@@ -1,5 +1,6 @@
 package supervision;
 
+import Exception.GraphException;
 import Exception.ReadMapXMLException;
 import java.awt.Color;
 import java.awt.Point;
@@ -124,7 +125,7 @@ public class Controleur {
 	public int click(int x, int y, int button) {
 		int retour = -1;
 		boolean onlyArcs = (button == 3);
-		if (etat == Etat.REMPLISSAGE)
+		if (etat != Etat.VIDE)
 		{
 			Object clicked = viewmain.findAt(x, y, onlyArcs);
 			if (clicked == null) {
@@ -182,6 +183,19 @@ public class Controleur {
 
 	public Etat getEtat() {
 		return etat;
+	}
+
+	public void genererTournee() {
+		try {
+			feuilleDeRoute.computeWithTSP();
+		} catch (GraphException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setEtat(Etat.MODIFICATION);
+		viewmain.updateFeuilleDeRoute();
+		viewmain.repaint();
+		fenetre.update();
 	}
 
 }
