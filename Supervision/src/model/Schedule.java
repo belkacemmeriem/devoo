@@ -124,4 +124,9 @@ public class Schedule
 		return str;
 	}
 	*/
+
+	//formate l'affiche sous forme de chaine de caractère de la plage horaire.
+	public String getSliceString() {
+		return ""+(startTime/60)+"h - "+(endTime/60)+"h";
+	}
 }

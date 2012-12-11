@@ -122,8 +122,7 @@ public class Fenetre extends Frame {
 
 		for(int i =0;i<schedules.size();i++)
 		{
-			String s = ""+(schedules.get(i).getStartTime()/60)+"h - "+
-					+(schedules.get(i).getEndTime()/60)+"h";
+			String s = schedules.get(i).getSliceString();
 			jToggleButtonSchedules.add(new JToggleButton(s));
 			ActionListener a = new ActionListener() {
 
@@ -445,6 +444,11 @@ public class Fenetre extends Frame {
         jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
 
         jButtonValiderLiv.setText("Ajouter");
+        jButtonValiderLiv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButtonValiderLivMouseReleased(evt);
+            }
+        });
 
         jPanelHoraires.setBackground(new java.awt.Color(51, 51, 51));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
@@ -562,7 +566,7 @@ public class Fenetre extends Frame {
                 .addGap(64, 64, 64))
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 54, Short.MAX_VALUE))
         );
         jPanelDroiteLayout.setVerticalGroup(
             jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -640,6 +644,25 @@ public class Fenetre extends Frame {
 private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_insertAfterButtonActionPerformed
+
+private void jButtonValiderLivMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonValiderLivMouseReleased
+		if (controleur.getEtat() == Etat.REMPLISSAGE) {
+			String addr = jLabelAddLivCurr.getText();
+			if(listeLivraison.livExists(addr)){
+				Object[] options = { "Ok" };
+				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
+						"Addresse existante",
+								"Confirmation de changement de zone",
+								JOptionPane.ERROR_MESSAGE, 
+								JOptionPane.ERROR_MESSAGE, null,
+								options, options[1]);
+			}
+			else{
+				controleur.add();
+				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
+			}
+		}
+}//GEN-LAST:event_jButtonValiderLivMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton insertAfterButton;

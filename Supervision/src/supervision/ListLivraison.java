@@ -1,34 +1,3 @@
-/*
- * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *
- *   - Neither the name of Oracle or the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
-
 package supervision;
 
 import java.awt.*;
@@ -36,31 +5,43 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.tree.*;
 import model.Schedule;
 
 /* ListLivraison.java requires no other files. */
 public class ListLivraison extends JPanel
-                      implements ListSelectionListener {
-    private JList list;
-    private DefaultListModel listModel;
+                      implements TreeSelectionListener {
+    private JTree tree;
+    private DefaultTreeModel treeModel;
     private ArrayList<Schedule> schedules;
-    private ArrayList<Integer> idSchedules; /*numero de ligne de la Jlist 
-    ou commence la liste des livraisons de la plage horaire*/
 
     public ListLivraison(){
         super(new BorderLayout());
     }
     
+	
+	//Teste la présence d'un noeud dans l'arbre par l'id 
     public boolean livExists(String addr){
-    	for(int i = 0;i<listModel.size();i++){
-    		if(addr.equals(listModel.get(i))){
-    			return true;
-    		}
+		//recherche de la racine
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
+		
+		//Scan de l'arbre par plage horaire puis par children de ces plages horaires.
+		DefaultMutableTreeNode nodeBuffer;
+    	for(int i = 0;i<treeModel.getChildCount(root);i++){
+			nodeBuffer = (DefaultMutableTreeNode)treeModel.getChild(root, i);
+			for(int j = 0;j<treeModel.getChildCount(nodeBuffer);j++){
+				if(addr.equals(((DefaultMutableTreeNode)treeModel.getChild(nodeBuffer, j)).toString())){
+					//noeud trouvé
+					return true;
+				}
+			}
     	}
     	return false;
     }
     
+	//Récupère l'id d'une adresse de livraison
     private Integer getIdSchedule(Schedule schedule){
+		
     	for(int i = 0;i<schedules.size();i++){
     		if(schedule.getEndTime()==schedules.get(i).getEndTime()){
     			return i;
@@ -69,55 +50,72 @@ public class ListLivraison extends JPanel
     	return -1;
     }
     
+	
     public void addLiv (Schedule schedule, String addr){
+		//récupération de l'indice du noeud de plage horaire voulue
     	Integer idSchedule=getIdSchedule(schedule);
-    	listModel.add(idSchedules.get(idSchedule)+1, addr);
-    	
-    	//MAJ de idschedules
-    	for(int i =idSchedule+1;i<idSchedules.size();i++){
-    		idSchedules.set(i, idSchedules.get(i)+1);
-    	}
+		//récupère le noeud relatif à une plage horaire
+		DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(idSchedule);
+		//insère un noeud dans la plage horaire trouvée au dessus
+    	treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
     }
     
     /*Supprimer une livraison de la liste*/
     public void remLiv (){
-    	int j = list.getSelectedIndex();
-    	System.out.println("j "+j);
-    	
-    	//MAJ de idschedules
-    	for(int i =0;i<idSchedules.size();i++){
-    		if(idSchedules.get(i)==j){
-    			return;
-    		}
-    		else if (idSchedules.get(i)>j){
-    			idSchedules.set(i, idSchedules.get(i)+1);
-    		}
-    	}
-    	listModel.remove(j);
+		//récupère le noeud sélectionné
+    	DefaultMutableTreeNode node = ((DefaultMutableTreeNode)tree.getLastSelectedPathComponent());
+    	//System.out.println("node supprimé "+node);
+		
+		//supprime le noeud en question
+    	treeModel.removeNodeFromParent(node);
     }
     
     public void setSchedule(ArrayList<Schedule> aschedules) {
         schedules = aschedules;
-        idSchedules= new ArrayList<Integer>();
-        listModel = new DefaultListModel();
-        int i;
-        for(i=0;i<schedules.size();i++){
-        	idSchedules.add(i, i);
-            listModel.addElement(""+(schedules.get(i).getStartTime()/60)+"h - "
-                    +(schedules.get(i).getEndTime()/60)+"h");
+		//définition de la racine de l'arbre et déclaration du model de l'arbre (contient la totalité des données et conditionne le comportement de l'arbre)
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Plages horaires");
+        treeModel = new DefaultTreeModel(root);
+		
+		//créée les noeuds relatifs aux plages horaires
+        for(int i=0;i<schedules.size();i++){
+			DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode(schedules.get(i).getSliceString());
+			//treeNode.setAllowsChildren(true);
+            treeModel.insertNodeInto(treeNode, root, i);
         }
         
-        //Create the list and put it in a scroll pane.
-        list = new JList(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setSelectedIndex(0);
-        list.addListSelectionListener(this);
-        list.setVisibleRowCount(5);
-        JScrollPane listScrollPane = new JScrollPane(list);
+        //créée l'arbre, édite son mode de fonctionnement, son état initial et le met dans le scrollpane
+        tree = new JTree(treeModel);
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        tree.setSelectionPath(new TreePath(root));
+        tree.addTreeSelectionListener(this);
+        //tree.setVisibleRowCount(5);
+        JScrollPane listScrollPane = new JScrollPane(tree);
 
         add(listScrollPane, BorderLayout.CENTER);
     }
 
+	@Override
+	public void valueChanged(TreeSelectionEvent e) {
+        if (e.isAddedPath() == false) {
+
+            if (tree.isSelectionEmpty()) {
+            //No selection, disable fire button.
+        //        fireButton.setEnabled(false);
+
+            } else {
+            //Selection, enable the fire button.
+          //      fireButton.setEnabled(true);
+            }
+        }
+	}
+
+	
+	/*
+	 * 
+	 * USELESS !!!!!!!!!!!!!!!!!!!!
+	 * 
+	 * 
+	 */
     //This listener is shared by the text field and the hire button.
     class HireListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
@@ -137,8 +135,8 @@ public class ListLivraison extends JPanel
                 //employeeName.selectAll();
                 return;
             }
-
-            int index = list.getSelectedIndex(); //get selected index
+			DefaultMutableTreeNode nodebuffer = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+            int index = tree.getRowForPath(tree.getSelectionPath()); //get selected index
             if (index == -1) { //no selection, so insert at beginning
                 index = 0;
             } else {           //add after the selected item
@@ -154,15 +152,15 @@ public class ListLivraison extends JPanel
             //employeeName.setText("");
 
             //Select the new item and make it visible.
-            list.setSelectedIndex(index);
-            list.ensureIndexIsVisible(index);
+            tree.setSelectionRow(index);
+            tree.makeVisible(tree.getSelectionPath());
         }
 
         //This method tests for string equality. You could certainly
         //get more sophisticated about the algorithm.  For example,
         //you might want to ignore white space and capitalization.
         protected boolean alreadyInList(String name) {
-            return listModel.contains(name);
+            return treeModel.equals(new DefaultMutableTreeNode(name));
         }
 
         //Required by DocumentListener.
@@ -198,21 +196,13 @@ public class ListLivraison extends JPanel
         }
     }
 
-    //This method is required by ListSelectionListener.
-    public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting() == false) {
-
-            if (list.getSelectedIndex() == -1) {
-            //No selection, disable fire button.
-        //        fireButton.setEnabled(false);
-
-            } else {
-            //Selection, enable the fire button.
-          //      fireButton.setEnabled(true);
-            }
-        }
-    }
-
+	
+	/*
+	 * 
+	 * USELESS !!!!!!!!!!!!!!!!!!!!
+	 * 
+	 * 
+	 */
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the
@@ -233,6 +223,12 @@ public class ListLivraison extends JPanel
         frame.setVisible(true);
     }
 
+	/*
+	 * 
+	 * USELESS !!!!!!!!!!!!!!!!!!!!
+	 * 
+	 * 
+	 */
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -243,12 +239,14 @@ public class ListLivraison extends JPanel
         });
     }
 
-    public JList getList() {
-        return list;
+	//Retourne l'arbre
+    public JTree getList() {
+        return tree;
     }
 
-    public DefaultListModel getListModel() {
-        return listModel;
+	//Retourne le model de l'arbre
+    public DefaultTreeModel getListModel() {
+        return treeModel;
     }
     
 }
