@@ -157,15 +157,15 @@ public class FeuilleDeRoute
 
 	    writer =  new PrintWriter(new BufferedWriter(new FileWriter(path)));
 	   
-	    writer.println("Rapport de la feuille de route pour le livreur.");
+	    writer.println("Rapport de la feuille de route pour le livreur.\n");
 	    writer.println("La tournee est divisee en "+timeZones.size()+" creneaux.");
 	    for(Schedule s: timeZones)
 	    {
-		    writer.println("Le prochain creneau s'�tend de" + Schedule.timeToString(s.startTime)+  " a "+Schedule.timeToString(s.endTime));
+		    writer.println("Le prochain creneau s'etend de" + Schedule.timeToString(s.startTime)+  " a "+Schedule.timeToString(s.endTime));
 		    writer.println("Dans ce creneau il y a "+s.getDeliveries().size()+ " livraisons a faire." );
 		    for(Delivery d : s.getDeliveries())
 		    {
-			    writer.println("La prochaine livraison aura lieu a "+d.getDest()+" ." );
+			    writer.println("La prochaine livraison aura lieu a "+d.getDest().getID()+" ." );
 			    writer.println("Arrivee prevue a:"+ d.getHeurePrevue());
 			    Integer previous=d.getPathToDest().getTrajectory().get(0).getID();
 		    	for(Arc a :d.getPathToDest().getArcs())
