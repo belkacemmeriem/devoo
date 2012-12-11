@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import sun.awt.Mutex;
-import java.util.concurrent.locks.ReadWriteLock;
-
 import model.EtatFDR;
 import model.FeuilleDeRoute;
 import model.Schedule;
@@ -17,7 +15,8 @@ public class ViewFeuilleDeRoute {
 	protected ViewMain mere;
 	protected ArrayList<ViewSchedule> schedules = new ArrayList<ViewSchedule>();
 	protected LinkedList<ViewArcChemin> pulsingArcs;
-	protected ReadWriteLock mtx_pulsingArcs;
+	protected Mutex mtx_pulsingArcs = new Mutex();
+	protected PulseThread pulseThread = null;
 	
 	public ViewFeuilleDeRoute(FeuilleDeRoute f, ViewMain vm) {
 		feuilleDeRoute = f;
@@ -38,18 +37,33 @@ public class ViewFeuilleDeRoute {
 		for (ViewSchedule vs : schedules) {
 			vs.update();
 		}
+		
+		updatePulsingArcs();
 	}
 	
-	protected List<ViewArcChemin> updateViewArcs()
+	protected List<ViewArcChemin> updatePulsingArcs()
 	{
+		if (pulseThread != null)
+		{
+			pulseThread.interrupt();
+			pulseThread = null;
+		}
+		
 		LinkedList<ViewArcChemin> list = new LinkedList<ViewArcChemin>();
 		for (ViewSchedule sch: schedules)
 		{
 			list.addAll(sch.getViewArcs());
 		}
-		mtx_pulsingArcs.writeLock().lock();
+		mtx_pulsingArcs.lock();
 		pulsingArcs = list;
-		mtx_pulsingArcs.writeLock().unlock();
+		mtx_pulsingArcs.unlock();
+		
+		
+		if (list.size() != 0)
+		{
+			pulseThread = new PulseThread(pulsingArcs, mtx_pulsingArcs, mere);
+			pulseThread.start();
+		}
 		return list;
 	}
 }
