@@ -12,7 +12,7 @@ public class ViewArcChemin {
 	ViewMain mere;
 	int epaisseur;
 	boolean late;
-	static int defaultEpaisseur = 3;
+	static int defaultEpaisseur = 1;
 	Color color;
 	
 	public ViewArcChemin(Arc a, ViewMain m, Color c, boolean retard) {

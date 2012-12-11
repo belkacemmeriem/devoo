@@ -102,8 +102,8 @@ public class ViewArc {
 		float normalX = (float) ((float)(y2-y1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
 		float normalY = (float) ((float)(x2-x1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
 	
-		int[] x = new int[]{x1,x2,x2+(int)(normalX*3),x1+(int)(normalX*3)};
-	    int[] y = new int[]{y1,y2,y2-(int)(normalY*3),y1-(int)(normalY*3)};
+		int[] x = new int[]{x1,x2,x2+(int)(normalX*4),x1+(int)(normalX*4)};
+	    int[] y = new int[]{y1,y2,y2-(int)(normalY*4),y1-(int)(normalY*4)};
 	    g.fillPolygon(x, y, x.length);
 		g2d.setColor(defaultColor);
 	    g.drawPolygon(x, y, x.length);
