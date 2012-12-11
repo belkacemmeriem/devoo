@@ -446,6 +446,11 @@ public class Fenetre extends Frame {
         jLabelAddLivCurr.setText("Aucune livraison sÃ©lectionnÃ©e");
 
         jButtonValiderLiv.setText("Ajouter");
+        jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jButtonValiderLivActionPerformed(evt);
+            }
+        });
 
         jPanelHoraires.setBackground(new java.awt.Color(51, 51, 51));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
@@ -616,16 +621,16 @@ public class Fenetre extends Frame {
 		if (controleur.getEtat() != Etat.VIDE) {
 			controleur.add();
 			String addr = jLabelAddLivCurr.getText();
-			if(listeLivraison.livExists(addr)){
+			if(listeLivraison.livExists(addr)) {
 				Object[] options = { "Ok" };
 				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-						"L'addresse sélectionnée est déjà dans la liste de livraison",
+						"L'addresse sï¿½lectionnï¿½e est dï¿½jï¿½ dans la liste de livraison",
 								"Addresse existante",
 								JOptionPane.ERROR_MESSAGE, 
 								JOptionPane.ERROR_MESSAGE, null,
 								options, options[0]);
 			}
-			else{
+			else {
 				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
 			}
 		}
