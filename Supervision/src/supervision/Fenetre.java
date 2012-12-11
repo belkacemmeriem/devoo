@@ -570,7 +570,8 @@ public class Fenetre extends Frame {
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
-		if (controleur.getEtat() == Etat.REMPLISSAGE) {
+		if (controleur.getEtat() != Etat.VIDE) {
+			controleur.add();
 			String addr = jLabelAddLivCurr.getText();
 			if(listeLivraison.livExists(addr)){
 				Object[] options = { "Ok" };
@@ -582,14 +583,13 @@ public class Fenetre extends Frame {
 								options, options[1]);
 			}
 			else{
-				controleur.add();
 				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
 			}
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 
 	private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
-		if (controleur.getEtat() == Etat.REMPLISSAGE) {
+		if (controleur.getEtat() != Etat.VIDE) {
 			controleur.del();
 			listeLivraison.remLiv();
 		}
