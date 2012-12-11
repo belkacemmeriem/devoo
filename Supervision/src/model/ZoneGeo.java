@@ -23,11 +23,16 @@ public class ZoneGeo
 	 */
 	public void addNode(Node node)
 	{
-			nodes.put(node.id, node);
-			xmin = Math.min(xmin, node.getX());
-			xmax = Math.max(xmax, node.getX());
-			ymin = Math.min(ymin, node.getY());
-			ymax = Math.max(ymax, node.getY());
+		if (nodes.containsKey(node.id))
+		{
+			throw new RuntimeException("ZoneGeo.addNode() : adding two nodes with the same id");
+		}
+		
+		nodes.put(node.id, node);
+		xmin = Math.min(xmin, node.getX());
+		xmax = Math.max(xmax, node.getX());
+		ymin = Math.min(ymin, node.getY());
+		ymax = Math.max(ymax, node.getY());
 	}
 	
 	
@@ -42,16 +47,26 @@ public class ZoneGeo
 	 */
 	public void addArc(int originID, int destID, int speed, int lenght, String name)
 	{
-		
-		Arc arc = new Arc(	nodes.get(originID),
-							nodes.get(destID),
-							speed,
-							lenght,
-							name );
-		
-		arcs.add(arc);
-		nodes.get(originID).addOutArc(arc);
-		nodes.get(destID).addInArc(arc);
+		if (!nodes.containsKey(originID))
+		{
+			throw new RuntimeException("ZoneGeo.addArc() : originID node does not exists already");
+		}
+		else if (!nodes.containsKey(destID))
+		{
+			throw new RuntimeException("ZoneGeo.addArc() : destID node does not exists already");
+		}
+		else
+		{
+			Arc arc = new Arc(	nodes.get(originID),
+								nodes.get(destID),
+								speed,
+								lenght,
+								name );
+			
+			arcs.add(arc);
+			nodes.get(originID).addOutArc(arc);
+			nodes.get(destID).addInArc(arc);
+		}
 	}
 	
 	/**

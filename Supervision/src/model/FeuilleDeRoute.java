@@ -48,6 +48,11 @@ public class FeuilleDeRoute
 		return timeZones;
 	}
 	
+	
+	/**
+	 * 
+	 * @return liste ordonnée de tous les noeuds (y compris ceux permetant de passer d'une livraison à l'autre)
+	 */
 	public ArrayList<Node> getFullPath()
 	{
 		ArrayList<Node> fullPath = new ArrayList<Node>();
@@ -75,6 +80,10 @@ public class FeuilleDeRoute
 		return retour;
 	}
 	
+	/**
+	 * 	@param n node dont on veut le schedule
+	 * 	@return schedule contenant le node n, null si le node n'est acutellement pas un point de livraison
+	 */
 	public Delivery getDelivery(Node n) {
 		for (Delivery d : getAllDeliveries()) {
 			if (d.getDest().getID() == n.getID()) {
@@ -89,7 +98,10 @@ public class FeuilleDeRoute
 		return etat;
 	}
 
-	
+	/**
+	 * (re)calcule la tournée optimale sur la base des données actuelles de la FeuilleDeRoute (schedules, deliveries).
+	 * @throws GraphException
+	 */
 	public void computeWithTSP() throws GraphException
 	{
 		GraphLivraisons gl = new GraphLivraisons(this);
@@ -116,7 +128,9 @@ public class FeuilleDeRoute
 		etat = EtatFDR.OPTIM;
 	}
 
-	
+	/**
+	 * calcule les HeurePrevue et RetardPrevu de toutes les delivery actuellement dans la FeuilleDeRoute
+	 */
 	protected void computeArrivalTimes()
 	{
 		int theTime = timeZones.get(0).getStartTime();
@@ -178,6 +192,10 @@ public class FeuilleDeRoute
 		schedule.appendDelivery(deliv);
 	}
 	
+	/**
+	 * supprime la livraison concernant node si elle existe, et recalcule le chemin entre les noeuds englobants
+	 * @param node noeud a supprimer
+	 */
 	public void delNode(Node node)
 	{
 		Delivery deliv = getDelivery(node);
@@ -190,24 +208,41 @@ public class FeuilleDeRoute
 			Delivery next = nextDelivery(deliv);
 			deliv.getSchedule().removeDelivery(deliv);
 			recalcPathTo(next);
+			computeArrivalTimes();
 		}
 
 	}
 	
+	/**
+	 * insère inserted avant reference, dans la meme plage horraire que celui-ci
+	 * @param inserted	noeud a inserer
+	 * @param reference	noeud vis-a-vis du quel on cherche à insérer
+	 */
 	public void insertNodeBefore(Node inserted, Delivery reference)
 	{
 		insertNode(inserted, reference, true);
 	}
 	
+	/**
+	 * insère inserted apres reference, dans la meme plage horraire que celui-ci
+	 * @param inserted	noeud a inserer
+	 * @param reference	noeud vis-a-vis du quel on cherche à insérer
+	 */
 	public void insertNodeAfter(Node inserted, Delivery reference)
 	{
 		insertNode(inserted, reference, false);
 	}
 	
 	
-	
+	/**
+	 * @param inserted	noeud a inserer
+	 * @param reference	noeud vis-a-vis du quel on cherche à insérer inserted
+	 * @param before	insertion de inserted avant reference si true, après sinon
+	 */
 	protected void insertNode(Node inserted, Delivery reference, boolean before)
 	{
+		boolean refFound = false;
+		
 		//recherche du bon schedule
 		for (Schedule sch : timeZones)
 		{
@@ -215,7 +250,7 @@ public class FeuilleDeRoute
 
 			if (schDeliveries.contains(reference))	//si le schedule contient la livraison de reference
 			{
-				
+				refFound = true;
 				
 			//insertion du noeud dans le schedule
 				Delivery newDelivery = new Delivery(inserted, sch);
@@ -237,14 +272,20 @@ public class FeuilleDeRoute
 			//re-calcul du chemin suivant
 				recalcPathTo(nextDelivery(newDelivery));
 				
+				computeArrivalTimes();
+				
 				etat = EtatFDR.MODIF;
 			}
 		}
-		throw new RuntimeException("FeuilleDeRoute.insertNode(): reference delivery not found");
+		if (!refFound)
+			throw new RuntimeException("FeuilleDeRoute.insertNode(): reference delivery not found");
 	}
 	
 	
-	
+	/**
+	 * @param delivery
+	 * @return delivery precedant la delivery passée en parametre
+	 */
 	protected Delivery previousDelivery(Delivery delivery)
 	{
 		int idxSch = -1;
@@ -280,7 +321,10 @@ public class FeuilleDeRoute
 		return returned;
 	}
 	
-	
+	/**
+	 * @param delivery
+	 * @return delivery suivant la delivery passée en parametre
+	 */
 	protected Delivery nextDelivery(Delivery delivery)
 	{
 		int idxSch = -1;
@@ -316,7 +360,9 @@ public class FeuilleDeRoute
 	}
 
 
-
+	/**
+	 * @param delivery delivery dont le PathToDest doit etre recalculé
+	 */
 	protected void recalcPathTo(Delivery delivery)
 	{
 		//recherche chemin
