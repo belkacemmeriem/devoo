@@ -8,6 +8,7 @@ import model.Node;
 public class ViewNode {
 	Node node;
 	ViewMain mere;
+	boolean square;
 	int radius;
 	int myDefaultRadius;
 	static int defaultRadius = 5;
@@ -16,9 +17,10 @@ public class ViewNode {
 
 	static Color defaultColor = new Color(0, 0, 0);
 	
-	public ViewNode(Node n, ViewMain m) {
+	public ViewNode(Node n, ViewMain m, boolean sqr) {
 		node = n;
 		mere = m;
+		square = sqr;
 		myDefaultRadius = defaultRadius;
 		myDefaultColor = defaultColor;
 		setDefault();
@@ -69,6 +71,10 @@ public class ViewNode {
 		int ypixel = mere.ypix(node.getY());
 		
 		g.setColor(color); // boule noires
-		g.fillOval(xpixel-radius/2, ypixel-radius/2, radius, radius);
+		if (square)
+			g.fillRect(xpixel-radius/2, ypixel-radius/2, radius, radius);
+		else
+			g.fillOval(xpixel-radius/2, ypixel-radius/2, radius, radius);
+		
 	}
 }

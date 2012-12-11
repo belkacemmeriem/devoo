@@ -18,7 +18,7 @@ public class ViewZoneGeo {
 		zonegeo = zg;
 		mere = m;
 		for (Node n : zonegeo.getNodes().values()) {
-			ViewNode vn = new ViewNode(n, mere);
+			ViewNode vn = new ViewNode(n, mere, false);
 			if (n.getID() == zonegeo.getWarehouseID()) {
 				vn.setMyDefaultColor(new Color(0, 0, 255));
 				vn.setMyDefaultRadius(8);

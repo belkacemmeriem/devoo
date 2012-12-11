@@ -23,7 +23,7 @@ public class ViewDelivery {
 		mere = m;
 		
 		Node destNode = delivery.getDest();
-		dest = new ViewNode(destNode, mere);
+		dest = new ViewNode(destNode, mere, delivery.isRetardPrevu());
 		dest.setMyDefaultColor(delivery.getSchedule().getColor());
 		dest.setMyDefaultRadius(8);
 		dest.setDefault();
