@@ -9,18 +9,24 @@ import javax.swing.tree.*;
 import model.Schedule;
 
 /* ListLivraison.java requires no other files. */
-public class ListLivraison extends JPanel
-                      implements TreeSelectionListener {
+public class ListLivraison extends JPanel {
+	
     private JTree tree;
     private DefaultTreeModel treeModel;
     private ArrayList<Schedule> schedules;
+	private JButton jButtonSupprimer;
+    private ArrayList<Integer> idSchedules; /*numero de ligne de la Jlist 
+    ou commence la liste des livraisons de la plage horaire*/
 
     public ListLivraison(){
         super(new BorderLayout());
     }
     
-	
-	//Teste la présence d'un noeud dans l'arbre par l'id 
+    public void setjButtonSupprimer(JButton jb){
+    	this.jButtonSupprimer=jb;
+    }
+    
+	//Teste la pr�sence d'un noeud dans l'arbre par l'id 
     public boolean livExists(String addr){
 		//recherche de la racine
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
@@ -31,7 +37,7 @@ public class ListLivraison extends JPanel
 			nodeBuffer = (DefaultMutableTreeNode)treeModel.getChild(root, i);
 			for(int j = 0;j<treeModel.getChildCount(nodeBuffer);j++){
 				if(addr.equals(((DefaultMutableTreeNode)treeModel.getChild(nodeBuffer, j)).toString())){
-					//noeud trouvé
+					//noeud trouv�
 					return true;
 				}
 			}
@@ -39,7 +45,7 @@ public class ListLivraison extends JPanel
     	return false;
     }
     
-	//Récupère l'id d'une adresse de livraison
+	//R�cup�re l'id d'une adresse de livraison
     private Integer getIdSchedule(Schedule schedule){
 		
     	for(int i = 0;i<schedules.size();i++){
@@ -52,19 +58,19 @@ public class ListLivraison extends JPanel
     
 	
     public void addLiv (Schedule schedule, String addr){
-		//récupération de l'indice du noeud de plage horaire voulue
+		//r�cup�ration de l'indice du noeud de plage horaire voulue
     	Integer idSchedule=getIdSchedule(schedule);
-		//récupère le noeud relatif à une plage horaire
+		//r�cup�re le noeud relatif � une plage horaire
 		DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(idSchedule);
-		//insère un noeud dans la plage horaire trouvée au dessus
+		//ins�re un noeud dans la plage horaire trouv�e au dessus
     	treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
     }
     
     /*Supprimer une livraison de la liste*/
     public void remLiv (){
-		//récupère le noeud sélectionné
+		//r�cup�re le noeud s�lectionn�
     	DefaultMutableTreeNode node = ((DefaultMutableTreeNode)tree.getLastSelectedPathComponent());
-    	//System.out.println("node supprimé "+node);
+    	//System.out.println("node supprim� "+node);
 		
 		//supprime le noeud en question
     	treeModel.removeNodeFromParent(node);
@@ -72,43 +78,42 @@ public class ListLivraison extends JPanel
     
     public void setSchedule(ArrayList<Schedule> aschedules) {
         schedules = aschedules;
-		//définition de la racine de l'arbre et déclaration du model de l'arbre (contient la totalité des données et conditionne le comportement de l'arbre)
+		//d�finition de la racine de l'arbre et declaration du model de l'arbre (contient la totalite des donnees et conditionne le comportement de l'arbre)
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Plages horaires");
         treeModel = new DefaultTreeModel(root);
 		
-		//créée les noeuds relatifs aux plages horaires
+		//creee les noeuds relatifs aux plages horaires
         for(int i=0;i<schedules.size();i++){
 			DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode(schedules.get(i).getSliceString());
 			//treeNode.setAllowsChildren(true);
             treeModel.insertNodeInto(treeNode, root, i);
         }
         
-        //créée l'arbre, édite son mode de fonctionnement, son état initial et le met dans le scrollpane
+        //creee l'arbre, edite son mode de fonctionnement, son etat initial et le met dans le scrollpane
         tree = new JTree(treeModel);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.setSelectionPath(new TreePath(root));
-        tree.addTreeSelectionListener(this);
-        //tree.setVisibleRowCount(5);
         JScrollPane listScrollPane = new JScrollPane(tree);
-
         add(listScrollPane, BorderLayout.CENTER);
+
+        /*listener qui detecte une selection sur la liste
+        et enable le bouton supprimer s'il s'agit d'une livraison*/
+    	tree.addTreeSelectionListener(new TreeSelectionListener() {
+			
+			@Override
+			public void valueChanged(TreeSelectionEvent e) {
+				
+				//la ligne selectionnee est une livraison?
+				if(((DefaultMutableTreeNode)tree.getLastSelectedPathComponent()).getLevel()>1){
+					//System.out.println("liv");
+					jButtonSupprimer.setEnabled(true);
+				}
+				else{
+					jButtonSupprimer.setEnabled(false);
+				}
+			}
+		});
     }
-
-	@Override
-	public void valueChanged(TreeSelectionEvent e) {
-        if (e.isAddedPath() == false) {
-
-            if (tree.isSelectionEmpty()) {
-            //No selection, disable fire button.
-        //        fireButton.setEnabled(false);
-
-            } else {
-            //Selection, enable the fire button.
-          //      fireButton.setEnabled(true);
-            }
-        }
-	}
-
 	
 	/*
 	 * 

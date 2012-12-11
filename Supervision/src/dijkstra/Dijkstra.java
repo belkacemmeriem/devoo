@@ -41,7 +41,7 @@ public class Dijkstra {
         for(Node v : theGraph.getNodes().values())
         {
             PriorityNode newNode = new PriorityNode(Infinity,v.getID());
-            //Q.add(newNode);
+            Q.add(newNode);
         }
         PriorityNode aNode =  new PriorityNode(0,source.getID());
         Q.add(aNode);

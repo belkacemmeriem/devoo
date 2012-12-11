@@ -149,6 +149,7 @@ public class Fenetre extends Frame {
 			jToggleButtonSchedules.get(i).addActionListener(a);
 			jPanelHoraires.add(jToggleButtonSchedules.get(i));
 			listeLivraison = new ListLivraison();
+			listeLivraison.setjButtonSupprimer(jButtonSupprimerLiv);
 			listeLivraison.setSchedule(schedules);
 			jPaneLivraisons.add(listeLivraison);
 		}
@@ -398,7 +399,7 @@ public class Fenetre extends Frame {
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
 
-        jButtonGenTourn.setText("Générer tournée");
+        jButtonGenTourn.setText("Generer tournee");
         jButtonGenTourn.setPreferredSize(new java.awt.Dimension(113, 20));
         jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -441,12 +442,12 @@ public class Fenetre extends Frame {
             }
         });
 
-        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
+        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
 
         jButtonValiderLiv.setText("Ajouter");
-        jButtonValiderLiv.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButtonValiderLivMouseReleased(evt);
+        jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jButtonValiderLivActionPerformed(evt);
             }
         });
 
@@ -455,13 +456,13 @@ public class Fenetre extends Frame {
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison précedente :");
+        jLabelLivPrec.setText("Livraison precedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
+        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
+        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
 
         insertBeforeButton.setToolTipText("");
 
@@ -616,53 +617,35 @@ public class Fenetre extends Frame {
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
-		if (controleur.getEtat() == Etat.REMPLISSAGE) {
+		if (controleur.getEtat() != Etat.VIDE) {
+			controleur.add();
 			String addr = jLabelAddLivCurr.getText();
-			if(listeLivraison.livExists(addr)){
+			if(listeLivraison.livExists(addr)) {
 				Object[] options = { "Ok" };
 				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-						"Addresse existante",
-								"Confirmation de changement de zone",
+						"L'addresse s�lectionn�e est d�j� dans la liste de livraison",
+								"Addresse existante",
 								JOptionPane.ERROR_MESSAGE, 
 								JOptionPane.ERROR_MESSAGE, null,
-								options, options[1]);
+								options, options[0]);
 			}
-			else{
-				controleur.add();
+			else {
 				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
 			}
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 
 	private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
-		if (controleur.getEtat() == Etat.REMPLISSAGE) {
+		if (controleur.getEtat() != Etat.VIDE) {
 			controleur.del();
 			listeLivraison.remLiv();
+			jButtonSupprimerLiv.setEnabled(false);
 		}
 	}//GEN-LAST:event_jButtonSupprimerLivActionPerformed
 
 private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_insertAfterButtonActionPerformed
-
-private void jButtonValiderLivMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonValiderLivMouseReleased
-		if (controleur.getEtat() == Etat.REMPLISSAGE) {
-			String addr = jLabelAddLivCurr.getText();
-			if(listeLivraison.livExists(addr)){
-				Object[] options = { "Ok" };
-				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-						"Addresse existante",
-								"Confirmation de changement de zone",
-								JOptionPane.ERROR_MESSAGE, 
-								JOptionPane.ERROR_MESSAGE, null,
-								options, options[1]);
-			}
-			else{
-				controleur.add();
-				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
-			}
-		}
-}//GEN-LAST:event_jButtonValiderLivMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton insertAfterButton;
