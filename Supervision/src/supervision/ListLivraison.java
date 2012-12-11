@@ -36,6 +36,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
+
 import model.Schedule;
 
 /* ListLivraison.java requires no other files. */
@@ -44,11 +45,16 @@ public class ListLivraison extends JPanel
     private JList list;
     private DefaultListModel listModel;
     private ArrayList<Schedule> schedules;
+	private JButton jButtonSupprimer;
     private ArrayList<Integer> idSchedules; /*numero de ligne de la Jlist 
     ou commence la liste des livraisons de la plage horaire*/
 
     public ListLivraison(){
         super(new BorderLayout());
+    }
+    
+    public void setjButtonSupprimer(JButton jb){
+    	this.jButtonSupprimer=jb;
     }
     
     public boolean livExists(String addr){
@@ -71,7 +77,8 @@ public class ListLivraison extends JPanel
     
     public void addLiv (Schedule schedule, String addr){
     	Integer idSchedule=getIdSchedule(schedule);
-    	listModel.add(idSchedules.get(idSchedule)+1, addr);
+    	int k = idSchedules.get(idSchedule)+1;
+    	listModel.add(k, addr);
     	
     	//MAJ de idschedules
     	for(int i =idSchedule+1;i<idSchedules.size();i++){
@@ -116,6 +123,31 @@ public class ListLivraison extends JPanel
         JScrollPane listScrollPane = new JScrollPane(list);
 
         add(listScrollPane, BorderLayout.CENTER);
+
+        /*listener qui détecte une selection sur la liste
+        et enable le bouton supprimer s'il s'agit d'une livraison*/
+    	list.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int idsel=list.getSelectedIndex();
+				boolean liv;
+				liv=true;
+				for(int j=0;j<idSchedules.size();j++){
+					if(idSchedules.get(j)==idsel){
+						liv=false;
+					}
+				}
+				//le ligne selectionnée est une livraison?
+				if(liv){
+					//System.out.println("liv");
+					jButtonSupprimer.setEnabled(true);
+				}
+				else{
+					jButtonSupprimer.setEnabled(false);
+				}
+			}
+		});
     }
 
     //This listener is shared by the text field and the hire button.
