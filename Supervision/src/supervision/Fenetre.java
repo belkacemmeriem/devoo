@@ -307,7 +307,7 @@ public class Fenetre extends Frame {
 			Calendar c = Calendar.getInstance ();
 			file = new File(fileExtension + "/Rapport - "+ c.getTime().toString()+".txt");
 		}
-
+		
 		try
 		{
 			writer = new BufferedWriter( new FileWriter(file));
@@ -329,7 +329,9 @@ public class Fenetre extends Frame {
 				}
 			}
 			catch (IOException e)
-			{e.printStackTrace(); }
+			{
+				
+			}
 		}
 		return file;
 	}
@@ -400,7 +402,7 @@ public class Fenetre extends Frame {
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
 
-        jButtonGenTourn.setText("Générer tournée");
+        jButtonGenTourn.setText("Generer tournee");
         jButtonGenTourn.setPreferredSize(new java.awt.Dimension(113, 20));
         jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -443,7 +445,7 @@ public class Fenetre extends Frame {
             }
         });
 
-        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
+        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
 
         jButtonValiderLiv.setText("Ajouter");
         jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
@@ -457,13 +459,13 @@ public class Fenetre extends Frame {
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison précedente :");
+        jLabelLivPrec.setText("Livraison precedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
+        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
+        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
 
         insertBeforeButton.setToolTipText("");
 

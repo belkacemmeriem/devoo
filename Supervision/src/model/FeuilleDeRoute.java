@@ -166,17 +166,17 @@ public class FeuilleDeRoute
 		    for(Delivery d : s.getDeliveries())
 		    {
 			    writer.println("La prochaine livraison aura lieu a "+d.getDest().getID()+" ." );
-			    writer.println("Arrivee prevue a:"+ d.getHeurePrevue());
+			    writer.println("Arrivee prevue a  "+ Schedule.timeToString(d.getHeurePrevue()));
 			    Integer previous=d.getPathToDest().getTrajectory().get(0).getID();
 		    	for(Arc a :d.getPathToDest().getArcs())
 		    	{
-		    		writer.print("Passer par le point :"+ a.getDest().getID());
+		    		writer.print("Passer par le point "+ a.getDest().getID());
 					writer.println(" en empruntant la rue "+a.getName()+".");
 		    	}
 			    writer.println("Quand vous serez arrive, vous disposez de 15 minutes pour livrer le colis au client.");
 		    }
 	    }
-
+	    writer.println("Toutes les livraisons ont ete faites, la tournee est finie.");
 	    writer.close();
 	}
 
