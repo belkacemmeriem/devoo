@@ -150,6 +150,7 @@ public class Fenetre extends Frame {
 			jToggleButtonSchedules.get(i).addActionListener(a);
 			jPanelHoraires.add(jToggleButtonSchedules.get(i));
 			listeLivraison = new ListLivraison();
+			listeLivraison.setjButtonSupprimer(jButtonSupprimerLiv);
 			listeLivraison.setSchedule(schedules);
 			jPaneLivraisons.add(listeLivraison);
 		}
@@ -617,11 +618,11 @@ public class Fenetre extends Frame {
 			if(listeLivraison.livExists(addr)){
 				Object[] options = { "Ok" };
 				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-						"Addresse existante",
-								"Confirmation de changement de zone",
+						"L'addresse sélectionnée est déjà dans la liste de livraison",
+								"Addresse existante",
 								JOptionPane.ERROR_MESSAGE, 
 								JOptionPane.ERROR_MESSAGE, null,
-								options, options[1]);
+								options, options[0]);
 			}
 			else{
 				controleur.add();
@@ -634,6 +635,7 @@ public class Fenetre extends Frame {
 		if (controleur.getEtat() == Etat.REMPLISSAGE) {
 			controleur.del();
 			listeLivraison.remLiv();
+			jButtonSupprimerLiv.setEnabled(false);
 		}
 	}//GEN-LAST:event_jButtonSupprimerLivActionPerformed
 
