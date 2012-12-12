@@ -98,6 +98,7 @@ public class Controleur {
 	}
 
 	public void exportReport(File path) {
+		if(path!= null)
 		try {
 			feuilleDeRoute.generateReport(path);
 		} catch (IOException e) {

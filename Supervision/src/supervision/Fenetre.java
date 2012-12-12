@@ -122,8 +122,7 @@ public class Fenetre extends Frame {
 
 		for(int i =0;i<schedules.size();i++)
 		{
-			String s = ""+(schedules.get(i).getStartTime()/60)+"h - "+
-					+(schedules.get(i).getEndTime()/60)+"h";
+			String s = schedules.get(i).getSliceString();
 			jToggleButtonSchedules.add(new JToggleButton(s));
 			ActionListener a = new ActionListener() {
 
@@ -400,7 +399,7 @@ public class Fenetre extends Frame {
         jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
 
-        jButtonGenTourn.setText("Générer tournée");
+        jButtonGenTourn.setText("Generer tournee");
         jButtonGenTourn.setPreferredSize(new java.awt.Dimension(113, 20));
         jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -443,7 +442,7 @@ public class Fenetre extends Frame {
             }
         });
 
-        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
+        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
 
         jButtonValiderLiv.setText("Ajouter");
         jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
@@ -457,13 +456,13 @@ public class Fenetre extends Frame {
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison précedente :");
+        jLabelLivPrec.setText("Livraison precedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
+        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
+        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
 
         insertBeforeButton.setToolTipText("insérer avant...");
         insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -573,7 +572,7 @@ public class Fenetre extends Frame {
                 .addGap(64, 64, 64))
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 54, Short.MAX_VALUE))
         );
         jPanelDroiteLayout.setVerticalGroup(
             jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
