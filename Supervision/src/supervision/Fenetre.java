@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Vector;
 
 import javax.swing.*;
 import model.Schedule;
@@ -64,17 +65,24 @@ public class Fenetre extends Frame {
 //		private ArrayList<JToggleButton> jToggleButtonSchedules;
 //		private Menu menuFichier;
 //		private Menu menuEdition;
+//	    private javax.swing.JButton insertBeforeButton;
+//		private javax.swing.JButton insertAfterButton;
+		
 		if (controleur == null)
 			return;
 		
 		switch (controleur.getEtat()) {
 		case VIDE:
+			insertBeforeButton.setEnabled(false);
+			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(false);
 			jButtonSupprimerLiv.setEnabled(false);
 			jButtonValiderLiv.setEnabled(false);
 			break;
 		
 		case REMPLISSAGE:
+			insertBeforeButton.setEnabled(false);
+			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(true);
 			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
 			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
@@ -91,11 +99,13 @@ public class Fenetre extends Frame {
 			break;
 			
 		case MODIFICATION:
+			insertBeforeButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
+			insertAfterButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			jButtonGenTourn.setEnabled(true);
 			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
-			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
+			jButtonValiderLiv.setEnabled(false);
 			for (JToggleButton jtb : jToggleButtonSchedules)
-				jtb.setEnabled(controleur.nodeSelected());
+				jtb.setEnabled(false);
 			jLabelAddLivPrec.setEnabled(false);
 			jLabelAddLivSuiv.setEnabled(false);
 			jLabelLivPrec.setEnabled(false);
@@ -106,6 +116,11 @@ public class Fenetre extends Frame {
 					" "+CHAMP_INDISP_CREA);
 			break;
 		}
+	}
+	
+	public void setInsertButton(int i) {
+		insertBeforeButton.setSelected(i == 1);
+		insertAfterButton.setSelected(i == 2);
 	}
 	
 	public void setSchedule(Schedule schedule) {
@@ -171,6 +186,18 @@ public class Fenetre extends Frame {
 		/*Combo box de la zone
 		 * On demande confirmation quand l'utilisateur veut changer de zone
 		 */
+		Vector<String> listPlan = new Vector<String>();
+		File folder = new File("./content/");
+		File[] listOfFiles = folder.listFiles();
+		for (File file : listOfFiles) {
+		    if (! file.isDirectory()) {
+		        String name = file.getName();
+		        if (name.startsWith("plan") && name.endsWith(".xml"))
+		        	listPlan.add(name.substring(0, name.length()-4));
+		    }
+		}
+
+		jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(listPlan));
 		selectedZone = jComboBoxZone.getSelectedIndex();
 		ItemListener itemListenerZone = new ItemListener() {
 
@@ -201,8 +228,8 @@ public class Fenetre extends Frame {
 						}
 						else
 						{
-							controleur.setEtat(Etat.REMPLISSAGE);
-							update();
+							File path = new File("./content/" + e.getItem() + ".xml");
+							controleur.loadZone(path);
 							selectedZone=jComboBoxZone.getSelectedIndex();
 						}
 					}
@@ -378,8 +405,8 @@ public class Fenetre extends Frame {
         jLabelAddLivPrec = new javax.swing.JLabel();
         jLabelLivSuiv = new javax.swing.JLabel();
         jLabelAddLivSuiv = new javax.swing.JLabel();
-        insertBeforeButton = new javax.swing.JButton();
-        insertAfterButton = new javax.swing.JButton();
+        insertBeforeButton = new javax.swing.JToggleButton();
+        insertAfterButton = new javax.swing.JToggleButton();
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
@@ -396,7 +423,6 @@ public class Fenetre extends Frame {
         jPanelBoutonsGen.setBackground(new java.awt.Color(51, 51, 51));
         jPanelBoutonsGen.setForeground(new java.awt.Color(51, 51, 51));
 
-        jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
 
         jButtonGenTourn.setText("Generer tournee");
@@ -464,14 +490,14 @@ public class Fenetre extends Frame {
 
         jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
 
-        insertBeforeButton.setToolTipText("insérer avant...");
+        insertBeforeButton.setText("insérer avant...");
         insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	insertBeforeButtonActionPerformed(evt);
             }
         });
 
-        insertAfterButton.setToolTipText("insérer après...");
+        insertAfterButton.setText("insérer après...");
         insertAfterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertAfterButtonActionPerformed(evt);
@@ -650,15 +676,19 @@ public class Fenetre extends Frame {
 
 	private void insertBeforeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 		// TODO add your handling code here:
+		System.out.println("BTN BEFORE");
+		controleur.setInsertButton(1);
 	}//GEN-LAST:event_insertAfterButtonActionPerformed
 	
 	private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 		// TODO add your handling code here:
+		System.out.println("BTN AFTER");
+		controleur.setInsertButton(2);
 	}//GEN-LAST:event_insertAfterButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton insertAfterButton;
-    private javax.swing.JButton insertBeforeButton;
+    private javax.swing.JToggleButton insertAfterButton;
+    private javax.swing.JToggleButton insertBeforeButton;
     private javax.swing.JButton jButtonGenTourn;
     private javax.swing.JButton jButtonSupprimerLiv;
     private javax.swing.JButton jButtonValiderLiv;

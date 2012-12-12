@@ -29,6 +29,7 @@ public class Controleur {
 	ZoneGeo zonegeo;
 	FeuilleDeRoute feuilleDeRoute;
 	Object selected, highlighted;
+	int insertButton = 0;
 	Schedule selectedSchedule;
 
 	Etat etat = Etat.VIDE;
@@ -120,7 +121,6 @@ public class Controleur {
 				s.setDefault();
 			}
 		}
-		obj = null;
 	}
 
 	public int click(int x, int y, int button) {
@@ -134,11 +134,26 @@ public class Controleur {
 				deselect(selected);                             
 			}
 			else if (clicked instanceof ViewNode) {
-				deselect(highlighted);
-				deselect(selected);
-				selected = clicked;
-				System.out.println("selected ok");
 				ViewNode vn = (ViewNode) clicked;
+				deselect(selected);
+				deselect(highlighted);
+				System.out.println("CLIK NODE");
+				highlighted = null;
+				if (etat == Etat.MODIFICATION && insertButton != 0
+						&& selected != null && selected instanceof ViewNode) {
+					ViewNode vns = (ViewNode) selected;
+					Delivery d = feuilleDeRoute.getDelivery(vn.getNode());
+					System.out.println("COND REUN");
+					if (insertButton == 1) {
+						// insert before
+						feuilleDeRoute.insertNodeBefore(vns.getNode(), d);
+					} else if (insertButton == 2) {
+						// insert after
+						feuilleDeRoute.insertNodeAfter(vns.getNode(), d);
+					}
+					viewmain.updateFeuilleDeRoute();
+				}
+				selected = clicked;
 				vn.setColor(new Color(255, 0, 0));
 				vn.setRadius(11);
 				Delivery deliv = feuilleDeRoute.getDelivery(vn.getNode());
@@ -149,8 +164,9 @@ public class Controleur {
 				retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
-				deselect(highlighted);
 				deselect(selected);
+				deselect(highlighted);
+				highlighted = null;
 				selected = clicked;
 				ViewArc va = (ViewArc) clicked;
 				va.setColor(new Color(255, 0, 0));
@@ -158,6 +174,7 @@ public class Controleur {
 			}
 		}
 
+		setInsertButton(0);
 		viewmain.repaint();
 		fenetre.update();
 		return retour;
@@ -168,8 +185,7 @@ public class Controleur {
 		{
 			Object high = viewmain.findAt(x, y, false);
 			if (high != null && high == selected) {
-				System.out.println("high is selected");
-				highlighted = null;
+				deselect(highlighted);
 			}
 			else if (high == null) {
 				deselect(highlighted);
@@ -178,15 +194,14 @@ public class Controleur {
 				deselect(highlighted);
 				highlighted = high;
 				ViewNode vn = (ViewNode) high;
-				vn.setColor(new Color(255, 255, 100));
-				vn.setRadius(11);
+				vn.setColor(new Color(255, 255, 0));
+				vn.setRadius(14);
 			}
 			else if (high instanceof ViewArc) {
 				deselect(highlighted);
 				highlighted = high;
 				ViewArc va = (ViewArc) high;
-				va.setColor(new Color(255, 255, 100));
-				va.setEpaisseur(3);
+				va.setEpaisseur(4);
 			}
 		}
 
@@ -232,6 +247,12 @@ public class Controleur {
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
+	}
+
+	public void setInsertButton(int i) {
+		// TODO Auto-generated method stub
+		insertButton = i;
+		fenetre.setInsertButton(i);
 	}
 
 }

@@ -71,7 +71,7 @@ public class ViewZoneGeo {
 		
 		// en premier, test selection node
 		if (onlyArcs == false) { 
-			distMin = ViewNode.defaultRadius;
+			distMin = 7.0;
 			ViewNode clicked = null;
 			for (ViewNode vn : nodes) {
 				double dist = vn.distance(x, y);
