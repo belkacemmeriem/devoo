@@ -28,7 +28,7 @@ public class Controleur {
 	ViewMain viewmain;
 	ZoneGeo zonegeo;
 	FeuilleDeRoute feuilleDeRoute;
-	Object selected;
+	Object selected, highlighted;
 	Schedule selectedSchedule;
 
 	Etat etat = Etat.VIDE;
@@ -108,18 +108,18 @@ public class Controleur {
 		viewmain = vm;
 	}
 
-	public void deselect() {
-		if (selected != null) {
-			if (selected instanceof ViewNode) {
-				ViewNode s = (ViewNode) selected;
+	public void deselect(Object obj) {
+		if (obj != null) {
+			if (obj instanceof ViewNode) {
+				ViewNode s = (ViewNode) obj;
 				s.setDefault();
 			}
-			else if (selected instanceof ViewArc) {
-				ViewArc s = (ViewArc) selected;
+			else if (obj instanceof ViewArc) {
+				ViewArc s = (ViewArc) obj;
 				s.setDefault();
 			}
 		}
-		selected = null;
+		obj = null;
 	}
 
 	public int click(int x, int y, int button) {
@@ -129,11 +129,14 @@ public class Controleur {
 		{
 			Object clicked = viewmain.findAt(x, y, onlyArcs);
 			if (clicked == null) {
-				deselect();                             
+				deselect(highlighted);
+				deselect(selected);                             
 			}
 			else if (clicked instanceof ViewNode) {
-				deselect();
+				deselect(highlighted);
+				deselect(selected);
 				selected = clicked;
+				System.out.println("selected ok");
 				ViewNode vn = (ViewNode) clicked;
 				vn.setColor(new Color(255, 0, 0));
 				vn.setRadius(11);
@@ -145,7 +148,8 @@ public class Controleur {
 				retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
-				deselect();
+				deselect(highlighted);
+				deselect(selected);
 				selected = clicked;
 				ViewArc va = (ViewArc) clicked;
 				va.setColor(new Color(255, 0, 0));
@@ -156,6 +160,37 @@ public class Controleur {
 		viewmain.repaint();
 		fenetre.update();
 		return retour;
+	}
+	
+	public void highlight(int x, int y) {
+		if (etat != Etat.VIDE)
+		{
+			Object high = viewmain.findAt(x, y, false);
+			if (high != null && high == selected) {
+				System.out.println("high is selected");
+				highlighted = null;
+			}
+			else if (high == null) {
+				deselect(highlighted);
+			}
+			else if (high instanceof ViewNode) {
+				deselect(highlighted);
+				highlighted = high;
+				ViewNode vn = (ViewNode) high;
+				vn.setColor(new Color(255, 255, 100));
+				vn.setRadius(11);
+			}
+			else if (high instanceof ViewArc) {
+				deselect(highlighted);
+				highlighted = high;
+				ViewArc va = (ViewArc) high;
+				va.setColor(new Color(255, 255, 100));
+				va.setEpaisseur(3);
+			}
+		}
+
+		viewmain.repaint();
+		fenetre.update();
 	}
 
 	public void add() {

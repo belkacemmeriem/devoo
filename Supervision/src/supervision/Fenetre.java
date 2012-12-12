@@ -465,9 +465,14 @@ public class Fenetre extends Frame {
 
         jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
 
-        insertBeforeButton.setToolTipText("");
+        insertBeforeButton.setToolTipText("insérer avant...");
+        insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	insertBeforeButtonActionPerformed(evt);
+            }
+        });
 
-        insertAfterButton.setToolTipText("");
+        insertAfterButton.setToolTipText("insérer après...");
         insertAfterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertAfterButtonActionPerformed(evt);
@@ -644,9 +649,13 @@ public class Fenetre extends Frame {
 		}
 	}//GEN-LAST:event_jButtonSupprimerLivActionPerformed
 
-private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
-// TODO add your handling code here:
-}//GEN-LAST:event_insertAfterButtonActionPerformed
+	private void insertBeforeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
+		// TODO add your handling code here:
+	}//GEN-LAST:event_insertAfterButtonActionPerformed
+	
+	private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
+		// TODO add your handling code here:
+	}//GEN-LAST:event_insertAfterButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton insertAfterButton;

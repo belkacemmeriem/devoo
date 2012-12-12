@@ -10,9 +10,9 @@ public class PulseThread extends Thread
 	protected boolean running = true;
 	protected ViewMain mere;
 	
-	final int SLEEP_TIME = 80;
+	final int SLEEP_TIME = 100;
 	final int DEF_WIDTH = ViewArcChemin.defaultEpaisseur;
-	final int PULSE_WIDTH = 4;
+	final int PULSE_WIDTH = 5;
 	
     public void run()
     {

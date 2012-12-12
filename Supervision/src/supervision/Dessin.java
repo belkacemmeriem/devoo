@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -14,7 +15,7 @@ import views.ViewZoneGeo;
 import model.Node;
 import model.ZoneGeo;
 
-public class Dessin extends JPanel implements MouseListener {
+public class Dessin extends JPanel implements MouseListener, MouseMotionListener {
 	
 	protected ViewMain viewmain;
 	protected Controleur controleur;
@@ -22,6 +23,7 @@ public class Dessin extends JPanel implements MouseListener {
 	
 	public Dessin() {
 		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
 		viewmain = new ViewMain(this);
 	}
 	
@@ -34,29 +36,10 @@ public class Dessin extends JPanel implements MouseListener {
 		int id = controleur.click(e.getX(), e.getY(), e.getButton());
 		fenetre.nodeClicked(id);
 	}
-
+	
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+	public void mouseMoved(MouseEvent e) {
+		controleur.highlight(e.getX(), e.getY());
 	}
 	
 	@Override
@@ -69,8 +52,22 @@ public class Dessin extends JPanel implements MouseListener {
 		controleur = ctrl;
 	}
 
-        public void setFenetre(Fenetre fenetre) {
-            this.fenetre = fenetre;
-        }
+    public void setFenetre(Fenetre fenetre) {
+        this.fenetre = fenetre;
+    }
 
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {}
 }
