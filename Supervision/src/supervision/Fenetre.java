@@ -73,6 +73,7 @@ public class Fenetre extends Frame {
 		
 		switch (controleur.getEtat()) {
 		case VIDE:
+			menuFichier.getItem(0).setEnabled(false);
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(false);
@@ -81,13 +82,16 @@ public class Fenetre extends Frame {
 			break;
 		
 		case REMPLISSAGE:
+			menuFichier.getItem(0).setEnabled(false);
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
-			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
+			jButtonValiderLiv.setEnabled(controleur.nodeSelected()
+					&& controleur.getSelectedSchedule() != null
+					&& ! controleur.warehouseSelected());
 			for (JToggleButton jtb : jToggleButtonSchedules)
-				jtb.setEnabled(controleur.nodeSelected());
+				jtb.setEnabled(true);
 			jLabelAddLivPrec.setEnabled(false);
 			jLabelAddLivSuiv.setEnabled(false);
 			jLabelLivPrec.setEnabled(false);
@@ -99,10 +103,11 @@ public class Fenetre extends Frame {
 			break;
 			
 		case MODIFICATION:
+			menuFichier.getItem(0).setEnabled(true);
 			insertBeforeButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			insertAfterButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
 			jButtonValiderLiv.setEnabled(false);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(false);
@@ -269,7 +274,6 @@ public class Fenetre extends Frame {
 			}
 		};
 		ajoutItem("Generer rapport", menuFichier, a4);
-		menuFichier.getItem(0).disable();
 		ActionListener a5 = new ActionListener(){
 
 			@Override
@@ -644,7 +648,6 @@ public class Fenetre extends Frame {
 		controleur.genererTournee();
 		update();
 		//controleur.genererTournee();
-		menuFichier.getItem(0).enable();
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
@@ -676,13 +679,11 @@ public class Fenetre extends Frame {
 
 	private void insertBeforeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 		// TODO add your handling code here:
-		System.out.println("BTN BEFORE");
 		controleur.setInsertButton(1);
 	}//GEN-LAST:event_insertAfterButtonActionPerformed
 	
 	private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 		// TODO add your handling code here:
-		System.out.println("BTN AFTER");
 		controleur.setInsertButton(2);
 	}//GEN-LAST:event_insertAfterButtonActionPerformed
 

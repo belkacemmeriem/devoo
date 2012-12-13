@@ -39,6 +39,10 @@ public class FeuilleDeRoute
 		timeZones.add(retourSch);
 		
 	}
+	
+	public Delivery getWarehouse() {
+		return warehouseDelivery;
+	}
 
 	public ZoneGeo getZoneGeo() {
 		return zoneGeo;
