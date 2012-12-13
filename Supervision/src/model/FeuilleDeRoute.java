@@ -292,11 +292,9 @@ public class FeuilleDeRoute
 	 */
 	protected Delivery previousDelivery(Delivery delivery)
 	{
-		int idxSch = -1;
 		Delivery returned = null;
 		for (Schedule sch : timeZones)
 		{
-			idxSch++;
 			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
 
 			if (schDeliveries.contains(delivery))	//si le schedule contient la livraison de reference
@@ -305,13 +303,8 @@ public class FeuilleDeRoute
 				if (idx == 0)	//si premier element du schedule
 				{
 					
-					//recherche du dernier node du schedule précédent non vide
-					Schedule prevSched = prevNonemptySchedule(sch);	//dernier node du sch précédent		
-					if (prevSched == null)	//cas particulier de la 1ere deliv: bouclage sur warehouse
-					{
-						prevSched = retourSch;
-					}
-					returned = prevSched.getDeliveries().getLast();
+					//recherche du dernier node du schedule précédent non vide	
+					returned = prevNonemptySchedule(sch).getDeliveries().getLast();
 				}
 				else
 				{
@@ -361,43 +354,50 @@ public class FeuilleDeRoute
 	Schedule prevNonemptySchedule(Schedule sch)
 	{
 		int idx = timeZones.indexOf(sch);
-
+		Schedule prev = null;
 		if (idx == 0)
 		{
-			return null;
+			prev = retourSch;	//bouclage
 		}
 		else
 		{
-			if (timeZones.get(idx-1).getDeliveries().size() != 0)
-			{
-				return timeZones.get(idx-1);
-			}
-			else
-			{
-				return  prevNonemptySchedule(timeZones.get(idx-1));
-			}
+			prev = timeZones.get(idx-1);
+		}
+
+		
+		if (prev.getDeliveries().size() != 0)
+		{
+			return prev;
+		}
+		else
+		{
+			return  prevNonemptySchedule(timeZones.get(idx-1));
 		}
 	}
 	
 	Schedule nextNonemptySchedule(Schedule sch)
 	{
 		int idx = timeZones.indexOf(sch);
-		
-		if (timeZones.get(idx+1).getDeliveries().size() != 0)
+		Schedule next = null;
+		if (idx == 0)
 		{
-			return timeZones.get(idx+1);
+			next = retourSch;	//bouclage
 		}
 		else
 		{
-			if (idx == timeZones.size()-1)
-			{
-				return null;
-			}
-			else
-			{
-				return  prevNonemptySchedule(timeZones.get(idx+1));
-			}
+			next = timeZones.get(idx+1);
 		}
+
+		
+		if (next.getDeliveries().size() != 0)
+		{
+			return next;
+		}
+		else
+		{
+			return  nextNonemptySchedule(timeZones.get(idx+1));
+		}
+	
 	}
 
 	/**
@@ -410,6 +410,7 @@ public class FeuilleDeRoute
 		singleton.add(delivery.getDest());
 		ArrayList<Chemin> result = Dijkstra.solve(zoneGeo, previousDelivery(delivery).getDest(), singleton);
 		delivery.pathToDest = result.get(0);
+		
 	}
 
 }
