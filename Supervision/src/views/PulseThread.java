@@ -7,10 +7,11 @@ public class PulseThread extends Thread
 {
 	protected LinkedList<ViewArcChemin> pulsingArcs;
 	protected Mutex mtx_pulsingArcs;
+	protected Mutex mtx_sleepTime;
 	protected boolean running = true;
 	protected ViewMain mere;
 	
-	final int SLEEP_TIME = 100;
+	int sleepTime;
 	final int DEF_WIDTH = ViewArcChemin.defaultEpaisseur;
 	final int PULSE_WIDTH = 5;
 	
@@ -34,7 +35,7 @@ public class PulseThread extends Thread
     		i++;
     		try
 			{
-				Thread.sleep(SLEEP_TIME);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e)
 			{
                 Thread.currentThread().interrupt(); // Très important de réinterrompre
@@ -43,13 +44,22 @@ public class PulseThread extends Thread
     	}
     }
 	
+	public void setSleepTime(int sleepTime)
+	{
+		mtx_sleepTime.lock();
+		this.sleepTime = sleepTime;
+		mtx_sleepTime.unlock();
+	}
+
 	public PulseThread(LinkedList<ViewArcChemin> pulsingArcs,
 			Mutex mtx_pulsingArcs,
-			ViewMain mere)
+			ViewMain mere,
+			int sleepTime)
 	{
 		super();
 		this.pulsingArcs = pulsingArcs;
 		this.mtx_pulsingArcs = mtx_pulsingArcs;
 		this.mere = mere;
+		this.sleepTime = sleepTime;
 	}
 }

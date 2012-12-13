@@ -17,6 +17,7 @@ public class ViewFeuilleDeRoute {
 	protected LinkedList<ViewArcChemin> pulsingArcs;
 	protected Mutex mtx_pulsingArcs = new Mutex();
 	protected PulseThread pulseThread = null;
+	protected int pulseSleepTime = 100;
 	
 	public ViewFeuilleDeRoute(FeuilleDeRoute f, ViewMain vm) {
 		feuilleDeRoute = f;
@@ -41,6 +42,14 @@ public class ViewFeuilleDeRoute {
 		updatePulsingArcs();
 	}
 	
+	public void setPulseSleepTime(int sleepTime)
+	{
+		if (pulseThread != null)
+			pulseThread.setSleepTime(sleepTime);
+		
+		pulseSleepTime = sleepTime;
+	}
+	
 	protected List<ViewArcChemin> updatePulsingArcs()
 	{
 		if (pulseThread != null)
@@ -61,7 +70,7 @@ public class ViewFeuilleDeRoute {
 		
 		if (list.size() != 0)
 		{
-			pulseThread = new PulseThread(pulsingArcs, mtx_pulsingArcs, mere);
+			pulseThread = new PulseThread(pulsingArcs, mtx_pulsingArcs, mere, pulseSleepTime);
 			pulseThread.start();
 		}
 		return list;
