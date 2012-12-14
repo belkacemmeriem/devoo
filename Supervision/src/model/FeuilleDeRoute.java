@@ -153,7 +153,7 @@ public class FeuilleDeRoute
 	 */
 	protected void computeArrivalTimes()
 	{
-		int theTime = timeZones.get(0).getStartTime();
+		int theTime = 0;
 		for (Schedule sch : timeZones)
 		{
 			//pause attente début livraison
