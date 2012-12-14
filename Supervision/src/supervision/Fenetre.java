@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -56,24 +57,18 @@ public class Fenetre extends Frame {
 		creeMenu();
 		setFonts();
 		setPopups();
+		setKeyEvents();
 	}
 	
 	public void update() {
-//		private javax.swing.JButton jButtonGenTourn;
-//		private javax.swing.JButton jButtonSupprimerLiv;
-//		private javax.swing.JButton jButtonValiderLiv;
-//		private ArrayList<JToggleButton> jToggleButtonSchedules;
-//		private Menu menuFichier;
-//		private Menu menuEdition;
-//	    private javax.swing.JButton insertBeforeButton;
-//		private javax.swing.JButton insertAfterButton;
-		
 		if (controleur == null)
 			return;
 		
 		switch (controleur.getEtat()) {
 		case VIDE:
 			menuFichier.getItem(0).setEnabled(false);
+			menuEdition.getItem(0).setEnabled(false);
+			menuEdition.getItem(1).setEnabled(false);
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(false);
@@ -83,6 +78,8 @@ public class Fenetre extends Frame {
 		
 		case REMPLISSAGE:
 			menuFichier.getItem(0).setEnabled(false);
+			menuEdition.getItem(0).setEnabled(controleur.undoAble());
+			menuEdition.getItem(1).setEnabled(controleur.redoAble());
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(true);
@@ -104,6 +101,8 @@ public class Fenetre extends Frame {
 			
 		case MODIFICATION:
 			menuFichier.getItem(0).setEnabled(true);
+			menuEdition.getItem(0).setEnabled(controleur.undoAble());
+			menuEdition.getItem(1).setEnabled(controleur.redoAble());
 			insertBeforeButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			insertAfterButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			jButtonGenTourn.setEnabled(true);
@@ -182,12 +181,56 @@ public class Fenetre extends Frame {
 	public void setControleur(Controleur ctrl) {
 		controleur = ctrl;
 	}
+	
+	public void setKeyEvents() {
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		manager.addKeyEventDispatcher( new KeyEventDispatcher() {
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
+		        if(e.getID() == KeyEvent.KEY_TYPED) {
+		        	int k = (int) e.getKeyChar();
+		            switch (k) {
+		            case 26: // CTRL-Z
+		            	if(menuEdition.getItem(0).isEnabled())
+		            		controleur.undo();
+		            	break;
+		            	
+		            case 25: // CTRL-Y
+		            	if(menuEdition.getItem(1).isEnabled())
+		            		controleur.redo();
+		            	break;
+		            	
+		            case 10: // ENTER
+		    			if (jButtonValiderLiv.isEnabled())
+		    				controleur.add();
+		            	break;
+		            	
+		            case 127: // SUPPR
+		            	if (jButtonSupprimerLiv.isEnabled())
+		    				controleur.del();
+		            	break;
+		            
+		            case 19: // CTRL-S
+		            	if(menuFichier.getItem(0).isEnabled())
+		            		controleur.exportReport(trouverCheminRapport());
+		            	break;
+		            	
+		            case 15: // CTRL-O
+		            	if(menuFichier.getItem(1).isEnabled())
+		            		controleur.loadZone(ouvrirFichierXML());
+		            	break;
+		            }
+		        }
+		        return false;
+		    }
+		});
+	}
 
 	/**
 	 *  Associe les messages popups aux différentes actions qui les déclenchent
 	 * 
 	 */
-	private void setPopups(){
+	private void setPopups() {
 		/*Combo box de la zone
 		 * On demande confirmation quand l'utilisateur veut changer de zone
 		 */
@@ -263,41 +306,35 @@ public class Fenetre extends Frame {
 
 		menuFichier = new Menu("Fichier");
 		menuEdition = new Menu("Edition");
+		
 		ActionListener a4 = new ActionListener(){
-
 			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
+			public void actionPerformed(ActionEvent e) {
 				controleur.exportReport(trouverCheminRapport());
-				setControleur(controleur);
-
 			}
 		};
 		ajoutItem("Generer rapport", menuFichier, a4);
+		
 		ActionListener a5 = new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controleur.loadZone(ouvrirFichierXML());
-				setControleur(controleur);
 			}
 		};
 		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
 
 		ActionListener a6 = new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new UnsupportedOperationException("Not supported yet.");
+				controleur.undo();
 			}
 		};
 		ajoutItem("Undo", menuEdition, a6);
 
 		ActionListener a7 = new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new UnsupportedOperationException("Not supported yet.");
+				controleur.redo();
 			}
 		};
 		ajoutItem("Redo", menuEdition, a7);
@@ -309,12 +346,10 @@ public class Fenetre extends Frame {
 	}
 
 	private File trouverCheminRapport(){
-
 		//Opens filechooser
 		jFileChooserA  = new JFileChooser(JFileChooser.FILE_FILTER_CHANGED_PROPERTY); 
 		jFileChooserA.setDialogTitle("Choisir le dossier ou enregister le rapport");
 		jFileChooserA.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
 
 		if (jFileChooserA.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
 			return fileSaver(jFileChooserA);

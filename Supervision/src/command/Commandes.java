@@ -16,8 +16,11 @@ public class Commandes {
 			commandes.remove(i);
 		}
 		commandes.add(c);
-		c.redo();
 		indice++;
+	}
+	
+	public void clear() {
+		commandes.clear();
 	}
 
 	public boolean undo() {

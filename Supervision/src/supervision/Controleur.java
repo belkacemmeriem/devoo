@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import command.CommandeInsertNode;
+import command.Commandes;
+
 import parsexml.*;
 import model.Delivery;
 import model.FeuilleDeRoute;
@@ -24,17 +28,17 @@ import views.ViewNode;
 
 public class Controleur {
 
-	protected
-	ViewMain viewmain;
-	ZoneGeo zonegeo;
-	FeuilleDeRoute feuilleDeRoute;
-	Object selected, highlighted;
-	int insertButton = 0;
-	Schedule selectedSchedule;
+	protected Commandes commandes = new Commandes();
+	protected ViewMain viewmain;
+	protected ZoneGeo zonegeo;
+	protected FeuilleDeRoute feuilleDeRoute;
+	protected Object selected, highlighted;
+	protected int insertButton = 0;
+	protected Schedule selectedSchedule;
 
-	Etat etat = Etat.VIDE;
-	Fenetre fenetre;
-	ArrayList<Schedule> schedules;
+	protected Etat etat = Etat.VIDE;
+	protected Fenetre fenetre;
+	protected ArrayList<Schedule> schedules;
 
 	public Controleur() {
 	}
@@ -87,6 +91,7 @@ public class Controleur {
 				new ParseMapXML(path, zonegeo);
 				feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
 				etat = Etat.REMPLISSAGE;
+				commandes.clear();
 				viewmain.setZoneGeo(zonegeo,path);
 				viewmain.setFeuilleDeRoute(feuilleDeRoute);
 				viewmain.repaint();
@@ -146,11 +151,11 @@ public class Controleur {
 					Delivery d = feuilleDeRoute.getDelivery(vn.getNode());
 					System.out.println("COND REUN");
 					if (insertButton == 1) {
-						// insert before
 						feuilleDeRoute.insertNodeBefore(vns.getNode(), d);
+						commandes.add(new CommandeInsertNode(vns.getNode(), false, vn.getNode(), feuilleDeRoute));
 					} else if (insertButton == 2) {
-						// insert after
 						feuilleDeRoute.insertNodeAfter(vns.getNode(), d);
+						commandes.add(new CommandeInsertNode(vns.getNode(), true, vn.getNode(), feuilleDeRoute));
 					}
 					viewmain.updateFeuilleDeRoute();
 				}
@@ -216,6 +221,7 @@ public class Controleur {
 			if (d != null)
 				feuilleDeRoute.delNode(n);
 			feuilleDeRoute.addNode(n, selectedSchedule);
+			// com.add(new CommandAdd(n, selectedSchedule));
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
@@ -226,6 +232,7 @@ public class Controleur {
 		if (selected != null && selected instanceof ViewNode) {
 			Node n = ((ViewNode) selected).getNode();
 			feuilleDeRoute.delNode(n);
+			// com.add(new CommandDel(n));
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
@@ -255,6 +262,32 @@ public class Controleur {
 			i = 0; // toggle
 		insertButton = i;
 		fenetre.setInsertButton(i);
+	}
+	
+	public FeuilleDeRoute getFeuilleDeRoute() {
+		return feuilleDeRoute;
+	}
+	
+	public void undo() {
+		commandes.undo();
+		viewmain.updateFeuilleDeRoute();
+		viewmain.repaint();
+		fenetre.update();
+	}
+	
+	public boolean undoAble() {
+		return (commandes.getIndice() != 0);
+	}
+	
+	public void redo() {
+		commandes.redo();
+		viewmain.updateFeuilleDeRoute();
+		viewmain.repaint();
+		fenetre.update();
+	}
+	
+	public boolean redoAble() {
+		return (commandes.getIndice() != commandes.size());
 	}
 
 }

@@ -177,10 +177,14 @@ public class GraphLivraisons implements Graph {
 		SolutionState retour;
 		
 		long timeStart=Calendar.getInstance().getTimeInMillis();
+		
+		retour=tsp.solve(timeLimit, bound, this);
+		/*
 		while((retour=tsp.solve(timeLimit, bound, this))==SolutionState.SOLUTION_FOUND && (Calendar.getInstance().getTimeInMillis()-timeStart)< timeLimitTotal)
 		{
 			bound=tsp.getTotalCost();
 		}
+		*/
 		
 		if(retour==SolutionState.INCONSISTENT)
 		{
