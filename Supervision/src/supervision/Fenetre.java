@@ -87,8 +87,10 @@ public class Fenetre extends Frame {
 			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(controleur.nodeSelected());
+			jLabelAddLivCurr.setEnabled(false);
 			jLabelAddLivPrec.setEnabled(false);
 			jLabelAddLivSuiv.setEnabled(false);
+			jLabelLivCurr.setEnabled(false);
 			jLabelLivPrec.setEnabled(false);
 			jLabelLivSuiv.setEnabled(false);
 			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
@@ -654,26 +656,12 @@ public class Fenetre extends Frame {
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
 		if (controleur.getEtat() != Etat.VIDE) {
 			controleur.add();
-			/*String addr = jLabelAddLivCurr.getText();
-			if(listeLivraison.livExists(addr)) {
-				Object[] options = { "Ok" };
-				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-						"L'addresse s�lectionn�e est d�j� dans la liste de livraison",
-								"Addresse existante",
-								JOptionPane.ERROR_MESSAGE, 
-								JOptionPane.ERROR_MESSAGE, null,
-								options, options[0]);
-			}
-			else {
-				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
-			}*/
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 
 	private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
 		if (controleur.getEtat() != Etat.VIDE) {
 			controleur.del();
-			//listeLivraison.remLiv();
 			jButtonSupprimerLiv.setEnabled(false);
 		}
 	}//GEN-LAST:event_jButtonSupprimerLivActionPerformed
