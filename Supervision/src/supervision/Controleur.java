@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import parsexml.*;
 import model.Delivery;
 import model.FeuilleDeRoute;
@@ -219,6 +221,20 @@ public class Controleur {
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
+			ListLivraison listeLivraison = fenetre.getListLivraison();
+			String addr = n.getID().toString();
+			if(listeLivraison.livExists(addr)) {
+				Object[] options = { "Ok" };
+					int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
+								"L'addresse selectionnee est deja dans la liste de livraison",
+								"Addresse existante",
+								JOptionPane.ERROR_MESSAGE, 
+								JOptionPane.ERROR_MESSAGE, null,
+								options, options[0]);
+			}
+			else {
+				listeLivraison.addLiv(getSelectedSchedule(), addr);
+			}
 		}
 	}
 
@@ -229,6 +245,7 @@ public class Controleur {
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
+			fenetre.getListLivraison().remLiv();
 		}
 	}
 

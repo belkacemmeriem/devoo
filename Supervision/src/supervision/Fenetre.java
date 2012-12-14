@@ -13,7 +13,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
@@ -174,6 +173,11 @@ public class Fenetre extends Frame {
 		return (Dessin)jPanelPlan;
 	}
 
+	public ListLivraison getListLivraison()
+	{
+		return listeLivraison;
+	}	
+	
 	public void setControleur(Controleur ctrl) {
 		controleur = ctrl;
 	}
@@ -650,7 +654,7 @@ public class Fenetre extends Frame {
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
 		if (controleur.getEtat() != Etat.VIDE) {
 			controleur.add();
-			String addr = jLabelAddLivCurr.getText();
+			/*String addr = jLabelAddLivCurr.getText();
 			if(listeLivraison.livExists(addr)) {
 				Object[] options = { "Ok" };
 				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
@@ -662,23 +666,23 @@ public class Fenetre extends Frame {
 			}
 			else {
 				listeLivraison.addLiv(controleur.getSelectedSchedule(), addr);
-			}
+			}*/
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 
 	private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
 		if (controleur.getEtat() != Etat.VIDE) {
 			controleur.del();
-			listeLivraison.remLiv();
+			//listeLivraison.remLiv();
 			jButtonSupprimerLiv.setEnabled(false);
 		}
 	}//GEN-LAST:event_jButtonSupprimerLivActionPerformed
 
-	private void insertBeforeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
+	private void insertBeforeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
 		// TODO add your handling code here:
 		System.out.println("BTN BEFORE");
 		controleur.setInsertButton(1);
-	}//GEN-LAST:event_insertAfterButtonActionPerformed
+	}                                                 
 	
 	private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 		// TODO add your handling code here:
