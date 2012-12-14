@@ -375,7 +375,7 @@ public class FeuilleDeRoute
 		}
 		else
 		{
-			return  prevNonemptySchedule(timeZones.get(idx-1));
+			return  prevNonemptySchedule(prev);
 		}
 	}
 	
@@ -383,15 +383,8 @@ public class FeuilleDeRoute
 	{
 		int idx = timeZones.indexOf(sch);
 		Schedule next = null;
-		if (idx == 0)
-		{
-			next = retourSch;	//bouclage
-		}
-		else
-		{
-			next = timeZones.get(idx+1);
-		}
 
+		next = timeZones.get(idx+1);
 		
 		if (next.getDeliveries().size() != 0)
 		{
@@ -399,7 +392,7 @@ public class FeuilleDeRoute
 		}
 		else
 		{
-			return  nextNonemptySchedule(timeZones.get(idx+1));
+			return  nextNonemptySchedule(next);
 		}
 	
 	}
