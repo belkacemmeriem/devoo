@@ -102,7 +102,8 @@ public class FeuilleDeRoute
 	{
 		return etat;
 	}
-
+	
+	
 	/**
 	 * (re)calcule la tournée optimale sur la base des données actuelles de la FeuilleDeRoute (schedules, deliveries).
 	 * @throws GraphException
@@ -132,6 +133,20 @@ public class FeuilleDeRoute
 		computeArrivalTimes();
 		etat = EtatFDR.OPTIM;
 	}
+	
+	public void backToInit()
+	{
+		for (Schedule sch : timeZones)
+		{
+			for (Delivery deliv : sch.getDeliveries())
+			{
+				deliv.resetHeuresEtChemin();
+			}
+		}
+		etat = EtatFDR.INIT;
+	}
+	
+	
 
 	/**
 	 * calcule les HeurePrevue et RetardPrevu de toutes les delivery actuellement dans la FeuilleDeRoute
