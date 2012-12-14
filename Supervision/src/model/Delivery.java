@@ -51,6 +51,12 @@ public class Delivery
 		return schedule;
 	}
 
+	public void resetHeuresEtChemin()
+	{
+		setHeurePrevue(0);
+		setRetardPrevu(false);
+		pathToDest = null;
+	}
 
 	public Chemin getPathToDest()
 	{

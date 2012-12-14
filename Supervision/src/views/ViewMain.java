@@ -90,4 +90,8 @@ public class ViewMain {
 	public void updateFeuilleDeRoute() {
 		feuilleDeRoute.update();
 	}
+	
+	public void updatePulseSleep(int sleepTime) {
+		feuilleDeRoute.setPulseSleepTime(sleepTime);
+	}
 }

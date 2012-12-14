@@ -46,11 +46,18 @@ public class Controleur {
 	}
 	
 	public boolean nodeSelected() {
-		return (selected != null && selected instanceof ViewNode);
+		return (selected != null 
+				&& selected instanceof ViewNode);
 	}
 	
 	public boolean deliverySelected() {
-		return (nodeSelected() && feuilleDeRoute.getDelivery(((ViewNode) selected).getNode()) != null);
+		return (nodeSelected() 
+				&& feuilleDeRoute.getDelivery(((ViewNode) selected).getNode()) != null);
+	}
+	
+	public boolean warehouseSelected() {
+		return (deliverySelected()
+				&& feuilleDeRoute.getWarehouse().getDest() == ((ViewNode) selected).getNode());
 	}
 	
 	public Schedule getSelectedSchedule() {
@@ -63,20 +70,14 @@ public class Controleur {
 
 	public void setFenetre(Fenetre fenetre) {
 		this.fenetre = fenetre;
-		// loadSchedules(); <-- pas necessaire
 	}
 
 	public void loadSchedules()
 	{
 		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
 		schedules = parserSched.getPlagesHoraires();
-		/* // A remettre si necessaire, a virer sinon :
-            ArrayList<Schedule> fenSchedules = new ArrayList<Schedule>();
-            for (Schedule s : schedules) {
-                    fenSchedules.add(s);
-            }
-		 */
 		fenetre.setSchedules(schedules);
+		selectedSchedule = null;
 	}
 
 	public void loadZone(File path) {
@@ -112,6 +113,10 @@ public class Controleur {
 		viewmain = vm;
 	}
 
+	public ViewMain getViewMain() {
+		return viewmain;
+	}
+
 	public void deselect(Object obj) {
 		if (obj != null) {
 			if (obj instanceof ViewNode) {
@@ -133,16 +138,16 @@ public class Controleur {
 			Object clicked = viewmain.findAt(x, y, onlyArcs);
 			if (clicked == null) {
 				deselect(highlighted);
-				deselect(selected);                             
+				deselect(selected);
 			}
 			else if (clicked instanceof ViewNode) {
 				ViewNode vn = (ViewNode) clicked;
 				deselect(selected);
 				deselect(highlighted);
 				System.out.println("CLIK NODE");
-				highlighted = null;
 				if (etat == Etat.MODIFICATION && insertButton != 0
-						&& selected != null && selected instanceof ViewNode) {
+						&& selected != null && selected instanceof ViewNode
+						&& vn.getNode() != feuilleDeRoute.getWarehouse().getDest()) {
 					ViewNode vns = (ViewNode) selected;
 					Delivery d = feuilleDeRoute.getDelivery(vn.getNode());
 					System.out.println("COND REUN");
@@ -155,11 +160,10 @@ public class Controleur {
 					}
 					viewmain.updateFeuilleDeRoute();
 				}
-				selected = clicked;
 				vn.setColor(new Color(255, 0, 0));
 				vn.setRadius(11);
 				Delivery deliv = feuilleDeRoute.getDelivery(vn.getNode());
-				if (deliv != null) {
+				if (deliv != null && deliv != feuilleDeRoute.getWarehouse()) {
 					selectedSchedule = deliv.getSchedule();
 					fenetre.setSchedule(selectedSchedule);
 				}
@@ -168,12 +172,12 @@ public class Controleur {
 			else if (clicked instanceof ViewArc) {
 				deselect(selected);
 				deselect(highlighted);
-				highlighted = null;
-				selected = clicked;
 				ViewArc va = (ViewArc) clicked;
 				va.setColor(new Color(255, 0, 0));
 				va.setEpaisseur(3);
 			}
+			highlighted = null;
+			selected = clicked;
 		}
 
 		setInsertButton(0);
@@ -268,6 +272,8 @@ public class Controleur {
 
 	public void setInsertButton(int i) {
 		// TODO Auto-generated method stub
+		if (i != 0 && i == insertButton)
+			i = 0; // toggle
 		insertButton = i;
 		fenetre.setInsertButton(i);
 	}

@@ -11,12 +11,17 @@ import model.FeuilleDeRoute;
 import model.Schedule;
 
 public class ViewFeuilleDeRoute {
+	
+	public final static int PULSE_SLEEP_MIN = 30;
+	public final static int PULSE_SLEEP_MAX = 300;
+	
 	protected FeuilleDeRoute feuilleDeRoute;
 	protected ViewMain mere;
 	protected ArrayList<ViewSchedule> schedules = new ArrayList<ViewSchedule>();
 	protected LinkedList<ViewArcChemin> pulsingArcs;
 	protected Mutex mtx_pulsingArcs = new Mutex();
 	protected PulseThread pulseThread = null;
+	protected int pulseSleepTime = 100;
 	
 	public ViewFeuilleDeRoute(FeuilleDeRoute f, ViewMain vm) {
 		feuilleDeRoute = f;
@@ -41,6 +46,14 @@ public class ViewFeuilleDeRoute {
 		updatePulsingArcs();
 	}
 	
+	public void setPulseSleepTime(int sleepTime)
+	{
+		if (pulseThread != null)
+			pulseThread.setSleepTime(sleepTime);
+		
+		pulseSleepTime = sleepTime;
+	}
+	
 	protected List<ViewArcChemin> updatePulsingArcs()
 	{
 		if (pulseThread != null)
@@ -61,7 +74,7 @@ public class ViewFeuilleDeRoute {
 		
 		if (list.size() != 0)
 		{
-			pulseThread = new PulseThread(pulsingArcs, mtx_pulsingArcs, mere);
+			pulseThread = new PulseThread(pulsingArcs, mtx_pulsingArcs, mere, pulseSleepTime);
 			pulseThread.start();
 		}
 		return list;

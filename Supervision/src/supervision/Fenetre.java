@@ -72,6 +72,7 @@ public class Fenetre extends Frame {
 		
 		switch (controleur.getEtat()) {
 		case VIDE:
+			menuFichier.getItem(0).setEnabled(false);
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(false);
@@ -80,13 +81,16 @@ public class Fenetre extends Frame {
 			break;
 		
 		case REMPLISSAGE:
+			menuFichier.getItem(0).setEnabled(false);
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
-			jButtonValiderLiv.setEnabled(controleur.nodeSelected() && controleur.getSelectedSchedule() != null);
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
+			jButtonValiderLiv.setEnabled(controleur.nodeSelected()
+					&& controleur.getSelectedSchedule() != null
+					&& ! controleur.warehouseSelected());
 			for (JToggleButton jtb : jToggleButtonSchedules)
-				jtb.setEnabled(controleur.nodeSelected());
+				jtb.setEnabled(true);
 			jLabelAddLivCurr.setEnabled(false);
 			jLabelAddLivPrec.setEnabled(false);
 			jLabelAddLivSuiv.setEnabled(false);
@@ -100,10 +104,11 @@ public class Fenetre extends Frame {
 			break;
 			
 		case MODIFICATION:
+			menuFichier.getItem(0).setEnabled(true);
 			insertBeforeButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			insertAfterButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected());
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
 			jButtonValiderLiv.setEnabled(false);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(false);
@@ -275,7 +280,6 @@ public class Fenetre extends Frame {
 			}
 		};
 		ajoutItem("Generer rapport", menuFichier, a4);
-		menuFichier.getItem(0).disable();
 		ActionListener a5 = new ActionListener(){
 
 			@Override
@@ -399,6 +403,7 @@ public class Fenetre extends Frame {
         jPanelBoutonsGen = new javax.swing.JPanel();
         jComboBoxZone = new javax.swing.JComboBox();
         jButtonGenTourn = new javax.swing.JButton();
+        SpeedRateSlider = new javax.swing.JSlider();
         jPanelPlan = new Dessin();
         jPanelEditionLivraison = new javax.swing.JPanel();
         jLabelEdLivTitre = new javax.swing.JLabel();
@@ -411,8 +416,8 @@ public class Fenetre extends Frame {
         jLabelAddLivPrec = new javax.swing.JLabel();
         jLabelLivSuiv = new javax.swing.JLabel();
         jLabelAddLivSuiv = new javax.swing.JLabel();
-        insertBeforeButton = new javax.swing.JToggleButton();
-        insertAfterButton = new javax.swing.JToggleButton();
+        insertBeforeButton = new javax.swing.JButton();
+        insertAfterButton = new javax.swing.JButton();
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
@@ -429,13 +434,27 @@ public class Fenetre extends Frame {
         jPanelBoutonsGen.setBackground(new java.awt.Color(51, 51, 51));
         jPanelBoutonsGen.setForeground(new java.awt.Color(51, 51, 51));
 
+        jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxZone.setToolTipText("Changer de zone");
 
-        jButtonGenTourn.setText("Generer tournee");
+        jButtonGenTourn.setText("Générer tournée");
         jButtonGenTourn.setPreferredSize(new java.awt.Dimension(113, 20));
         jButtonGenTourn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGenTournActionPerformed(evt);
+            }
+        });
+
+        SpeedRateSlider.setBackground(new java.awt.Color(51, 51, 51));
+        SpeedRateSlider.setForeground(new java.awt.Color(51, 51, 51));
+        SpeedRateSlider.setMajorTickSpacing(1);
+        SpeedRateSlider.setMaximum(300);
+        SpeedRateSlider.setSnapToTicks(true);
+        SpeedRateSlider.setToolTipText("Edite la vitesse de rafraichissement");
+        SpeedRateSlider.setPreferredSize(new java.awt.Dimension(200, 20));
+        SpeedRateSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                SpeedRateSliderMouseReleased(evt);
             }
         });
 
@@ -444,18 +463,21 @@ public class Fenetre extends Frame {
         jPanelBoutonsGenLayout.setHorizontalGroup(
             jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBoutonsGenLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
                 .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(281, 281, 281)
+                .addGap(76, 76, 76)
+                .addComponent(SpeedRateSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
                 .addComponent(jButtonGenTourn, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelBoutonsGenLayout.setVerticalGroup(
             jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBoutonsGenLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addGroup(jPanelBoutonsGenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBoxZone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonGenTourn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButtonGenTourn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxZone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SpeedRateSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanelPlan.setFenetre(this);
@@ -474,12 +496,12 @@ public class Fenetre extends Frame {
             }
         });
 
-        jLabelAddLivCurr.setText("Aucune livraison selectionnee");
+        jLabelAddLivCurr.setText("Aucune livraison sélectionnée");
 
         jButtonValiderLiv.setText("Ajouter");
         jButtonValiderLiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	jButtonValiderLivActionPerformed(evt);
+                jButtonValiderLivActionPerformed(evt);
             }
         });
 
@@ -488,22 +510,17 @@ public class Fenetre extends Frame {
 
         jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison precedente :");
+        jLabelLivPrec.setText("Livraison précedente :");
 
-        jLabelAddLivPrec.setText("Aucune livraison selectionnee");
+        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
 
         jLabelLivSuiv.setText("Livraison suivante :");
 
-        jLabelAddLivSuiv.setText("Aucune livraison selectionnee");
+        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
 
-        insertBeforeButton.setText("insérer avant...");
-        insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	insertBeforeButtonActionPerformed(evt);
-            }
-        });
+        insertBeforeButton.setToolTipText("");
 
-        insertAfterButton.setText("insérer après...");
+        insertAfterButton.setToolTipText("");
         insertAfterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertAfterButtonActionPerformed(evt);
@@ -579,7 +596,7 @@ public class Fenetre extends Frame {
             .addGroup(jPanelGaucheLayout.createSequentialGroup()
                 .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -604,7 +621,7 @@ public class Fenetre extends Frame {
                 .addGap(64, 64, 64))
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 54, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
         jPanelDroiteLayout.setVerticalGroup(
             jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -637,8 +654,6 @@ public class Fenetre extends Frame {
 		jLabelAddLivCurr.setText(""+id);
 	}
 
-
-
 	/**
 	 * Exit the Application
 	 */
@@ -650,7 +665,6 @@ public class Fenetre extends Frame {
 		controleur.genererTournee();
 		update();
 		//controleur.genererTournee();
-		menuFichier.getItem(0).enable();
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
@@ -668,19 +682,22 @@ public class Fenetre extends Frame {
 
 	private void insertBeforeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
 		// TODO add your handling code here:
-		System.out.println("BTN BEFORE");
 		controleur.setInsertButton(1);
 	}                                                 
 	
 	private void insertAfterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAfterButtonActionPerformed
 		// TODO add your handling code here:
-		System.out.println("BTN AFTER");
 		controleur.setInsertButton(2);
 	}//GEN-LAST:event_insertAfterButtonActionPerformed
 
+private void SpeedRateSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpeedRateSliderMouseReleased
+	controleur.getViewMain().updatePulseSleep(SpeedRateSlider.getValue());
+}//GEN-LAST:event_SpeedRateSliderMouseReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton insertAfterButton;
-    private javax.swing.JToggleButton insertBeforeButton;
+    private javax.swing.JSlider SpeedRateSlider;
+    private javax.swing.JButton insertAfterButton;
+    private javax.swing.JButton insertBeforeButton;
     private javax.swing.JButton jButtonGenTourn;
     private javax.swing.JButton jButtonSupprimerLiv;
     private javax.swing.JButton jButtonValiderLiv;
