@@ -102,7 +102,8 @@ public class FeuilleDeRoute
 	{
 		return etat;
 	}
-
+	
+	
 	/**
 	 * (re)calcule la tournée optimale sur la base des données actuelles de la FeuilleDeRoute (schedules, deliveries).
 	 * @throws GraphException
@@ -132,13 +133,27 @@ public class FeuilleDeRoute
 		computeArrivalTimes();
 		etat = EtatFDR.OPTIM;
 	}
+	
+	public void backToInit()
+	{
+		for (Schedule sch : timeZones)
+		{
+			for (Delivery deliv : sch.getDeliveries())
+			{
+				deliv.resetHeuresEtChemin();
+			}
+		}
+		etat = EtatFDR.INIT;
+	}
+	
+	
 
 	/**
 	 * calcule les HeurePrevue et RetardPrevu de toutes les delivery actuellement dans la FeuilleDeRoute
 	 */
 	protected void computeArrivalTimes()
 	{
-		int theTime = timeZones.get(0).getStartTime();
+		int theTime = 0;
 		for (Schedule sch : timeZones)
 		{
 			//pause attente début livraison
@@ -375,7 +390,7 @@ public class FeuilleDeRoute
 		}
 		else
 		{
-			return  prevNonemptySchedule(timeZones.get(idx-1));
+			return  prevNonemptySchedule(prev);
 		}
 	}
 	
@@ -383,15 +398,8 @@ public class FeuilleDeRoute
 	{
 		int idx = timeZones.indexOf(sch);
 		Schedule next = null;
-		if (idx == 0)
-		{
-			next = retourSch;	//bouclage
-		}
-		else
-		{
-			next = timeZones.get(idx+1);
-		}
 
+		next = timeZones.get(idx+1);
 		
 		if (next.getDeliveries().size() != 0)
 		{
@@ -399,7 +407,7 @@ public class FeuilleDeRoute
 		}
 		else
 		{
-			return  nextNonemptySchedule(timeZones.get(idx+1));
+			return  nextNonemptySchedule(next);
 		}
 	
 	}

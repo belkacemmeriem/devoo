@@ -11,6 +11,10 @@ import model.FeuilleDeRoute;
 import model.Schedule;
 
 public class ViewFeuilleDeRoute {
+	
+	public final static int PULSE_SLEEP_MIN = 30;
+	public final static int PULSE_SLEEP_MAX = 300;
+	
 	protected FeuilleDeRoute feuilleDeRoute;
 	protected ViewMain mere;
 	protected ArrayList<ViewSchedule> schedules = new ArrayList<ViewSchedule>();
