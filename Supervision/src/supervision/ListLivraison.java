@@ -72,6 +72,27 @@ public class ListLivraison extends JPanel {
 		}
 	}
 	
+	public void updateAllSchedules(ArrayList<Schedule> schedules)
+	{
+		for(int s=0;s<schedules.size()-1;s++)
+		{
+			Schedule schedule = schedules.get(s);
+			
+			//recupere le noeud relatif a une plage horaire
+			DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(s);
+
+			scheduleNode.removeAllChildren();
+			this.repaint();
+			for(int i = 0; i<schedule.getDeliveries().size();i++)
+			{
+				String addr = schedule.getDeliveries().get(i).getDest().getID().toString();
+				treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
+			}
+		}
+		treeModel.reload();
+		this.repaint();
+	}
+	
     public void addLiv (Schedule schedule, String addr){
 		//recuperation de l'indice du noeud de plage horaire voulue
     	Integer idSchedule=getIdSchedule(schedule);
@@ -116,14 +137,20 @@ public class ListLivraison extends JPanel {
 			
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
-				
-				//la ligne selectionnee est une livraison?
-				if(((DefaultMutableTreeNode)tree.getLastSelectedPathComponent()).getLevel()>1){
-					//System.out.println("liv");
-					jButtonSupprimer.setEnabled(true);
+				if(!tree.isSelectionEmpty())
+				{
+					//la ligne selectionnee est une livraison?
+					if(((DefaultMutableTreeNode)tree.getLastSelectedPathComponent()).getLevel()>1){
+						//System.out.println("liv");
+						jButtonSupprimer.setEnabled(true);
+					}
+					else{
+						jButtonSupprimer.setEnabled(false);
+					}
 				}
-				else{
-					jButtonSupprimer.setEnabled(false);
+				else
+				{
+						jButtonSupprimer.setEnabled(false);					
 				}
 			}
 		});

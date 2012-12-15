@@ -48,7 +48,7 @@ public class FeuilleDeRoute
 		return zoneGeo;
 	}
 	
-	public ArrayList<Schedule> getTimeZones()
+	public ArrayList<Schedule> getSchedules()
 	{
 		return timeZones;
 	}

@@ -26,7 +26,7 @@ public class ViewFeuilleDeRoute {
 	public ViewFeuilleDeRoute(FeuilleDeRoute f, ViewMain vm) {
 		feuilleDeRoute = f;
 		mere = vm;
-		for (Schedule s : f.getTimeZones()) {
+		for (Schedule s : f.getSchedules()) {
 			ViewSchedule vs = new ViewSchedule(s, mere);
 			schedules.add(vs);
 		}

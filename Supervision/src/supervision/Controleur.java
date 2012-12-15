@@ -196,6 +196,7 @@ public class Controleur {
 						feuilleDeRoute.insertNodeAfter(vns.getNode(), d);
 						commandes.add(new CommandeInsertNode(vns.getNode(), true, vn.getNode(), feuilleDeRoute));
 					}
+					fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 					viewmain.updateFeuilleDeRoute();
 				}
 				selectNode(vn.getNode());

@@ -50,12 +50,12 @@ public class GraphLivraisons implements Graph {
 		ArrayList<Node> listeArrivees=new ArrayList<Node>();
 		
 		//on ne prend pas un schedule qui ne possède aucune livraison
-		while(feuilleDeRoute.getTimeZones().get(indexSchedule).getDeliveries().size()==0)
+		while(feuilleDeRoute.getSchedules().get(indexSchedule).getDeliveries().size()==0)
 		{
 			indexSchedule++;
 		}
 		
-		for(Delivery d : feuilleDeRoute.getTimeZones().get(indexSchedule).getDeliveries())
+		for(Delivery d : feuilleDeRoute.getSchedules().get(indexSchedule).getDeliveries())
 		{
 			listeArrivees.add(d.getDest());
 		}
@@ -89,9 +89,9 @@ public class GraphLivraisons implements Graph {
 		int indexSchedule2=indexSchedule+1;
 		
 		//tant qu'on est pas à la fin de la liste des schedules
-		while(indexSchedule<feuilleDeRoute.getTimeZones().size()-1)
+		while(indexSchedule<feuilleDeRoute.getSchedules().size()-1)
 		{
-			Schedule s1=feuilleDeRoute.getTimeZones().get(indexSchedule);
+			Schedule s1=feuilleDeRoute.getSchedules().get(indexSchedule);
 			
 			//on prend toutes les livraions d'un schedule
 			for(int j=0;j<s1.getDeliveries().size();j++)
@@ -109,12 +109,12 @@ public class GraphLivraisons implements Graph {
 				}
 				
 				//on cherche le schedule suivant indexSchedule possédant des livraisons 
-				while(indexSchedule2<feuilleDeRoute.getTimeZones().size() && feuilleDeRoute.getTimeZones().get(indexSchedule2).getDeliveries().size()==0)
+				while(indexSchedule2<feuilleDeRoute.getSchedules().size() && feuilleDeRoute.getSchedules().get(indexSchedule2).getDeliveries().size()==0)
 				{
 					indexSchedule2++;
 				}
 				
-				Schedule s2=feuilleDeRoute.getTimeZones().get(indexSchedule2);
+				Schedule s2=feuilleDeRoute.getSchedules().get(indexSchedule2);
 				for(Delivery d : s2.getDeliveries())
 				{
 					listeArrivees.add(d.getDest());
