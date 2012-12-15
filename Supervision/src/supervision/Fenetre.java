@@ -667,7 +667,7 @@ public class Fenetre extends Frame {
                 .addGap(64, 64, 64))
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 54, Short.MAX_VALUE))
         );
         jPanelDroiteLayout.setVerticalGroup(
             jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
