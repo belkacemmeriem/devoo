@@ -26,7 +26,11 @@ public class ListLivraison extends JPanel {
     	this.jButtonSupprimer=jb;
     }
     
-	//Teste la presence d'un noeud dans l'arbre par l'id 
+	/**
+	 * Teste la presence d'une addresse de livraison dans l'arbre
+	 * @param addr addresse de la livraison à chercher
+	 * @return retourne s'il a trouve la livraison ou non
+	 */
     public boolean livExists(String addr){
 		//recherche de la racine
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode)treeModel.getRoot();
@@ -45,7 +49,11 @@ public class ListLivraison extends JPanel {
     	return false;
     }
     
-	//R�cup�re l'id d'une adresse de livraison
+	/**
+	 * Recupere l'id d'une plage horaire
+	 * @param schedule plage de livraison
+	 * @return l'id de la plage horaire (-1 s'il ne troue rien)
+	 */
     private Integer getIdSchedule(Schedule schedule){
 		
     	for(int i = 0;i<schedules.size();i++){
@@ -93,6 +101,11 @@ public class ListLivraison extends JPanel {
 		this.repaint();
 	}
 	
+	/**
+	 * Ajoute une livraison à la plage horaire selectionnee
+	 * @param schedule plage horaire selectionnee
+	 * @param addr addresse de la livraison à ajouter
+	 */
     public void addLiv (Schedule schedule, String addr){
 		//recuperation de l'indice du noeud de plage horaire voulue
     	Integer idSchedule=getIdSchedule(schedule);
@@ -102,7 +115,9 @@ public class ListLivraison extends JPanel {
     	treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
     }
 	
-    /*Supprimer une livraison de la liste*/
+    /**
+     * Supprimer la livraison selectionne de la liste
+     */
     public void remLiv (){
 		//recupere le noeud selectionne
     	DefaultMutableTreeNode node = ((DefaultMutableTreeNode)tree.getLastSelectedPathComponent());
@@ -111,6 +126,10 @@ public class ListLivraison extends JPanel {
     	treeModel.removeNodeFromParent(node);
     }
     
+    /**
+     * Setter de schedules. 
+     * @param aschedules
+     */
     public void setSchedule(ArrayList<Schedule> aschedules) {
         schedules = aschedules;
 		//d�finition de la racine de l'arbre et declaration du model de l'arbre (contient la totalite des donnees et conditionne le comportement de l'arbre)
@@ -156,12 +175,18 @@ public class ListLivraison extends JPanel {
 		});
     }
 
-	//Retourne l'arbre
+	/**
+	 * Retourne l'arbre
+	 * @return l'arbre
+	 */
     public JTree getList() {
         return tree;
     }
 
-	//Retourne le model de l'arbre
+	/**
+	 * Retourne le model de l'arbre
+	 * @return le model de l'arbre
+	 */
     public DefaultTreeModel getListModel() {
         return treeModel;
     }
