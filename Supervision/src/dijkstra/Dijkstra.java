@@ -90,7 +90,7 @@ public class Dijkstra {
         		Integer theID =previous.get(temp.getID());
         		Node toADD=theGraph.getNode(theID);
         		contenu.add(toADD);
-            	distance+=toADD.getDuration(temp.getID());
+            	distance+=Math.round(toADD.getDuration(temp.getID()));
             	temp=theGraph.getNode(theID);
         	}
         	Collections.reverse(contenu);

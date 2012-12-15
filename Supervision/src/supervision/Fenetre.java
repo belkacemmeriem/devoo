@@ -63,6 +63,8 @@ public class Fenetre extends Frame {
 		if (controleur == null)
 			return;
 		
+		setMainLabel(controleur.getLabel());
+		
 		switch (controleur.getEtat()) {
 		case VIDE:
 			menuFichier.getItem(0).setEnabled(false);
@@ -455,8 +457,8 @@ public class Fenetre extends Frame {
         jLabelAddLivPrec = new javax.swing.JLabel();
         jLabelLivSuiv = new javax.swing.JLabel();
         jLabelAddLivSuiv = new javax.swing.JLabel();
-        insertBeforeButton = new javax.swing.JButton();
-        insertAfterButton = new javax.swing.JButton();
+        insertBeforeButton = new javax.swing.JToggleButton();
+        insertAfterButton = new javax.swing.JToggleButton();
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
@@ -547,7 +549,7 @@ public class Fenetre extends Frame {
         jPanelHoraires.setBackground(new java.awt.Color(51, 51, 51));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabelLivCurr.setText("Adresse de livraison :");
+        jLabelLivCurr.setText("Selection :");
 
         jLabelLivPrec.setText("Livraison précedente :");
 
@@ -557,9 +559,14 @@ public class Fenetre extends Frame {
 
         jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
 
-        insertBeforeButton.setToolTipText("");
+        insertBeforeButton.setText("inserer avant..");
+        insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	insertBeforeButtonActionPerformed(evt);
+            }
+        });
 
-        insertAfterButton.setToolTipText("");
+        insertAfterButton.setText("inserer apres..");
         insertAfterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertAfterButtonActionPerformed(evt);
@@ -688,9 +695,9 @@ public class Fenetre extends Frame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	public void nodeClicked(int id)
+	public void setMainLabel(String s)
 	{
-		jLabelAddLivCurr.setText(""+id);
+		jLabelAddLivCurr.setText(s);
 	}
 
 	/**

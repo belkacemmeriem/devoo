@@ -99,5 +99,13 @@ public class ViewZoneGeo {
 		
 		return null;
 	}
+
+	public ViewNode getNode(Node n) {
+		for (ViewNode vn : nodes) {
+			if (vn.getNode().getID() == n.getID())
+				return vn;
+		}
+		return null;
+	}
 	
 }

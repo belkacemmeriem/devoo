@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import parsexml.*;
+import model.Arc;
 import model.Delivery;
 import model.FeuilleDeRoute;
 import model.Node;
@@ -67,6 +68,24 @@ public class Controleur {
 	
 	public int nbDeliveries() {
 		return feuilleDeRoute.getAllDeliveries().size() - 1; // on ne compte pas l'entrepot
+	}
+	
+	public String getLabel() {
+		String s = "Aucune.";
+		if (selected instanceof ViewNode) {
+			Node n = ((ViewNode) selected).getNode();
+			s = "[Intersection " + n.getID() + "]";
+			Delivery d = feuilleDeRoute.getDelivery(n);
+			if (etat == Etat.MODIFICATION && d != null) {
+				s += " Passage a ~" + Schedule.timeToString(d.getHeurePrevue());
+				if (d.isRetardPrevu())
+					s += " (en retard)";
+			}
+		} else if (selected instanceof ViewArc) {
+			Arc a = ((ViewArc) selected).getArc();
+			s = "[Rue " + a.getName() + "] Temps de parcourt : ~" + Math.round(a.getDuration()) + " minutes";
+		}
+		return s;
 	}
 	
 	public Schedule getSelectedSchedule() {
@@ -125,12 +144,23 @@ public class Controleur {
 	public ViewMain getViewMain() {
 		return viewmain;
 	}
+	
+	public void selectNode(Node n) {
+		ViewNode vn = viewmain.getNode(n);
+		vn.setColor(new Color(255, 0, 0));
+		vn.setRadius(12);
+	}
+	
+	public void deselectNode(Node n) {
+		ViewNode vn = viewmain.getNode(n);
+		vn.setDefault();
+	}
 
 	public void deselect(Object obj) {
 		if (obj != null) {
 			if (obj instanceof ViewNode) {
 				ViewNode s = (ViewNode) obj;
-				s.setDefault();
+				deselectNode(s.getNode());
 			}
 			else if (obj instanceof ViewArc) {
 				ViewArc s = (ViewArc) obj;
@@ -139,8 +169,7 @@ public class Controleur {
 		}
 	}
 
-	public int click(int x, int y, int button) {
-		int retour = -1;
+	public void click(int x, int y, int button) {
 		boolean onlyArcs = (button == 3);
 		if (etat != Etat.VIDE)
 		{
@@ -169,14 +198,12 @@ public class Controleur {
 					}
 					viewmain.updateFeuilleDeRoute();
 				}
-				vn.setColor(new Color(255, 0, 0));
-				vn.setRadius(11);
+				selectNode(vn.getNode());
 				Delivery deliv = feuilleDeRoute.getDelivery(vn.getNode());
 				if (deliv != null && deliv != feuilleDeRoute.getWarehouse()) {
 					selectedSchedule = deliv.getSchedule();
 					fenetre.setSchedule(selectedSchedule);
 				}
-				retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
 				deselect(selected);
@@ -192,7 +219,6 @@ public class Controleur {
 		setInsertButton(0);
 		viewmain.repaint();
 		fenetre.update();
-		return retour;
 	}
 	
 	public void highlight(int x, int y) {

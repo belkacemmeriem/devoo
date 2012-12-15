@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 
 import model.FeuilleDeRoute;
+import model.Node;
 import model.ZoneGeo;
 
 import supervision.Controleur;
@@ -85,6 +86,10 @@ public class ViewMain {
 	
 	public Controleur getControleur() {
 		return controleur;
+	}
+	
+	public ViewNode getNode(Node n) {
+		return zonegeo.getNode(n);
 	}
 
 	public void updateFeuilleDeRoute() {
