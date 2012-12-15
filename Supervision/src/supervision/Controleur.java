@@ -303,10 +303,16 @@ public class Controleur {
 		if (etat == Etat.REMPLISSAGE) {
 			try {
 				feuilleDeRoute.computeWithTSP();
+				etat = Etat.MODIFICATION;
 			} catch (GraphException e) {
-				e.printStackTrace();
+				Object[] options = { "Ok" };
+				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
+							"Trop de données : la tournée n'a pas pu etre calculée.",
+							"Trop de données",
+							JOptionPane.ERROR_MESSAGE, 
+							JOptionPane.ERROR_MESSAGE, null,
+							options, options[0]);
 			}
-			etat = Etat.MODIFICATION;
 		} else if (etat == Etat.MODIFICATION) {
 			feuilleDeRoute.backToInit();
 			etat = Etat.REMPLISSAGE;

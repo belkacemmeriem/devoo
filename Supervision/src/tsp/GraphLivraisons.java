@@ -9,8 +9,7 @@ import Exception.*;
 
 public class GraphLivraisons implements Graph {
 
-	private final int timeLimit=10000;//milliseconds
-	private final int timeLimitTotal=60000;//milliseconds indique le temps total accordé pour trouver une solution optimale
+	private final int timeLimit = 10000;//milliseconds
 	private Chemin[][] listeChemins;
 	private int[][] listeCosts;
 	private FeuilleDeRoute feuilleDeRoute;
@@ -171,7 +170,7 @@ public class GraphLivraisons implements Graph {
 	 * @author arnaud MDM
 	 * @throws GraphException 
 	 */
-	public ArrayList<Delivery> calcItineraire() throws GraphException{
+	public ArrayList<Delivery> calcItineraire() throws GraphException {
 		TSP tsp=new TSP();
 		int bound=(nbVertices+1)*maxArcCost;
 		SolutionState retour;
@@ -179,12 +178,6 @@ public class GraphLivraisons implements Graph {
 		long timeStart=Calendar.getInstance().getTimeInMillis();
 		
 		retour=tsp.solve(timeLimit, bound, this);
-		/*
-		while((retour=tsp.solve(timeLimit, bound, this))==SolutionState.SOLUTION_FOUND && (Calendar.getInstance().getTimeInMillis()-timeStart)< timeLimitTotal)
-		{
-			bound=tsp.getTotalCost();
-		}
-		*/
 		
 		if(retour==SolutionState.INCONSISTENT)
 		{
