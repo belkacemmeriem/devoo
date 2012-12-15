@@ -57,6 +57,21 @@ public class ListLivraison extends JPanel {
     }
     
 	
+	public void updateOneSchedule(Schedule schedule)
+	{
+		//recuperation de l'indice du noeud de plage horaire voulue
+    	Integer idSchedule=getIdSchedule(schedule);
+		//recupere le noeud relatif a une plage horaire
+		DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(idSchedule);
+		
+		scheduleNode.removeAllChildren();
+		for(int i = 0; i<schedule.getDeliveries().size();i++)
+		{
+			String addr = schedule.getDeliveries().get(i).getDest().getID().toString();
+			treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
+		}
+	}
+	
     public void addLiv (Schedule schedule, String addr){
 		//recuperation de l'indice du noeud de plage horaire voulue
     	Integer idSchedule=getIdSchedule(schedule);
@@ -65,8 +80,6 @@ public class ListLivraison extends JPanel {
 		//insere un noeud dans la plage horaire trouvee au dessus
     	treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
     }
-    
-	
 	
     /*Supprimer une livraison de la liste*/
     public void remLiv (){
