@@ -81,7 +81,7 @@ public class Node
 		return list;
 	}
 
-	public float getDuration(Integer anID)
+	public double getDuration(Integer anID)
 	{
 
 		for (Arc a : outArcs)

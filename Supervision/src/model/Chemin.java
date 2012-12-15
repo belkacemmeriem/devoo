@@ -10,9 +10,9 @@ public class Chemin {
 
 	Node start;
 	Node target;
-	float duration;
+	double duration;
 	
-	public Chemin(ArrayList<Node> contenu, float duration)
+	public Chemin(ArrayList<Node> contenu, double duration)
 	{
 		super();
 		this.trajectory = contenu;
@@ -47,7 +47,7 @@ public class Chemin {
 		return trajectory;
 
 	}
-	public float getDuration()
+	public double getDuration()
 	{
 		return duration;
 	}

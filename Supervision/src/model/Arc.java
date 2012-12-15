@@ -4,20 +4,20 @@ public class Arc
 {
 	protected Node		origin, dest;
 	protected int		speed;
-	protected int		lenght;
+	protected int		length;
 	protected String	name;
 
 	public String getName() {
 		return name;
 	}
 
-	public Arc(Node origin, Node dest, int speed, int lenght, String name)
+	public Arc(Node origin, Node dest, int speed, int length, String name)
 	{
 		super();
 		this.origin = origin;
 		this.dest = dest;
 		this.speed = speed;
-		this.lenght = lenght;
+		this.length = length;
 		this.name = name;
 	}	
 
@@ -31,9 +31,9 @@ public class Arc
 		return dest;
 	}
 	
-	public float getDuration()
+	public double getDuration()
 	{
-		//System.out.println(lenght+" "+speed+" "+((float)lenght/speed));
-		return ((float)lenght/speed);
+		//System.out.println(length+" "+speed+" "+((float)length/speed));
+		return ((double)length/speed/60.0);
 	}
 }

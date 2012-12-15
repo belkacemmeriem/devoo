@@ -6,9 +6,9 @@ import model.Node;
 
 public class CommandeInsertNode extends Commande {
 	
-	Node newNode, existingNode;
-	FeuilleDeRoute fdr;
-	boolean after;
+	private Node newNode, existingNode;
+	private FeuilleDeRoute fdr;
+	private boolean after;
 
 	public CommandeInsertNode(Node n, boolean after, Node e, FeuilleDeRoute fdr) {
 		this.newNode = n;

@@ -151,7 +151,7 @@ public class FeuilleDeRoute
 	/**
 	 * calcule les HeurePrevue et RetardPrevu de toutes les delivery actuellement dans la FeuilleDeRoute
 	 */
-	protected void computeArrivalTimes()
+	public void computeArrivalTimes()
 	{
 		int theTime = 0;
 		for (Schedule sch : timeZones)
@@ -162,10 +162,10 @@ public class FeuilleDeRoute
 			
 			for (Delivery d : sch.getDeliveries())
 			{
-				theTime+= d.getPathToDest().getDuration();
+				theTime += (int) d.getPathToDest().getDuration();
 				d.setHeurePrevue(theTime);
 				d.setRetardPrevu(theTime > sch.getEndTime());	//si arrive hors schedule
-				theTime+= DUREE_LIVRAISON;
+				theTime += DUREE_LIVRAISON;
 			}
 		}
 	}
@@ -309,19 +309,21 @@ public class FeuilleDeRoute
 	 * @param delivery
 	 * @return delivery precedant la delivery passée en parametre
 	 */
-	protected Delivery previousDelivery(Delivery delivery)
+	public Delivery previousDelivery(Delivery delivery)
 	{
 		Delivery returned = null;
+		System.out.println("NBSCHED = " + timeZones.size()); 
 		for (Schedule sch : timeZones)
 		{
 			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
 
+			System.out.println("SCHED " + sch.endTimeString() + " SIZE = " + schDeliveries.size());
 			if (schDeliveries.contains(delivery))	//si le schedule contient la livraison de reference
 			{
 				int idx = schDeliveries.indexOf(delivery);
+				System.out.println("CONTAINED. IDX : " + idx);
 				if (idx == 0)	//si premier element du schedule
 				{
-					
 					//recherche du dernier node du schedule précédent non vide	
 					returned = prevNonemptySchedule(sch).getDeliveries().getLast();
 				}
@@ -341,7 +343,7 @@ public class FeuilleDeRoute
 	 * @param delivery
 	 * @return delivery suivant la delivery passée en parametre
 	 */
-	protected Delivery nextDelivery(Delivery delivery)
+	public Delivery nextDelivery(Delivery delivery)
 	{
 		int idxSch = -1;
 		Delivery returned = null;
@@ -415,7 +417,7 @@ public class FeuilleDeRoute
 	/**
 	 * @param delivery delivery dont le PathToDest doit etre recalculé
 	 */
-	protected void recalcPathTo(Delivery delivery)
+	public void recalcPathTo(Delivery delivery)
 	{
 		//recherche chemin
 		ArrayList<Node> singleton = new ArrayList<Node>();

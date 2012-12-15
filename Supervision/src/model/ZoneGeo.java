@@ -41,11 +41,11 @@ public class ZoneGeo
 	 * @param originID id du Node origine
 	 * @param destID id du Node destination
 	 * @param speed vitesse moyenne du troncon
-	 * @param lenght longueur du troncon
+	 * @param length longueur du troncon
 	 * @param name nom de la rue
 	 * @pre originID et originID doivent avoir été insérés!
 	 */
-	public void addArc(int originID, int destID, int speed, int lenght, String name)
+	public void addArc(int originID, int destID, int speed, int length, String name)
 	{
 		if (!nodes.containsKey(originID))
 		{
@@ -60,7 +60,7 @@ public class ZoneGeo
 			Arc arc = new Arc(	nodes.get(originID),
 								nodes.get(destID),
 								speed,
-								lenght,
+								length,
 								name );
 			
 			arcs.add(arc);

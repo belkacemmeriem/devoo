@@ -82,7 +82,8 @@ public class Fenetre extends Frame {
 			menuEdition.getItem(1).setEnabled(controleur.redoAble());
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
-			jButtonGenTourn.setEnabled(true);
+			jButtonGenTourn.setEnabled(controleur.nbDeliveries() > 0);
+			jButtonGenTourn.setSelected(false);
 			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
 			jButtonValiderLiv.setEnabled(controleur.nodeSelected()
 					&& controleur.getSelectedSchedule() != null
@@ -106,7 +107,10 @@ public class Fenetre extends Frame {
 			insertBeforeButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			insertAfterButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
+			jButtonGenTourn.setSelected(true);
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() 
+					&& ! controleur.warehouseSelected()
+					&& controleur.nbDeliveries() > 1);
 			jButtonValiderLiv.setEnabled(false);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(false);
@@ -431,7 +435,7 @@ public class Fenetre extends Frame {
         jPanelGauche = new javax.swing.JPanel();
         jPanelBoutonsGen = new javax.swing.JPanel();
         jComboBoxZone = new javax.swing.JComboBox();
-        jButtonGenTourn = new javax.swing.JButton();
+        jButtonGenTourn = new javax.swing.JToggleButton();
         jPanelPlan = new Dessin();
         jPanelEditionLivraison = new javax.swing.JPanel();
         jLabelEdLivTitre = new javax.swing.JLabel();
@@ -671,7 +675,6 @@ public class Fenetre extends Frame {
 	}
 
 
-
 	/**
 	 * Exit the Application
 	 */
@@ -680,9 +683,7 @@ public class Fenetre extends Frame {
 	}//GEN-LAST:event_exitForm
 
 	private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
-		controleur.genererTournee();
-		update();
-		//controleur.genererTournee();
+		controleur.toggleGenererTournee(true);
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
@@ -725,7 +726,7 @@ public class Fenetre extends Frame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton insertAfterButton;
     private javax.swing.JToggleButton insertBeforeButton;
-    private javax.swing.JButton jButtonGenTourn;
+    private javax.swing.JToggleButton jButtonGenTourn;
     private javax.swing.JButton jButtonSupprimerLiv;
     private javax.swing.JButton jButtonValiderLiv;
     private javax.swing.JComboBox jComboBoxZone;

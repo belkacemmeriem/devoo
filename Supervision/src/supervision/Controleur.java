@@ -12,7 +12,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import command.CommandeAddNode;
+import command.CommandeDelNode;
 import command.CommandeInsertNode;
+import command.CommandeModifDelNode;
+import command.CommandeToggleTournee;
 import command.Commandes;
 
 import parsexml.*;
@@ -43,10 +47,6 @@ public class Controleur {
 	public Controleur() {
 	}
 	
-	public void setEtat(Etat aetat){
-		etat=aetat;
-	}
-	
 	public boolean nodeSelected() {
 		return (selected != null 
 				&& selected instanceof ViewNode);
@@ -62,6 +62,10 @@ public class Controleur {
 				&& feuilleDeRoute.getWarehouse().getDest() == ((ViewNode) selected).getNode());
 	}
 	
+	public int nbDeliveries() {
+		return feuilleDeRoute.getAllDeliveries().size() - 1; // on ne compte pas l'entrepot
+	}
+	
 	public Schedule getSelectedSchedule() {
 		return selectedSchedule;
 	}
@@ -74,8 +78,7 @@ public class Controleur {
 		this.fenetre = fenetre;
 	}
 
-	public void loadSchedules()
-	{
+	public void loadSchedules() {
 		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
 		schedules = parserSched.getPlagesHoraires();
 		fenetre.setSchedules(schedules);
@@ -217,11 +220,11 @@ public class Controleur {
 	public void add() {
 		if (selected != null && selected instanceof ViewNode && selectedSchedule != null) {
 			Node n = ((ViewNode) selected).getNode();
+			commandes.add(new CommandeAddNode(n, selectedSchedule, feuilleDeRoute));
 			Delivery d = feuilleDeRoute.getDelivery(n);
 			if (d != null)
 				feuilleDeRoute.delNode(n);
 			feuilleDeRoute.addNode(n, selectedSchedule);
-			// com.add(new CommandAdd(n, selectedSchedule));
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
@@ -231,8 +234,11 @@ public class Controleur {
 	public void del() {
 		if (selected != null && selected instanceof ViewNode) {
 			Node n = ((ViewNode) selected).getNode();
+			if (etat == Etat.MODIFICATION)
+				commandes.add(new CommandeModifDelNode(n, feuilleDeRoute));
+			else
+				commandes.add(new CommandeDelNode(n, feuilleDeRoute));
 			feuilleDeRoute.delNode(n);
-			// com.add(new CommandDel(n));
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
@@ -243,23 +249,28 @@ public class Controleur {
 		return etat;
 	}
 
-	public void genererTournee() {
-		try {
-			feuilleDeRoute.computeWithTSP();
-		} catch (GraphException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void toggleGenererTournee(boolean record) {
+		if (record)
+			commandes.add(new CommandeToggleTournee(this));
+		if (etat == Etat.REMPLISSAGE) {
+			try {
+				feuilleDeRoute.computeWithTSP();
+			} catch (GraphException e) {
+				e.printStackTrace();
+			}
+			etat = Etat.MODIFICATION;
+		} else if (etat == Etat.MODIFICATION) {
+			feuilleDeRoute.backToInit();
+			etat = Etat.REMPLISSAGE;
 		}
-		setEtat(Etat.MODIFICATION);
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
 	}
 
 	public void setInsertButton(int i) {
-		// TODO Auto-generated method stub
-		if (i != 0 && i == insertButton)
-			i = 0; // toggle
+		if (i != 0 && i == insertButton) // => toggle
+			i = 0;
 		insertButton = i;
 		fenetre.setInsertButton(i);
 	}
