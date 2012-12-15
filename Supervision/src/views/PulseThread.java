@@ -46,9 +46,7 @@ public class PulseThread extends Thread
 	
 	public void setSleepTime(int sleepTime)
 	{
-		mtx_sleepTime.lock();
 		this.sleepTime = sleepTime;
-		mtx_sleepTime.unlock();
 	}
 
 	public PulseThread(LinkedList<ViewArcChemin> pulsingArcs,
