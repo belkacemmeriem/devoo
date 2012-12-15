@@ -13,11 +13,15 @@ public class Commandes {
 	public void add(Commande c) {
 		int taille = commandes.size();
 		for (int i = indice ; i < taille  ; i++) {
-			commandes.remove(i);
+			commandes.remove(indice);
 		}
 		commandes.add(c);
-		c.redo();
 		indice++;
+	}
+	
+	public void clear() {
+		commandes.clear();
+		indice = 0;
 	}
 
 	public boolean undo() {

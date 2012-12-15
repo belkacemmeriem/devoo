@@ -11,9 +11,19 @@ import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import command.CommandeAddNode;
+import command.CommandeDelNode;
+import command.CommandeInsertNode;
+import command.CommandeModifDelNode;
+import command.CommandeToggleTournee;
+import command.Commandes;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 import parsexml.*;
+import model.Arc;
 import model.Delivery;
 import model.FeuilleDeRoute;
 import model.Node;
@@ -26,23 +36,19 @@ import views.ViewNode;
 
 public class Controleur {
 
-	protected
-	ViewMain viewmain;
-	ZoneGeo zonegeo;
-	FeuilleDeRoute feuilleDeRoute;
-	Object selected, highlighted;
-	int insertButton = 0;
-	Schedule selectedSchedule;
+	protected Commandes commandes = new Commandes();
+	protected ViewMain viewmain;
+	protected ZoneGeo zonegeo;
+	protected FeuilleDeRoute feuilleDeRoute;
+	protected Object selected, highlighted;
+	protected int insertButton = 0;
+	protected Schedule selectedSchedule;
 
-	Etat etat = Etat.VIDE;
-	Fenetre fenetre;
-	ArrayList<Schedule> schedules;
+	protected Etat etat = Etat.VIDE;
+	protected Fenetre fenetre;
+	protected ArrayList<Schedule> schedules;
 
 	public Controleur() {
-	}
-	
-	public void setEtat(Etat aetat){
-		etat=aetat;
 	}
 	
 	public boolean nodeSelected() {
@@ -60,6 +66,28 @@ public class Controleur {
 				&& feuilleDeRoute.getWarehouse().getDest() == ((ViewNode) selected).getNode());
 	}
 	
+	public int nbDeliveries() {
+		return feuilleDeRoute.getAllDeliveries().size() - 1; // on ne compte pas l'entrepot
+	}
+	
+	public String getLabel() {
+		String s = "Aucune.";
+		if (selected instanceof ViewNode) {
+			Node n = ((ViewNode) selected).getNode();
+			s = "[Intersection " + n.getID() + "]";
+			Delivery d = feuilleDeRoute.getDelivery(n);
+			if (etat == Etat.MODIFICATION && d != null) {
+				s += " Passage a ~" + Schedule.timeToString(d.getHeurePrevue());
+				if (d.isRetardPrevu())
+					s += " (en retard)";
+			}
+		} else if (selected instanceof ViewArc) {
+			Arc a = ((ViewArc) selected).getArc();
+			s = "[Rue " + a.getName() + "] Temps de parcourt : ~" + Math.round(a.getDuration()) + " minutes";
+		}
+		return s;
+	}
+	
 	public Schedule getSelectedSchedule() {
 		return selectedSchedule;
 	}
@@ -72,8 +100,7 @@ public class Controleur {
 		this.fenetre = fenetre;
 	}
 
-	public void loadSchedules()
-	{
+	public void loadSchedules() {
 		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
 		schedules = parserSched.getPlagesHoraires();
 		fenetre.setSchedules(schedules);
@@ -89,6 +116,7 @@ public class Controleur {
 				new ParseMapXML(path, zonegeo);
 				feuilleDeRoute = new FeuilleDeRoute(schedules, zonegeo);
 				etat = Etat.REMPLISSAGE;
+				commandes.clear();
 				viewmain.setZoneGeo(zonegeo,path);
 				viewmain.setFeuilleDeRoute(feuilleDeRoute);
 				viewmain.repaint();
@@ -116,12 +144,23 @@ public class Controleur {
 	public ViewMain getViewMain() {
 		return viewmain;
 	}
+	
+	public void selectNode(Node n) {
+		ViewNode vn = viewmain.getNode(n);
+		vn.setColor(new Color(255, 0, 0));
+		vn.setRadius(12);
+	}
+	
+	public void deselectNode(Node n) {
+		ViewNode vn = viewmain.getNode(n);
+		vn.setDefault();
+	}
 
 	public void deselect(Object obj) {
 		if (obj != null) {
 			if (obj instanceof ViewNode) {
 				ViewNode s = (ViewNode) obj;
-				s.setDefault();
+				deselectNode(s.getNode());
 			}
 			else if (obj instanceof ViewArc) {
 				ViewArc s = (ViewArc) obj;
@@ -130,8 +169,7 @@ public class Controleur {
 		}
 	}
 
-	public int click(int x, int y, int button) {
-		int retour = -1;
+	public void click(int x, int y, int button) {
 		boolean onlyArcs = (button == 3);
 		if (etat != Etat.VIDE)
 		{
@@ -152,22 +190,20 @@ public class Controleur {
 					Delivery d = feuilleDeRoute.getDelivery(vn.getNode());
 					System.out.println("COND REUN");
 					if (insertButton == 1) {
-						// insert before
 						feuilleDeRoute.insertNodeBefore(vns.getNode(), d);
+						commandes.add(new CommandeInsertNode(vns.getNode(), false, vn.getNode(), feuilleDeRoute));
 					} else if (insertButton == 2) {
-						// insert after
 						feuilleDeRoute.insertNodeAfter(vns.getNode(), d);
+						commandes.add(new CommandeInsertNode(vns.getNode(), true, vn.getNode(), feuilleDeRoute));
 					}
 					viewmain.updateFeuilleDeRoute();
 				}
-				vn.setColor(new Color(255, 0, 0));
-				vn.setRadius(11);
+				selectNode(vn.getNode());
 				Delivery deliv = feuilleDeRoute.getDelivery(vn.getNode());
 				if (deliv != null && deliv != feuilleDeRoute.getWarehouse()) {
 					selectedSchedule = deliv.getSchedule();
 					fenetre.setSchedule(selectedSchedule);
 				}
-				retour = vn.getNode().getID();
 			}
 			else if (clicked instanceof ViewArc) {
 				deselect(selected);
@@ -183,7 +219,6 @@ public class Controleur {
 		setInsertButton(0);
 		viewmain.repaint();
 		fenetre.update();
-		return retour;
 	}
 	
 	public void highlight(int x, int y) {
@@ -218,6 +253,7 @@ public class Controleur {
 	public void add() {
 		if (selected != null && selected instanceof ViewNode && selectedSchedule != null) {
 			Node n = ((ViewNode) selected).getNode();
+			commandes.add(new CommandeAddNode(n, selectedSchedule, feuilleDeRoute));
 			Delivery d = feuilleDeRoute.getDelivery(n);
 			if (d != null)
 				feuilleDeRoute.delNode(n);
@@ -245,6 +281,10 @@ public class Controleur {
 	public void del() {
 		if (selected != null && selected instanceof ViewNode) {
 			Node n = ((ViewNode) selected).getNode();
+			if (etat == Etat.MODIFICATION)
+				commandes.add(new CommandeModifDelNode(n, feuilleDeRoute));
+			else
+				commandes.add(new CommandeDelNode(n, feuilleDeRoute));
 			feuilleDeRoute.delNode(n);
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
@@ -257,25 +297,62 @@ public class Controleur {
 		return etat;
 	}
 
-	public void genererTournee() {
-		try {
-			feuilleDeRoute.computeWithTSP();
-		} catch (GraphException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void toggleGenererTournee(boolean record) {
+		if (record)
+			commandes.add(new CommandeToggleTournee(this));
+		if (etat == Etat.REMPLISSAGE) {
+			try {
+				feuilleDeRoute.computeWithTSP();
+				etat = Etat.MODIFICATION;
+			} catch (GraphException e) {
+				Object[] options = { "Ok" };
+				int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
+							"Trop de données : la tournée n'a pas pu etre calculée.",
+							"Trop de données",
+							JOptionPane.ERROR_MESSAGE, 
+							JOptionPane.ERROR_MESSAGE, null,
+							options, options[0]);
+			}
+		} else if (etat == Etat.MODIFICATION) {
+			feuilleDeRoute.backToInit();
+			etat = Etat.REMPLISSAGE;
 		}
-		setEtat(Etat.MODIFICATION);
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
 	}
 
 	public void setInsertButton(int i) {
-		// TODO Auto-generated method stub
-		if (i != 0 && i == insertButton)
-			i = 0; // toggle
+		if (i != 0 && i == insertButton) // => toggle
+			i = 0;
 		insertButton = i;
 		fenetre.setInsertButton(i);
+	}
+	
+	public FeuilleDeRoute getFeuilleDeRoute() {
+		return feuilleDeRoute;
+	}
+	
+	public void undo() {
+		commandes.undo();
+		viewmain.updateFeuilleDeRoute();
+		viewmain.repaint();
+		fenetre.update();
+	}
+	
+	public boolean undoAble() {
+		return (commandes.getIndice() != 0);
+	}
+	
+	public void redo() {
+		commandes.redo();
+		viewmain.updateFeuilleDeRoute();
+		viewmain.repaint();
+		fenetre.update();
+	}
+	
+	public boolean redoAble() {
+		return (commandes.getIndice() != commandes.size());
 	}
 
 }

@@ -19,13 +19,13 @@ import java.util.*;
 public class Dijkstra {
 
     protected
-            static float Infinity =1000000;
+            static double Infinity =1000000;
     
     public  static ArrayList<Chemin> solve(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
 
     {
     	ArrayList<Node> toCompute= (ArrayList<Node>) toEnglobe.clone();
-        HashMap<Integer,Float> dist = new HashMap<Integer, Float>(); 
+        HashMap<Integer,Double> dist = new HashMap<Integer, Double>(); 
         HashMap<Integer,Integer> previous = new HashMap<Integer, Integer>(); 
         
         for(Node v : theGraph.getNodes().values())
@@ -33,7 +33,7 @@ public class Dijkstra {
             dist.put(v.getID(),Infinity);
             previous.put(v.getID(),-1);
         }
-        dist.put(source.getID(),new Float(0));
+        dist.put(source.getID(),new Double(0));
          Comparator<PriorityNode> comparator = new NodeComparator();
          PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>((int)Infinity, comparator);
          System.out.println("Les points");
@@ -57,7 +57,7 @@ public class Dijkstra {
             {
                 for(Node v : u.getOutNodes())
                 {
-                    float alt=dist.get(u.getID())+u.getDuration(v.getID() );
+                    double alt=dist.get(u.getID())+u.getDuration(v.getID() );
 
                     if(alt<dist.get(v.getID()))
                     {
@@ -81,7 +81,7 @@ public class Dijkstra {
         ArrayList<Chemin> solution= new ArrayList<Chemin>();
         for(Node n : toCompute)
         {
-        	float distance=0;
+        	double distance=0;
         	ArrayList<Node> contenu = new ArrayList<Node>();
         	Node temp=theGraph.getNode(n.getID());
         	contenu.add(temp);
@@ -90,7 +90,7 @@ public class Dijkstra {
         		Integer theID =previous.get(temp.getID());
         		Node toADD=theGraph.getNode(theID);
         		contenu.add(toADD);
-            	distance+=toADD.getDuration(temp.getID());
+            	distance+=Math.round(toADD.getDuration(temp.getID()));
             	temp=theGraph.getNode(theID);
         	}
         	Collections.reverse(contenu);

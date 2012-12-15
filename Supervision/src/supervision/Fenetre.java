@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -55,24 +56,20 @@ public class Fenetre extends Frame {
 		creeMenu();
 		setFonts();
 		setPopups();
+		setKeyEvents();
 	}
 	
 	public void update() {
-//		private javax.swing.JButton jButtonGenTourn;
-//		private javax.swing.JButton jButtonSupprimerLiv;
-//		private javax.swing.JButton jButtonValiderLiv;
-//		private ArrayList<JToggleButton> jToggleButtonSchedules;
-//		private Menu menuFichier;
-//		private Menu menuEdition;
-//	    private javax.swing.JButton insertBeforeButton;
-//		private javax.swing.JButton insertAfterButton;
-		
 		if (controleur == null)
 			return;
+		
+		setMainLabel(controleur.getLabel());
 		
 		switch (controleur.getEtat()) {
 		case VIDE:
 			menuFichier.getItem(0).setEnabled(false);
+			menuEdition.getItem(0).setEnabled(false);
+			menuEdition.getItem(1).setEnabled(false);
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
 			jButtonGenTourn.setEnabled(false);
@@ -82,9 +79,12 @@ public class Fenetre extends Frame {
 		
 		case REMPLISSAGE:
 			menuFichier.getItem(0).setEnabled(false);
+			menuEdition.getItem(0).setEnabled(controleur.undoAble());
+			menuEdition.getItem(1).setEnabled(controleur.redoAble());
 			insertBeforeButton.setEnabled(false);
 			insertAfterButton.setEnabled(false);
-			jButtonGenTourn.setEnabled(true);
+			jButtonGenTourn.setEnabled(controleur.nbDeliveries() > 0);
+			jButtonGenTourn.setSelected(false);
 			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
 			jButtonValiderLiv.setEnabled(controleur.nodeSelected()
 					&& controleur.getSelectedSchedule() != null
@@ -105,10 +105,15 @@ public class Fenetre extends Frame {
 			
 		case MODIFICATION:
 			menuFichier.getItem(0).setEnabled(true);
+			menuEdition.getItem(0).setEnabled(controleur.undoAble());
+			menuEdition.getItem(1).setEnabled(controleur.redoAble());
 			insertBeforeButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			insertAfterButton.setEnabled(controleur.nodeSelected() && ! controleur.deliverySelected());
 			jButtonGenTourn.setEnabled(true);
-			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() && ! controleur.warehouseSelected());
+			jButtonGenTourn.setSelected(true);
+			jButtonSupprimerLiv.setEnabled(controleur.deliverySelected() 
+					&& ! controleur.warehouseSelected()
+					&& controleur.nbDeliveries() > 1);
 			jButtonValiderLiv.setEnabled(false);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(false);
@@ -188,12 +193,56 @@ public class Fenetre extends Frame {
 	public void setControleur(Controleur ctrl) {
 		controleur = ctrl;
 	}
+	
+	public void setKeyEvents() {
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		manager.addKeyEventDispatcher( new KeyEventDispatcher() {
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
+		        if(e.getID() == KeyEvent.KEY_TYPED) {
+		        	int k = (int) e.getKeyChar();
+		            switch (k) {
+		            case 26: // CTRL-Z
+		            	if(menuEdition.getItem(0).isEnabled())
+		            		controleur.undo();
+		            	break;
+		            	
+		            case 25: // CTRL-Y
+		            	if(menuEdition.getItem(1).isEnabled())
+		            		controleur.redo();
+		            	break;
+		            	
+		            case 10: // ENTER
+		    			if (jButtonValiderLiv.isEnabled())
+		    				controleur.add();
+		            	break;
+		            	
+		            case 127: // SUPPR
+		            	if (jButtonSupprimerLiv.isEnabled())
+		    				controleur.del();
+		            	break;
+		            
+		            case 19: // CTRL-S
+		            	if(menuFichier.getItem(0).isEnabled())
+		            		controleur.exportReport(trouverCheminRapport());
+		            	break;
+		            	
+		            case 15: // CTRL-O
+		            	if(menuFichier.getItem(1).isEnabled())
+		            		controleur.loadZone(ouvrirFichierXML());
+		            	break;
+		            }
+		        }
+		        return false;
+		    }
+		});
+	}
 
 	/**
 	 *  Associe les messages popups aux différentes actions qui les déclenchent
 	 * 
 	 */
-	private void setPopups(){
+	private void setPopups() {
 		/*Combo box de la zone
 		 * On demande confirmation quand l'utilisateur veut changer de zone
 		 */
@@ -269,41 +318,35 @@ public class Fenetre extends Frame {
 
 		menuFichier = new Menu("Fichier");
 		menuEdition = new Menu("Edition");
+		
 		ActionListener a4 = new ActionListener(){
-
 			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
+			public void actionPerformed(ActionEvent e) {
 				controleur.exportReport(trouverCheminRapport());
-				setControleur(controleur);
-
 			}
 		};
 		ajoutItem("Generer rapport", menuFichier, a4);
+		
 		ActionListener a5 = new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controleur.loadZone(ouvrirFichierXML());
-				setControleur(controleur);
 			}
 		};
 		ajoutItem("Ouvrir un fichier XML", menuFichier, a5);
 
 		ActionListener a6 = new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new UnsupportedOperationException("Not supported yet.");
+				controleur.undo();
 			}
 		};
 		ajoutItem("Undo", menuEdition, a6);
 
 		ActionListener a7 = new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				throw new UnsupportedOperationException("Not supported yet.");
+				controleur.redo();
 			}
 		};
 		ajoutItem("Redo", menuEdition, a7);
@@ -315,12 +358,10 @@ public class Fenetre extends Frame {
 	}
 
 	private File trouverCheminRapport(){
-
 		//Opens filechooser
 		jFileChooserA  = new JFileChooser(JFileChooser.FILE_FILTER_CHANGED_PROPERTY); 
 		jFileChooserA.setDialogTitle("Choisir le dossier ou enregister le rapport");
 		jFileChooserA.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
 
 		if (jFileChooserA.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
 			return fileSaver(jFileChooserA);
@@ -402,7 +443,7 @@ public class Fenetre extends Frame {
         jPanelGauche = new javax.swing.JPanel();
         jPanelBoutonsGen = new javax.swing.JPanel();
         jComboBoxZone = new javax.swing.JComboBox();
-        jButtonGenTourn = new javax.swing.JButton();
+        jButtonGenTourn = new javax.swing.JToggleButton();
         SpeedRateSlider = new javax.swing.JSlider();
         jPanelPlan = new Dessin();
         jPanelEditionLivraison = new javax.swing.JPanel();
@@ -416,8 +457,8 @@ public class Fenetre extends Frame {
         jLabelAddLivPrec = new javax.swing.JLabel();
         jLabelLivSuiv = new javax.swing.JLabel();
         jLabelAddLivSuiv = new javax.swing.JLabel();
-        insertBeforeButton = new javax.swing.JButton();
-        insertAfterButton = new javax.swing.JButton();
+        insertBeforeButton = new javax.swing.JToggleButton();
+        insertAfterButton = new javax.swing.JToggleButton();
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
@@ -508,7 +549,7 @@ public class Fenetre extends Frame {
         jPanelHoraires.setBackground(new java.awt.Color(51, 51, 51));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabelLivCurr.setText("Adresse de livraison :");
+        jLabelLivCurr.setText("Selection :");
 
         jLabelLivPrec.setText("Livraison précedente :");
 
@@ -518,9 +559,14 @@ public class Fenetre extends Frame {
 
         jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
 
-        insertBeforeButton.setToolTipText("");
+        insertBeforeButton.setText("inserer avant..");
+        insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	insertBeforeButtonActionPerformed(evt);
+            }
+        });
 
-        insertAfterButton.setToolTipText("");
+        insertAfterButton.setText("inserer apres..");
         insertAfterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertAfterButtonActionPerformed(evt);
@@ -649,9 +695,9 @@ public class Fenetre extends Frame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	public void nodeClicked(int id)
+	public void setMainLabel(String s)
 	{
-		jLabelAddLivCurr.setText(""+id);
+		jLabelAddLivCurr.setText(s);
 	}
 
 	/**
@@ -662,9 +708,7 @@ public class Fenetre extends Frame {
 	}//GEN-LAST:event_exitForm
 
 	private void jButtonGenTournActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenTournActionPerformed
-		controleur.genererTournee();
-		update();
-		//controleur.genererTournee();
+		controleur.toggleGenererTournee(true);
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
@@ -695,10 +739,10 @@ private void SpeedRateSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-
 }//GEN-LAST:event_SpeedRateSliderMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton insertAfterButton;
+    private javax.swing.JToggleButton insertBeforeButton;
+    private javax.swing.JToggleButton jButtonGenTourn;
     private javax.swing.JSlider SpeedRateSlider;
-    private javax.swing.JButton insertAfterButton;
-    private javax.swing.JButton insertBeforeButton;
-    private javax.swing.JButton jButtonGenTourn;
     private javax.swing.JButton jButtonSupprimerLiv;
     private javax.swing.JButton jButtonValiderLiv;
     private javax.swing.JComboBox jComboBoxZone;

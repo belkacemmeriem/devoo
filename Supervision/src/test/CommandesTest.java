@@ -14,10 +14,10 @@ public class CommandesTest {
 	@Test
 	public void testAdd() {
 		Commandes com = new Commandes();
-		Commande a = new Commande("a");
+		/*Commande a = new Commande("a");
 		Commande b = new Commande("b");
 		com.add(a);
-		com.add(b);
+		com.add(b);*/
 		assertEquals(2, com.size());
 		assertEquals(2, com.getIndice());
 	}

@@ -33,8 +33,7 @@ public class Dessin extends JPanel implements MouseListener, MouseMotionListener
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int id = controleur.click(e.getX(), e.getY(), e.getButton());
-		fenetre.nodeClicked(id);
+		controleur.click(e.getX(), e.getY(), e.getButton());
 	}
 	
 	@Override
