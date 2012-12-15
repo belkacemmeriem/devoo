@@ -97,6 +97,7 @@ public class ViewMain {
 	}
 	
 	public void updatePulseSleep(int sleepTime) {
-		feuilleDeRoute.setPulseSleepTime(sleepTime);
+		if (feuilleDeRoute != null)
+			feuilleDeRoute.setPulseSleepTime(sleepTime);
 	}
 }

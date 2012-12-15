@@ -46,8 +46,7 @@ public class ListLivraison extends JPanel {
     }
     
 	//R�cup�re l'id d'une adresse de livraison
-    private Integer getIdSchedule(Schedule schedule){
-		
+    private Integer getIdSchedule(Schedule schedule) {
     	for(int i = 0;i<schedules.size();i++){
     		if(schedule.getEndTime()==schedules.get(i).getEndTime()){
     			return i;
@@ -56,7 +55,6 @@ public class ListLivraison extends JPanel {
     	return -1;
     }
     
-	
     public void addLiv (Schedule schedule, String addr){
 		//recuperation de l'indice du noeud de plage horaire voulue
     	Integer idSchedule=getIdSchedule(schedule);
@@ -65,8 +63,6 @@ public class ListLivraison extends JPanel {
 		//insere un noeud dans la plage horaire trouvee au dessus
     	treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
     }
-    
-	
 	
     /*Supprimer une livraison de la liste*/
     public void remLiv (){
