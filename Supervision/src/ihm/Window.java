@@ -280,6 +280,7 @@ public class Window extends java.awt.Frame {
 		}
 
 		jComboBoxZone.setModel(new javax.swing.DefaultComboBoxModel(listPlan));
+		jComboBoxZone.setSelectedIndex(-1);
 		selectedZone = jComboBoxZone.getSelectedIndex();
 		ItemListener itemListenerZone = new ItemListener() {
 
