@@ -4,10 +4,12 @@
  */
 package supervision;
 
+import ihm.Drawing;
+import ihm.Fenetre;
+
 import java.text.ParseException;
 import model.ZoneGeo;
 import parsexml.ParseMapXML;
-import supervision.Fenetre;
 import views.ViewMain;
 
 /**

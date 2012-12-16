@@ -1,5 +1,7 @@
 package views;
 
+import ihm.Drawing;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -14,7 +16,6 @@ import model.Node;
 import model.ZoneGeo;
 
 import supervision.Controleur;
-import supervision.Drawing;
 
 public class ViewMain {
 	Controleur controleur;

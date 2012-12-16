@@ -5,6 +5,14 @@ import model.FeuilleDeRoute;
 import model.Node;
 import model.Schedule;
 
+/**
+ * Renvoie une commande pour annuler ou répéter l'ajout d'un node dans un schedule.
+ * (en mode remplissage)
+ *
+ * @param  node  le node à ajouter
+ * @param  newSchedule le schedule où on doit ajouter le node
+ * @param  fdr  la feuille de route actuelle
+ */
 public class CommandAddNode extends Command {
 
 	Node node;

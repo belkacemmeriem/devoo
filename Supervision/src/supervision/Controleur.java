@@ -2,6 +2,9 @@ package supervision;
 
 import Exception.GraphException;
 import Exception.ReadMapXMLException;
+import ihm.Fenetre;
+import ihm.ListLivraison;
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;

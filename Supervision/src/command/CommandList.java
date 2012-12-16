@@ -2,14 +2,20 @@ package command;
 
 import java.util.ArrayList;
 
+/**
+ * Permet de manipuler un historique de commandes annulables / répétables.
+ */
 public class CommandList {
 
 	private ArrayList<Command> commandes = new ArrayList<Command>();
 	private int index = 0;
 
-	public CommandList() {
-	}
-
+	/**
+	 * Ajoute une commande à la liste.
+	 * Toutes les commandes qui pouvaient être répétées sont détruites.
+	 *
+	 * @param  c la commande à ajouter.
+	 */
 	public void add(Command c) {
 		int taille = commandes.size();
 		for (int i = index ; i < taille  ; i++) {
@@ -19,11 +25,19 @@ public class CommandList {
 		index++;
 	}
 	
+	/**
+	 * Supprime toutes les commandes de l'historique.
+	 */
 	public void clear() {
 		commandes.clear();
 		index = 0;
 	}
 
+	/**
+	 * Annule une commande.
+	 * 
+	 * @return vrai si l'annulation a été possible
+	 */
 	public boolean undo() {
 		if (index <= 0) {
 			System.out.println("(undo impossible)");
@@ -34,6 +48,11 @@ public class CommandList {
 		return true;
 	}
 
+	/**
+	 * Répète une commande.
+	 * 
+	 * @return vrai si la répétition a été possible
+	 */
 	public boolean redo() {
 		if (index >= commandes.size()) {
 			System.out.println("(redo impossible)");
@@ -44,10 +63,20 @@ public class CommandList {
 		return true;
 	}
 	
+	/**
+	 * Renvoie la taille de l'historique.
+	 * 
+	 * @return la taille de l'historique
+	 */
 	public int size() {
 		return commandes.size();
 	}
 	
+	/**
+	 * Renvoie la position actuelle dans l'historique.
+	 * 
+	 * @return la position actuelle dans l'historique
+	 */
 	public int getIndice() {
 		return index;
 	}

@@ -1,4 +1,4 @@
-package supervision;
+package ihm;
 /*
  * @(#)ExampleFileFilter.java	1.16 04/07/26
  * 

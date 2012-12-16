@@ -1,4 +1,5 @@
-package supervision;
+package ihm;
+
 
 import java.awt.Color;
 import java.awt.Frame;
@@ -9,6 +10,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
+import supervision.Controleur;
 import views.ViewMain;
 import views.ViewZoneGeo;
 

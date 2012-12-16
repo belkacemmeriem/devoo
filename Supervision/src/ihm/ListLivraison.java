@@ -1,4 +1,4 @@
-package supervision;
+package ihm;
 
 import java.awt.*;
 import java.awt.event.*;

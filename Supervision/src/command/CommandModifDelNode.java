@@ -5,6 +5,12 @@ import model.FeuilleDeRoute;
 import model.Node;
 import model.Schedule;
 
+/**
+ * Renvoie une commande pour annuler ou répéter la suppression d'un node en mode modification.
+ *
+ * @param  n  le node à ajouter
+ * @param  fdr  la feuille de route actuelle
+ */
 public class CommandModifDelNode extends Command {
 	
 	private Node node, ref;

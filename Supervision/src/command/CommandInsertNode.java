@@ -4,6 +4,15 @@ import model.Delivery;
 import model.FeuilleDeRoute;
 import model.Node;
 
+/**
+ * Renvoie une commande pour annuler ou répéter l'insertion d'un node avant ou après un autre.
+ * (en mode modification)
+ *
+ * @param  n  le node à ajouter.
+ * @param  after  vrai si insertion après, faux si insertion avant.
+ * @param  e  le node après ou avant lequel on doit ajouter le node.
+ * @param  fdr  la feuille de route actuelle
+ */
 public class CommandInsertNode extends Command {
 	
 	private Node newNode, existingNode;
