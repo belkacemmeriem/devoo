@@ -36,6 +36,7 @@ public class ZoneGeo
 	
 	
 	/**
+	 * ajoute un arc entre deux noeuds déjà existants.
 	 * 
 	 * @param originID id du Node origine
 	 * @param destID id du Node destination
@@ -69,8 +70,8 @@ public class ZoneGeo
 	}
 	
 	/**
-	 * 
-	 * @pre doit etre un identifiant valide (pas de vérification).
+	 * désigne le noeud de l'entrepot par son ID.
+	 * @pre id doit etre un identifiant valide (pas de vérification).
 	 */
 	public void setWarehouse(int id)
 	{

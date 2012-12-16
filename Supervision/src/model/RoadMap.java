@@ -154,12 +154,13 @@ public class RoadMap
 		int theTime = 0;
 		for (Schedule sch : timeZones)
 		{
-			//pause attente début livraison
-			if (theTime<sch.getStartTime())
-				theTime = sch.getStartTime();
 			
 			for (Delivery d : sch.getDeliveries())
 			{
+				//pause attente début livraison
+				if (theTime<sch.getStartTime())
+					theTime = sch.getStartTime();
+				
 				theTime += (int) d.getPathToDest().getDuration();
 				d.setHeurePrevue(theTime);
 				d.setRetardPrevu(theTime > sch.getEndTime());	//si arrive hors schedule
@@ -168,6 +169,12 @@ public class RoadMap
 		}
 	}
 	
+	/**
+	 * gènère un rapport de feuilleDeRoute sous forme de fichier texte
+	 * 
+	 * @param path fichier dans lequel écrire le rapport
+	 * @throws IOException
+	 */
 	public void generateReport(File path) throws IOException
 	{
 	    PrintWriter writer;
@@ -196,8 +203,13 @@ public class RoadMap
 	    writer.close();
 	}
 
-	// ajoute un node dans un schedule donné
-	// utile seulement à l'init, avant le premier appel de computeWithTSP
+	/**
+	 * ajoute un node dans un schedule donné, utile seulement à l'init, avant le premier appel de computeWithTSP
+	 * 
+	 * @param node noeud à insérer
+	 * @param schedule schedule dans lequel insérer le noeud
+	 * @throws RuntimeException
+	 */
 	public void addNode(Node node, Schedule schedule) throws RuntimeException
 	{
 		if (etat != StateRoadMap.INIT)
@@ -362,7 +374,12 @@ public class RoadMap
 		return returned;
 	}
 
-	
+	/**
+	 * renvoie le schedule non vide précédent
+	 * 
+	 * @param sch schedule dont on cherche le précédent non vide
+	 * @return schedule non vide précédent. Si tous les schedules précedents sont vides, renvoie le schedule de retour à l'entrepot.
+	 */
 	Schedule prevNonemptySchedule(Schedule sch)
 	{
 		int idx = timeZones.indexOf(sch);
@@ -387,6 +404,13 @@ public class RoadMap
 		}
 	}
 	
+	
+	/**
+	 * renvoie le prochain schedule non vide
+	 * 
+	 * @param sch schedule dont on cherche le suivant non vide
+	 * @return prochain schedule non vide. Si tous les schedules suivants sont vides, renvoie le schedule de retour à l'entrepot.
+	 */
 	Schedule nextNonemptySchedule(Schedule sch)
 	{
 		int idx = timeZones.indexOf(sch);
@@ -406,6 +430,7 @@ public class RoadMap
 	}
 
 	/**
+	 * recalcule le chemin pour aller à delivery. Se base sur l'ordre donné dans les schedules pour le point de départ.
 	 * @param delivery delivery dont le PathToDest doit etre recalculé
 	 */
 	public void recalcPathTo(Delivery delivery)
