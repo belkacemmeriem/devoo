@@ -231,13 +231,11 @@ public class Controler {
 				ViewNode vn = (ViewNode) clicked;
 				deselect(selected);
 				deselect(highlighted);
-				System.out.println("CLIK NODE");
 				if (etat == State.MODIFICATION && insertButton != 0
 						&& selected != null && selected instanceof ViewNode
 						&& vn.getNode() != feuilleDeRoute.getWarehouse().getDest()) {
 					ViewNode vns = (ViewNode) selected;
 					Delivery d = feuilleDeRoute.getDelivery(vn.getNode());
-					System.out.println("COND REUN");
 					if (insertButton == 1) {
 						feuilleDeRoute.insertNodeBefore(vns.getNode(), d);
 						commands.add(new CommandInsertNode(vns.getNode(), false, vn.getNode(), feuilleDeRoute));

@@ -39,7 +39,6 @@ public class Dijkstra {
         dist.put(source.getID(),new Double(0));
          Comparator<PriorityNode> comparator = new NodeComparator();
          PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>((int)Infinity, comparator);
-         System.out.println("Les points");
          
         for(Node v : theGraph.getNodes().values())
         {

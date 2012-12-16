@@ -308,16 +308,13 @@ public class RoadMap
 	public Delivery previousDelivery(Delivery delivery)
 	{
 		Delivery returned = null;
-		System.out.println("NBSCHED = " + timeZones.size()); 
 		for (Schedule sch : timeZones)
 		{
 			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
 
-			System.out.println("SCHED " + sch.endTimeString() + " SIZE = " + schDeliveries.size());
 			if (schDeliveries.contains(delivery))	//si le schedule contient la livraison de reference
 			{
 				int idx = schDeliveries.indexOf(delivery);
-				System.out.println("CONTAINED. IDX : " + idx);
 				if (idx == 0)	//si premier element du schedule
 				{
 					//recherche du dernier node du schedule précédent non vide	
