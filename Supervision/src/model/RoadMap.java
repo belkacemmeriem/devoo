@@ -156,12 +156,13 @@ public class RoadMap
 		{
 			
 			for (Delivery d : sch.getDeliveries())
-			{
+			{		
+				theTime += (int) d.getPathToDest().getDuration();
+				
 				//pause attente début livraison
 				if (theTime<sch.getStartTime())
 					theTime = sch.getStartTime();
 				
-				theTime += (int) d.getPathToDest().getDuration();
 				d.setHeurePrevue(theTime);
 				d.setRetardPrevu(theTime > sch.getEndTime());	//si arrive hors schedule
 				theTime += DUREE_LIVRAISON;
