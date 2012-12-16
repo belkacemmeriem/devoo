@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import sun.awt.Mutex;
-import model.StateRoadMap;
 import model.RoadMap;
 import model.Schedule;
+import sun.awt.Mutex;
 
+/**
+ * Vue de la roadmap
+ * @param r la roadmap
+ * @param m la vue principale
+ */
 public class ViewRoadMap {
 	
 	public final static int PULSE_SLEEP_MIN = 30;
@@ -23,21 +27,28 @@ public class ViewRoadMap {
 	protected PulseThread pulseThread = null;
 	protected int pulseSleepTime = 100;
 	
-	public ViewRoadMap(RoadMap f, ViewMain vm) {
-		roadMap = f;
+	public ViewRoadMap(RoadMap r, ViewMain vm) {
+		roadMap = r;
 		viewMain = vm;
-		for (Schedule s : f.getSchedules()) {
+		for (Schedule s : r.getSchedules()) {
 			ViewSchedule vs = new ViewSchedule(s, viewMain);
 			schedules.add(vs);
 		}
 	}
 	
+	/**
+	 * Peint this sur le canvas.
+	 * @param g objet graphics
+	 */
 	public void paint(Graphics g) {
 		for (ViewSchedule vs : schedules) {
 			vs.paint(g);
 		}
 	}
 	
+	/**
+	 * Met à jour la vue de la roadmap
+	 */
 	public void update() {
 		for (ViewSchedule vs : schedules) {
 			vs.update();

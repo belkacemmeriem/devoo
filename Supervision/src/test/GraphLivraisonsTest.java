@@ -13,7 +13,7 @@ import tsp.*;
 import model.*;
 
 public class GraphLivraisonsTest {
-	GraphLivraisons graphLivraisons;
+	GraphDelivery graphLivraisons;
 	static RoadMap feuilleDeRoute;
 	
 	@BeforeClass
@@ -68,7 +68,7 @@ public class GraphLivraisonsTest {
 	
 	@Test
 	public void testCreateGraph(){
-		graphLivraisons=new GraphLivraisons(feuilleDeRoute);
+		graphLivraisons=new GraphDelivery(feuilleDeRoute);
 		try {
 			graphLivraisons.createGraph();
 		} catch (GraphException e) {
@@ -100,7 +100,7 @@ public class GraphLivraisonsTest {
 	@Test
 	public void testCalcItineraire()
 	{
-		graphLivraisons=new GraphLivraisons(feuilleDeRoute);
+		graphLivraisons=new GraphDelivery(feuilleDeRoute);
 		try {
 			graphLivraisons.createGraph();
 

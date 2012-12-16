@@ -11,6 +11,11 @@ import model.Arc;
 import model.Delivery;
 import model.Node;
 
+/**
+ * Vue d'une delivery de la roadmap
+ * @param d une delivery
+ * @param m la vue principale
+ */
 public class ViewDelivery {
 	
 	Delivery delivery;
@@ -37,6 +42,10 @@ public class ViewDelivery {
 		}
 	}
 	
+	/**
+	 * Peint this sur le canvas.
+	 * @param g objet graphics
+	 */
 	public void paint(Graphics g) {
 		dest.paint(g);
 		for(ViewArcPath vac : arcs) {

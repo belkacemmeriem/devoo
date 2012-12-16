@@ -1,9 +1,9 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import command.Command;
 import command.CommandList;
 
 public class CommandesTest {
