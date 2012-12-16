@@ -60,7 +60,7 @@ public class Fenetre extends java.awt.Frame {
 	}
 	
 	/**
-	 * Met à jour les différents éléments de la fenêtre en fonction de l'état actuel du controleur
+	 * Met a jour les differents elements de la fenetre en fonction de l'etat actuel du controleur
 	 */
 	public void update() {
 		if (controleur == null)
@@ -147,8 +147,8 @@ public class Fenetre extends java.awt.Frame {
 	/**
 	 * Setter de la liste de plages horaire schedules. 
 	 * <p>
-	 * Créer les ToggleButtons associés à chaque plage horaire et définit leur comportement 
-	 * (deux boutons ne peuvent être appuyés en même temps).
+	 * Crï¿½er les ToggleButtons associï¿½s ï¿½ chaque plage horaire et dï¿½finit leur comportement 
+	 * (deux boutons ne peuvent ï¿½tre appuyï¿½s en mï¿½me temps).
 	 * @param aschedules la liste des plages horaires.
 	 */
 	public void setSchedules(ArrayList<Schedule> aschedules) {

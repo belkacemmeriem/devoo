@@ -101,6 +101,10 @@ public class Controleur {
 	}
 
 	public void loadSchedules() {
+		if(fenetre.getListLivraison()!=null)
+		{
+			fenetre.getListLivraison().removeAll();
+		}
 		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
 		schedules = parserSched.getPlagesHoraires();
 		fenetre.setSchedules(schedules);

@@ -63,7 +63,13 @@ public class ListLivraison extends JPanel {
     	}
     	return -1;
     }
-    
+	
+	public void clearTree()
+	{
+		((DefaultMutableTreeNode)treeModel.getRoot()).removeAllChildren();
+		treeModel.reload();
+		this.repaint();
+	}
 	
 	public void updateOneSchedule(Schedule schedule)
 	{
@@ -173,6 +179,8 @@ public class ListLivraison extends JPanel {
 				}
 			}
 		});
+		treeModel.reload();
+		this.repaint();
     }
 
 	/**
