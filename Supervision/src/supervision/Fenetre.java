@@ -186,7 +186,7 @@ public class Fenetre extends java.awt.Frame {
 			jPanelHoraires.add(jToggleButtonSchedules.get(i));
 			listeLivraison = new ListLivraison();
 			listeLivraison.setjButtonSupprimer(jButtonSupprimerLiv);
-			listeLivraison.setSchedule(schedules);
+			listeLivraison.initListLivraison(schedules);
 			jPaneLivraisons.add(listeLivraison);
 		}
 	}

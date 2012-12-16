@@ -101,14 +101,19 @@ public class Controleur {
 	}
 
 	public void loadSchedules() {
-		if(fenetre.getListLivraison()!=null)
-		{
-			fenetre.getListLivraison().removeAll();
+		try{
+			if(fenetre.getListLivraison()!=null)
+			{
+				fenetre.getListLivraison().removeAll();
+			}
+			ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
+			schedules = parserSched.getPlagesHoraires();
+			fenetre.setSchedules(schedules);
+			selectedSchedule = null;
+		} catch (ReadMapXMLException ex) {
+			new ViewError(ex.getMessage());
+			schedules = null;
 		}
-		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-		schedules = parserSched.getPlagesHoraires();
-		fenetre.setSchedules(schedules);
-		selectedSchedule = null;
 	}
 
 	public void loadZone(File path) {

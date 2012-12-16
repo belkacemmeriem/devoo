@@ -4,24 +4,61 @@
  */
 package parsexml;
 
+import Exception.ReadMapXMLException;
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import model.*;
+import org.jdom2.JDOMException;
 
 /**
- *
- * @author Sherlock
+ * <b>ParseDelivTimeXML est la classe permettant la lecture des plages horaires.</b>
+ * <p>
+ * Le ParseDelivTimeXML est caractérisée par les informations suivantes :
+ * <ul>
+ * <li>Un document représentant l'entité XML à lire.</li>
+ * <li>Une racine qui est la racine du document XML.</li>
+ * <li>plagesHoraires qui est la liste dans laquelle les plages horaires lues dans le document XML seront rangées.</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>
+ * Pour que cette classe fonctionne correctement il faut que le fichier xml "horaire.xml" soit contenu dans le dossier content qui doit se trouver dans le dossier de projet
+ * 
+ * On suppose que ce fichier est écrit correctement
+ * </p>
+ * 
+ * @see org.jdom2
+ * @see org.jdom2.Element
+ * @see org.jdom2.Document
+ * @see org.jdom2.input.SAXBuilder
+ * 
+ * @author H4404
  */
 public class ParseDelivTimeXML {
+	/**
+    * lien vers le document XML
+    */
     org.jdom2.Document document;
+	/**
+    * racine du document XML
+    */
     Element racine;
+	/**
+    * liste dans laquelle les plages horaires lues dans le document XML seront rangées.
+    */	
     ArrayList<Schedule> plagesHoraires = new ArrayList<Schedule>();
     
-    public ParseDelivTimeXML(){
+	/**
+    * Constructeur ParseDelivTimeXML.
+	 * 
+	 * @throws ReadMapXMLException  Si jamais la lecture ne s'est pas bien faite
+	 */
+    public ParseDelivTimeXML() throws ReadMapXMLException{
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)
         SAXBuilder sxb = new SAXBuilder();
          
@@ -32,13 +69,27 @@ public class ParseDelivTimeXML {
         {
             document = sxb.build(new File(path+"/content/horaires.xml"));
         }
-        catch(Exception e){}
+        catch(IOException ex){
+            //récupération de l'erreur générée par un fichier corrompu ou inapproprié
+            throw new ReadMapXMLException("Le fichier horaire.xml est corrompu ou inexistant");
+        }
+        catch(JDOMException ex){
+            //récupération de l'erreur générée par un fichier corrompu ou inapproprié
+            throw new ReadMapXMLException("Le fichier horaire.xml est corrompu ou inexistant");
+        }
+        catch(NullPointerException ex){
+            //récupération de l'erreur générée par un fichier corrompu ou inapproprié
+            throw new ReadMapXMLException("Le fichier horaire.xml est corrompu ou inexistant");
+        }
         
         //Récupération de la racine XML
         racine = document.getRootElement();
         getAll();
     }
     
+	/**
+    * Récupère la totalité des plages horaires dans le document XML.
+    */
     public void getAll()
     {
         List listNoeud = racine.getChildren("PlageHoraire");
@@ -61,6 +112,12 @@ public class ParseDelivTimeXML {
         }
     }
     
+	/**
+	 * Formate les heures lues en minutes.
+	 * 
+	 * @param hourIn heure lue en string sous le format HH:MM
+	 * @return heure en minutes
+	 */
     public int GetTimeInMin (String hourIn)
     {
         //Parse un string au format HH:MM pour le transformer 
@@ -72,6 +129,11 @@ public class ParseDelivTimeXML {
         return timeMin;
     }
 
+	/**
+	 * Retourne les plages horaires telles qu'elles ont été lues dans le fichier XML.
+	 * 
+	 * @return ArrayList de Schedules
+	 */
     public ArrayList<Schedule> getPlagesHoraires() {
         return plagesHoraires;
     }

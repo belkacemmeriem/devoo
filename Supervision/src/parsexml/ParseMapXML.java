@@ -14,15 +14,47 @@ import model.*;
 import org.jdom2.xpath.XPath;
 
 /**
- *
- * @author Benoît
+ * <b>ParseMapXML est la classe permettant la lecture dee la carte.</b>
+ * <p>
+ * Le ParseMapXML est caractérisée par les informations suivantes :
+ * <ul>
+ * <li>Un document représentant l'entité XML à lire.</li>
+ * <li>Une racine qui est la racine du document XML.</li>
+ * <li>zonegeo qui l'objet dans lequel on écrit les informations concernant la carte.</li>
+ * </ul>
+ * </p>
+ * 
+ * @see org.jdom2
+ * @see org.jdom2.Element
+ * @see org.jdom2.Document
+ * @see org.jdom2.input.SAXBuilder
+ * 
+ * @author H4404
  */
 public class ParseMapXML {
-
+	/**
+    * lien vers le document XML
+    */
     static org.jdom2.Document document;
+	/**
+    * racine du document XML
+    */
     static Element racine;
+	/**
+    * objet dans lequel on écrit les informations concernant la carte
+    */
     static ZoneGeo zonegeo;
     
+	/**
+	 * Constructeur ParseMapXML.
+	 * 
+	 * Lance automatiquement la lecture du fichier XML
+	 * 
+	 * @param file lien vers le fichier XML
+	 * @param zone lien vers la zonegeo à remplir
+	 * 
+	 * @throws ReadMapXMLException  Si jamais la lecture ne s'est pas bien faite
+	 */
     public ParseMapXML(File file, ZoneGeo zone) throws ReadMapXMLException {
         zonegeo = zone;
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)
@@ -54,6 +86,11 @@ public class ParseMapXML {
         getArcs();
     }
     
+	/**
+	 * lit les données sur l'entrepot
+	 * 
+	 * @throws ReadMapXMLException  Si jamais la lecture ne s'est pas bien faite
+	 */
     public static void setEntrepot() throws ReadMapXMLException
     //récupère l'id associé à la balise XML 'Entrepot' et l'envoie 
     //dans l'objet de type ZoneGeo
@@ -80,27 +117,12 @@ public class ParseMapXML {
             throw new ReadMapXMLException(getErrorMessage(7,null,null));
         }
     }
-            
-    public static void afficheALL()
-    //afficheur bête et méchant de test sur les Noeuds
-    {
-        //Récupération de toutes les balises 'Noeud' contenues dans 
-        //la balise 'Noeuds'
-        List listNoeud = racine.getChild("Noeuds").getChildren("Noeud");
-
-        //On crée un Iterator sur notre liste
-        Iterator i = listNoeud.iterator();
-        while(i.hasNext())
-        {
-            //On recrée l'Element courant à chaque tour de boucle afin de
-            //pouvoir utiliser les méthodes propres aux Element comme :
-            //selectionner un noeud fils, modifier du texte, etc...
-            Element courant = (Element)i.next();
-            //On affiche les informations de Noeud
-            System.out.println("id="+courant.getAttributeValue("id")+" x="+courant.getAttributeValue("x")+" y="+courant.getAttributeValue("y"));
-        }
-    }
-
+    
+	/**
+	 * lit les données relatives aux noeuds
+	 * 
+	 * @throws ReadMapXMLException  Si jamais la lecture ne s'est pas bien faite
+	 */
     public static void getNodes() throws ReadMapXMLException 
     //Récupération de tous les Noeuds et sauvegarde sous forme d'objet Node dans l'objet de type ZoneGeo
     {
@@ -163,7 +185,12 @@ public class ParseMapXML {
             throw new ReadMapXMLException(getErrorMessage(0,null,null));
         }
     }
-
+    
+	/**
+	 * lit les données relatives aux arcs
+	 * 
+	 * @throws ReadMapXMLException  Si jamais la lecture ne s'est pas bien faite
+	 */
     public static void getArcs() throws ReadMapXMLException
     {
         //Récupération de tous les noeuds contenus dans l'objet de type ZoneGeo
@@ -236,6 +263,12 @@ public class ParseMapXML {
         }
     }
     
+	/**
+	 * Permet de retrouver un Noeud dont l'indice est entrée en paramètre via une requête XPath
+	 * 
+	 * @param nodeid indice du noeud recherché
+	 * @return une liste d'éléments dont l'id corresponds à celui passé en paramètre
+	 */
     public static List xpathNodeQuery(int nodeid)
     {
         XPath xpa;
@@ -251,6 +284,14 @@ public class ParseMapXML {
         return null;
     }
     
+	/**
+	 * Méthode polymorphique permettant de formater le message d'erreur associé à une exception ReadMapXMLException
+	 * 
+	 * @param codeErreur code relatif à un type d'erreur spécifique
+	 * @param element1 premier élément à inserer dans le message (si non utile =null)
+	 * @param element2 second element à inserer dans le message (si non utile =null)
+	 * @return une chaîne de caractères correpondant au message d'erreur formaté par la méthode.
+	 */
     static String getErrorMessage(Integer codeErreur, Object element1, Object element2)
     {
         String message="La structure du fichier XML est incohérente ou corrompue.\n\n ";
