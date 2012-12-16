@@ -1,5 +1,7 @@
 package views;
 
+import ihm.Drawing;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -14,11 +16,10 @@ import model.Node;
 import model.ZoneGeo;
 
 import supervision.Controleur;
-import supervision.Dessin;
 
 public class ViewMain {
 	Controleur controleur;
-	Dessin dessin;
+	Drawing dessin;
 	ViewZoneGeo zonegeo;
 	ViewFeuilleDeRoute feuilleDeRoute;
 	int border = 20;
@@ -26,7 +27,7 @@ public class ViewMain {
 	BufferedImage img;
 
 	
-	public ViewMain(Dessin d) 
+	public ViewMain(Drawing d) 
 	{
 		dessin = d;
 		zonegeo = null;
@@ -97,6 +98,7 @@ public class ViewMain {
 	}
 	
 	public void updatePulseSleep(int sleepTime) {
-		feuilleDeRoute.setPulseSleepTime(sleepTime);
+		if (feuilleDeRoute != null)
+			feuilleDeRoute.setPulseSleepTime(sleepTime);
 	}
 }

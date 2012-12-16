@@ -2,11 +2,16 @@ package command;
 
 import supervision.Controleur;
 
-public class CommandeToggleTournee extends Commande {
+/**
+ * Renvoie une commande pour annuler ou répéter le switch entre les modes remplissage et modification.
+ *
+ * @param  ctrl  le controleur
+ */
+public class CommandToggleTournee extends Command {
 
 	private Controleur ctrl;
 	
-	public CommandeToggleTournee(Controleur ctrl) {
+	public CommandToggleTournee(Controleur ctrl) {
 		this.ctrl = ctrl;
 	}
 	

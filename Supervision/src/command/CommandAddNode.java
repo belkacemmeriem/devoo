@@ -5,13 +5,21 @@ import model.FeuilleDeRoute;
 import model.Node;
 import model.Schedule;
 
-public class CommandeAddNode extends Commande {
+/**
+ * Renvoie une commande pour annuler ou répéter l'ajout d'un node dans un schedule.
+ * (en mode remplissage)
+ *
+ * @param  node  le node à ajouter
+ * @param  newSchedule le schedule où on doit ajouter le node
+ * @param  fdr  la feuille de route actuelle
+ */
+public class CommandAddNode extends Command {
 
 	Node node;
 	Schedule newSchedule, oldSchedule;
 	FeuilleDeRoute fdr;
 	
-	public CommandeAddNode(Node node, Schedule newSchedule, FeuilleDeRoute fdr) {
+	public CommandAddNode(Node node, Schedule newSchedule, FeuilleDeRoute fdr) {
 		this.node = node;
 		this.newSchedule = newSchedule;
 		Delivery d = fdr.getDelivery(node);

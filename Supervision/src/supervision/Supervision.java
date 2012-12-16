@@ -4,10 +4,12 @@
  */
 package supervision;
 
+import ihm.Drawing;
+import ihm.Fenetre;
+
 import java.text.ParseException;
 import model.ZoneGeo;
 import parsexml.ParseMapXML;
-import supervision.Fenetre;
 import views.ViewMain;
 
 /**
@@ -25,7 +27,7 @@ public class Supervision extends javax.swing.JPanel {
         
         // fenetre et vues
         Fenetre fenetre = new Fenetre();
-        Dessin d = fenetre.getDessin();
+        Drawing d = fenetre.getDessin();
         ViewMain vm = d.getViewMain();
         
         ctrl.setViewMain(vm);

@@ -2,6 +2,9 @@ package supervision;
 
 import Exception.GraphException;
 import Exception.ReadMapXMLException;
+import ihm.Fenetre;
+import ihm.ListLivraison;
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
@@ -12,12 +15,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import command.CommandeAddNode;
-import command.CommandeDelNode;
-import command.CommandeInsertNode;
-import command.CommandeModifDelNode;
-import command.CommandeToggleTournee;
-import command.Commandes;
+import command.CommandAddNode;
+import command.CommandDelNode;
+import command.CommandInsertNode;
+import command.CommandModifDelNode;
+import command.CommandToggleTournee;
+import command.CommandList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -36,7 +39,7 @@ import views.ViewNode;
 
 public class Controleur {
 
-	protected Commandes commandes = new Commandes();
+	protected CommandList commandes = new CommandList();
 	protected ViewMain viewmain;
 	protected ZoneGeo zonegeo;
 	protected FeuilleDeRoute feuilleDeRoute;
@@ -153,6 +156,7 @@ public class Controleur {
 		ViewNode vn = viewmain.getNode(n);
 		vn.setColor(new Color(255, 0, 0));
 		vn.setRadius(12);
+		fenetre.getListLivraison().setSelected(n.getID().toString());
 	}
 	
 	public void deselectNode(Node n) {
@@ -195,10 +199,10 @@ public class Controleur {
 					System.out.println("COND REUN");
 					if (insertButton == 1) {
 						feuilleDeRoute.insertNodeBefore(vns.getNode(), d);
-						commandes.add(new CommandeInsertNode(vns.getNode(), false, vn.getNode(), feuilleDeRoute));
+						commandes.add(new CommandInsertNode(vns.getNode(), false, vn.getNode(), feuilleDeRoute));
 					} else if (insertButton == 2) {
 						feuilleDeRoute.insertNodeAfter(vns.getNode(), d);
-						commandes.add(new CommandeInsertNode(vns.getNode(), true, vn.getNode(), feuilleDeRoute));
+						commandes.add(new CommandInsertNode(vns.getNode(), true, vn.getNode(), feuilleDeRoute));
 					}
 					fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 					viewmain.updateFeuilleDeRoute();
@@ -209,7 +213,6 @@ public class Controleur {
 					selectedSchedule = deliv.getSchedule();
 					fenetre.setSchedule(selectedSchedule);
 				}
-				fenetre.getListLivraison().setSelected(vn.getNode().getID().toString());
 			}
 			else if (clicked instanceof ViewArc) {
 				deselect(selected);
@@ -259,7 +262,7 @@ public class Controleur {
 	public void add() {
 		if (selected != null && selected instanceof ViewNode && selectedSchedule != null) {
 			Node n = ((ViewNode) selected).getNode();
-			commandes.add(new CommandeAddNode(n, selectedSchedule, feuilleDeRoute));
+			commandes.add(new CommandAddNode(n, selectedSchedule, feuilleDeRoute));
 			Delivery d = feuilleDeRoute.getDelivery(n);
 			if (d != null)
 				feuilleDeRoute.delNode(n);
@@ -282,14 +285,14 @@ public class Controleur {
 		if (selected != null && selected instanceof ViewNode) {
 			Node n = ((ViewNode) selected).getNode();
 			if (etat == Etat.MODIFICATION)
-				commandes.add(new CommandeModifDelNode(n, feuilleDeRoute));
+				commandes.add(new CommandModifDelNode(n, feuilleDeRoute));
 			else
-				commandes.add(new CommandeDelNode(n, feuilleDeRoute));
+				commandes.add(new CommandDelNode(n, feuilleDeRoute));
 			feuilleDeRoute.delNode(n);
+			fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
-			fenetre.getListLivraison().remLiv();
 		}
 	}
 
@@ -299,7 +302,7 @@ public class Controleur {
 
 	public void toggleGenererTournee(boolean record) {
 		if (record)
-			commandes.add(new CommandeToggleTournee(this));
+			commandes.add(new CommandToggleTournee(this));
 		if (etat == Etat.REMPLISSAGE) {
 			try {
 				feuilleDeRoute.computeWithTSP();
@@ -317,6 +320,7 @@ public class Controleur {
 			feuilleDeRoute.backToInit();
 			etat = Etat.REMPLISSAGE;
 		}
+		fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
@@ -335,6 +339,7 @@ public class Controleur {
 	
 	public void undo() {
 		commandes.undo();
+		fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
@@ -346,6 +351,7 @@ public class Controleur {
 	
 	public void redo() {
 		commandes.redo();
+		fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();

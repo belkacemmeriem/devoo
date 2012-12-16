@@ -10,7 +10,7 @@ public class Delivery
 	Schedule schedule;
 	Chemin pathToDest;
 	
-	int heurePrevue;
+	Integer heurePrevue = null;
 	boolean retardPrevu;
 	
 	
@@ -24,7 +24,7 @@ public class Delivery
 		this.retardPrevu = retardPrevu;
 	}
 	
-	public int getHeurePrevue()
+	public Integer getHeurePrevue()
 	{
 		return heurePrevue;
 	}
@@ -34,7 +34,7 @@ public class Delivery
 		this.schedule = schedule;
 	}
 	
-	public void setHeurePrevue(int heurePrevue)
+	public void setHeurePrevue(Integer heurePrevue)
 	{
 		this.heurePrevue = heurePrevue;
 	}
@@ -53,7 +53,7 @@ public class Delivery
 
 	public void resetHeuresEtChemin()
 	{
-		setHeurePrevue(0);
+		setHeurePrevue(null);
 		setRetardPrevu(false);
 		pathToDest = null;
 	}

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package supervision;
+package ihm;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,9 @@ import java.util.Calendar;
 import java.util.Vector;
 
 import javax.swing.*;
+
+import supervision.Controleur;
+import supervision.Etat;
 import model.Schedule;
 
 
@@ -147,8 +150,8 @@ public class Fenetre extends java.awt.Frame {
 	/**
 	 * Setter de la liste de plages horaire schedules. 
 	 * <p>
-	 * Cr�er les ToggleButtons associ�s � chaque plage horaire et d�finit leur comportement 
-	 * (deux boutons ne peuvent �tre appuy�s en m�me temps).
+	 * Creer les ToggleButtons associes a chaque plage horaire et definit leur comportement 
+	 * (deux boutons ne peuvent etre appuyes en meme temps).
 	 * @param aschedules la liste des plages horaires.
 	 */
 	public void setSchedules(ArrayList<Schedule> aschedules) {
@@ -191,8 +194,8 @@ public class Fenetre extends java.awt.Frame {
 		}
 	}
 
-	public Dessin getDessin() {
-		return (Dessin)jPanelPlan;
+	public Drawing getDessin() {
+		return (Drawing)jPanelPlan;
 	}
 
 	public ListLivraison getListLivraison()
@@ -204,6 +207,9 @@ public class Fenetre extends java.awt.Frame {
 		controleur = ctrl;
 	}
 	
+	/**
+	 * Met en place le keyboard listener.
+	 */
 	public void setKeyEvents() {
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher( new KeyEventDispatcher() {
@@ -250,7 +256,6 @@ public class Fenetre extends java.awt.Frame {
 
 	/**
 	 *  Associe les messages popups aux differentes actions qui les declenchent
-	 * 
 	 */
 	private void setPopups() {
 		/*Combo box de la zone
@@ -311,7 +316,6 @@ public class Fenetre extends java.awt.Frame {
 
 	/**
 	 *  Associe les polices aux differents labels
-	 * 
 	 */
 	private void setFonts(){
 		//Titre edition livraison
@@ -383,6 +387,10 @@ public class Fenetre extends java.awt.Frame {
 		item.addActionListener(aActionListener);
 	}
 
+	/**
+	 * Ouvre un jfilechooser pour choisir l'emplacement du rapport.
+	 * @return le fichier où on écrira le rapport.
+	 */
 	private File trouverCheminRapport(){
 		//Opens filechooser
 		jFileChooserA  = new JFileChooser(JFileChooser.FILE_FILTER_CHANGED_PROPERTY); 
@@ -437,6 +445,7 @@ public class Fenetre extends java.awt.Frame {
 		return file;
 	}
 	//End fileSaver
+	
 	private File ouvrirFichierXML(){
 		jFileChooserXML = new JFileChooser();
 		// Note: source for ExampleFileFilter can be found in FileChooserDemo,
@@ -465,7 +474,7 @@ public class Fenetre extends java.awt.Frame {
         jComboBoxZone = new javax.swing.JComboBox();
         jButtonGenTourn = new javax.swing.JToggleButton();
         SpeedRateSlider = new javax.swing.JSlider();
-        jPanelPlan = new Dessin();
+        jPanelPlan = new Drawing();
         jPanelEditionLivraison = new javax.swing.JPanel();
         jLabelEdLivTitre = new javax.swing.JLabel();
         jButtonSupprimerLiv = new javax.swing.JButton();
@@ -780,7 +789,7 @@ private void SpeedRateSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-
     private javax.swing.JPanel jPanelEditionLivraison;
     private javax.swing.JPanel jPanelGauche;
     private javax.swing.JPanel jPanelHoraires;
-    private Dessin jPanelPlan;
+    private Drawing jPanelPlan;
     // End of variables declaration//GEN-END:variables
 
 }
