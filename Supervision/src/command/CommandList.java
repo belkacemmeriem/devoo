@@ -2,45 +2,45 @@ package command;
 
 import java.util.ArrayList;
 
-public class Commandes {
+public class CommandList {
 
-	private ArrayList<Commande> commandes = new ArrayList<Commande>();
-	private int indice = 0;
+	private ArrayList<Command> commandes = new ArrayList<Command>();
+	private int index = 0;
 
-	public Commandes() {
+	public CommandList() {
 	}
 
-	public void add(Commande c) {
+	public void add(Command c) {
 		int taille = commandes.size();
-		for (int i = indice ; i < taille  ; i++) {
-			commandes.remove(indice);
+		for (int i = index ; i < taille  ; i++) {
+			commandes.remove(index);
 		}
 		commandes.add(c);
-		indice++;
+		index++;
 	}
 	
 	public void clear() {
 		commandes.clear();
-		indice = 0;
+		index = 0;
 	}
 
 	public boolean undo() {
-		if (indice <= 0) {
+		if (index <= 0) {
 			System.out.println("(undo impossible)");
 			return false;
 		}
-		indice--;
-		commandes.get(indice).undo();
+		index--;
+		commandes.get(index).undo();
 		return true;
 	}
 
 	public boolean redo() {
-		if (indice >= commandes.size()) {
+		if (index >= commandes.size()) {
 			System.out.println("(redo impossible)");
 			return false;
 		}
-		commandes.get(indice).redo();
-		indice++;
+		commandes.get(index).redo();
+		index++;
 		return true;
 	}
 	
@@ -49,6 +49,6 @@ public class Commandes {
 	}
 	
 	public int getIndice() {
-		return indice;
+		return index;
 	}
 }

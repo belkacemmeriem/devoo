@@ -14,11 +14,11 @@ import model.Node;
 import model.ZoneGeo;
 
 import supervision.Controleur;
-import supervision.Dessin;
+import supervision.Drawing;
 
 public class ViewMain {
 	Controleur controleur;
-	Dessin dessin;
+	Drawing dessin;
 	ViewZoneGeo zonegeo;
 	ViewFeuilleDeRoute feuilleDeRoute;
 	int border = 20;
@@ -26,7 +26,7 @@ public class ViewMain {
 	BufferedImage img;
 
 	
-	public ViewMain(Dessin d) 
+	public ViewMain(Drawing d) 
 	{
 		dessin = d;
 		zonegeo = null;

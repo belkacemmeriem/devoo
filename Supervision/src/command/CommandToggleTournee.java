@@ -2,11 +2,11 @@ package command;
 
 import supervision.Controleur;
 
-public class CommandeToggleTournee extends Commande {
+public class CommandToggleTournee extends Command {
 
 	private Controleur ctrl;
 	
-	public CommandeToggleTournee(Controleur ctrl) {
+	public CommandToggleTournee(Controleur ctrl) {
 		this.ctrl = ctrl;
 	}
 	

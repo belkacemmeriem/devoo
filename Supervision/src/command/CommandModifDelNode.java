@@ -5,7 +5,7 @@ import model.FeuilleDeRoute;
 import model.Node;
 import model.Schedule;
 
-public class CommandeModifDelNode extends Commande {
+public class CommandModifDelNode extends Command {
 	
 	private Node node, ref;
 	private FeuilleDeRoute fdr;
@@ -13,7 +13,7 @@ public class CommandeModifDelNode extends Commande {
 	private enum InsertState { BEFORE, AFTER, ALONE };
 	private InsertState insertState;
 
-	public CommandeModifDelNode(Node n, FeuilleDeRoute fdr) {
+	public CommandModifDelNode(Node n, FeuilleDeRoute fdr) {
 		this.node = n;
 		Delivery me = fdr.getDelivery(node);
 		System.out.println("A");

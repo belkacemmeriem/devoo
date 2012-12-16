@@ -3,8 +3,8 @@ package test;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import command.Commande;
-import command.Commandes;
+import command.Command;
+import command.CommandList;
 
 public class CommandesTest {
 	
@@ -13,7 +13,7 @@ public class CommandesTest {
 	 */
 	@Test
 	public void testAdd() {
-		Commandes com = new Commandes();
+		CommandList com = new CommandList();
 		/*Commande a = new Commande("a");
 		Commande b = new Commande("b");
 		com.add(a);

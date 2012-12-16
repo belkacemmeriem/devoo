@@ -5,13 +5,13 @@ import model.FeuilleDeRoute;
 import model.Node;
 import model.Schedule;
 
-public class CommandeAddNode extends Commande {
+public class CommandAddNode extends Command {
 
 	Node node;
 	Schedule newSchedule, oldSchedule;
 	FeuilleDeRoute fdr;
 	
-	public CommandeAddNode(Node node, Schedule newSchedule, FeuilleDeRoute fdr) {
+	public CommandAddNode(Node node, Schedule newSchedule, FeuilleDeRoute fdr) {
 		this.node = node;
 		this.newSchedule = newSchedule;
 		Delivery d = fdr.getDelivery(node);

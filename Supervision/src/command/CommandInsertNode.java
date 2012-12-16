@@ -4,13 +4,13 @@ import model.Delivery;
 import model.FeuilleDeRoute;
 import model.Node;
 
-public class CommandeInsertNode extends Commande {
+public class CommandInsertNode extends Command {
 	
 	private Node newNode, existingNode;
 	private FeuilleDeRoute fdr;
 	private boolean after;
 
-	public CommandeInsertNode(Node n, boolean after, Node e, FeuilleDeRoute fdr) {
+	public CommandInsertNode(Node n, boolean after, Node e, FeuilleDeRoute fdr) {
 		this.newNode = n;
 		this.after = after;
 		this.existingNode = e;

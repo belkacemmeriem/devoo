@@ -191,8 +191,8 @@ public class Fenetre extends java.awt.Frame {
 		}
 	}
 
-	public Dessin getDessin() {
-		return (Dessin)jPanelPlan;
+	public Drawing getDessin() {
+		return (Drawing)jPanelPlan;
 	}
 
 	public ListLivraison getListLivraison()
@@ -465,7 +465,7 @@ public class Fenetre extends java.awt.Frame {
         jComboBoxZone = new javax.swing.JComboBox();
         jButtonGenTourn = new javax.swing.JToggleButton();
         SpeedRateSlider = new javax.swing.JSlider();
-        jPanelPlan = new Dessin();
+        jPanelPlan = new Drawing();
         jPanelEditionLivraison = new javax.swing.JPanel();
         jLabelEdLivTitre = new javax.swing.JLabel();
         jButtonSupprimerLiv = new javax.swing.JButton();
@@ -780,7 +780,7 @@ private void SpeedRateSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-
     private javax.swing.JPanel jPanelEditionLivraison;
     private javax.swing.JPanel jPanelGauche;
     private javax.swing.JPanel jPanelHoraires;
-    private Dessin jPanelPlan;
+    private Drawing jPanelPlan;
     // End of variables declaration//GEN-END:variables
 
 }
