@@ -12,9 +12,9 @@ import model.Arc;
 
 public class ViewArc {
 	Arc arc;
-	ViewMain mere;
-	int epaisseur;
-	static int defaultEpaisseur = 1;
+	ViewMain viewMain;
+	int thick;
+	static int defaultThick = 1;
 	Color color;
 	static Color defaultColor = new Color(200, 200, 200); 
 	static Color defaultRoadColor = new Color(255, 255, 150);
@@ -22,7 +22,7 @@ public class ViewArc {
 	
 	public ViewArc(Arc a, ViewMain m) {
 		arc = a;
-		mere = m;
+		viewMain = m;
 		setDefault();
 		dx1 = dx2 = dy1 = dy2 = 0;
 	}
@@ -56,10 +56,10 @@ public class ViewArc {
 	public double distance(int x, int y) {
 		double x1 = (double) x;
 		double y1 = (double) y;
-		double x2 = (double) mere.xpix(arc.getOrigin().getX());
-		double y2 = (double) mere.ypix(arc.getOrigin().getY());
-		double x3 = (double) mere.xpix(arc.getDest().getX());
-		double y3 = (double) mere.ypix(arc.getDest().getY());
+		double x2 = (double) viewMain.xpix(arc.getOrigin().getX());
+		double y2 = (double) viewMain.ypix(arc.getOrigin().getY());
+		double x3 = (double) viewMain.xpix(arc.getDest().getX());
+		double y3 = (double) viewMain.ypix(arc.getDest().getY());
 		return distToSegment(x1, y1, x2, y2, x3, y3);
 	}
 	
@@ -71,7 +71,7 @@ public class ViewArc {
 	}
 	
 	public void setEpaisseur(int n) {
-		epaisseur = n;
+		thick = n;
 	}
 	
 	public void setColor(Color c) {
@@ -86,19 +86,19 @@ public class ViewArc {
 	}
 	
 	public void setDefault() {
-		epaisseur = defaultEpaisseur;
+		thick = defaultThick;
 		color = defaultColor;
 	}
 	
 	public void paint(Graphics g) {
-		int x1 = mere.xpix(arc.getOrigin().getX()) + dx1;
-		int y1 = mere.ypix(arc.getOrigin().getY()) + dy1;
-		int x2 = mere.xpix(arc.getDest().getX()) + dx2;
-		int y2 = mere.ypix(arc.getDest().getY()) + dy2;
+		int x1 = viewMain.xpix(arc.getOrigin().getX()) + dx1;
+		int y1 = viewMain.ypix(arc.getOrigin().getY()) + dy1;
+		int x2 = viewMain.xpix(arc.getDest().getX()) + dx2;
+		int y2 = viewMain.ypix(arc.getDest().getY()) + dy2;
 		
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(defaultRoadColor);
-		g2d.setStroke(new BasicStroke(epaisseur));
+		g2d.setStroke(new BasicStroke(thick));
 		float normalX = (float) ((float)(y2-y1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
 		float normalY = (float) ((float)(x2-x1)/(Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1))));
 	

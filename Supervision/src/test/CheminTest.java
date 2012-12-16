@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.Arc;
-import model.Chemin;
+import model.Path;
 import model.Node;
 
 import org.junit.BeforeClass;
@@ -13,7 +13,7 @@ import org.junit.Test;
 
 
 public class CheminTest {
-	static Chemin path;
+	static Path path;
 	
 
 
@@ -46,7 +46,7 @@ public class CheminTest {
 		nodes.add(n3);
 		nodes.add(n4);
 		nodes.add(n5);
-		path = new Chemin(nodes, 100);
+		path = new Path(nodes, 100);
 	}
 
 	@Test

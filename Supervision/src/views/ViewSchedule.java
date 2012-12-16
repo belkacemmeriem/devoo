@@ -10,19 +10,19 @@ import model.Schedule;
 
 public class ViewSchedule {
 	Schedule schedule;
-	ViewMain mere;
+	ViewMain viewMain;
 	ArrayList<ViewDelivery> deliveries = new ArrayList<ViewDelivery>();
 
 	public ViewSchedule(Schedule s, ViewMain m) {
 		schedule = s;
-		mere = m;
+		viewMain = m;
 		update();
 	}
 	
 	public void update() {
 		deliveries.clear();
 		for (Delivery d : schedule.getDeliveries()) {
-			ViewDelivery vd = new ViewDelivery(d, mere);
+			ViewDelivery vd = new ViewDelivery(d, viewMain);
 			deliveries.add(vd);
 		}
 	}
@@ -33,9 +33,9 @@ public class ViewSchedule {
 		}
 	}
 	
-	public List<ViewArcChemin> getViewArcs()
+	public List<ViewArcPath> getViewArcs()
 	{
-		LinkedList<ViewArcChemin> list = new LinkedList<ViewArcChemin>();
+		LinkedList<ViewArcPath> list = new LinkedList<ViewArcPath>();
 		for (ViewDelivery deliv: deliveries)
 		{
 			list.addAll(deliv.getViewArcs());

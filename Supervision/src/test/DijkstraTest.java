@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.Arc;
-import model.Chemin;
+import model.Path;
 import model.Node;
 import model.ZoneGeo;
 
@@ -63,7 +63,7 @@ public class DijkstraTest {
 	{
 		//Appel de Dijkstra
 		int sucess=0;
-		ArrayList<Chemin> solution = Dijkstra.solve(uneZone, source, eng);
+		ArrayList<Path> solution = Dijkstra.solve(uneZone, source, eng);
 		
 		// Verification du nombre de chemi resultat
 		if(solution.size()==2) sucess ++;

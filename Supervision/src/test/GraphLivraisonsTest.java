@@ -14,7 +14,7 @@ import model.*;
 
 public class GraphLivraisonsTest {
 	GraphLivraisons graphLivraisons;
-	static FeuilleDeRoute feuilleDeRoute;
+	static RoadMap feuilleDeRoute;
 	
 	@BeforeClass
 	public static void init(){
@@ -57,7 +57,7 @@ public class GraphLivraisonsTest {
 		Schedule schedule2=new Schedule(900,1200,Color.RED);
 		listeSchedules.add(schedule2);		
 		
-		feuilleDeRoute=new FeuilleDeRoute(listeSchedules, zoneGeo);
+		feuilleDeRoute=new RoadMap(listeSchedules, zoneGeo);
 		
 		feuilleDeRoute.addNode(zoneGeo.getNode(1), schedule1);
 		feuilleDeRoute.addNode(zoneGeo.getNode(2), schedule1);

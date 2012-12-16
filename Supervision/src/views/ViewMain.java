@@ -1,5 +1,7 @@
 package views;
 
+import ihm.Drawing;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -9,94 +11,94 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-import model.FeuilleDeRoute;
+import model.RoadMap;
 import model.Node;
 import model.ZoneGeo;
 
-import supervision.Controleur;
-import supervision.Dessin;
+import supervision.Controler;
 
 public class ViewMain {
-	Controleur controleur;
-	Dessin dessin;
-	ViewZoneGeo zonegeo;
-	ViewFeuilleDeRoute feuilleDeRoute;
+	Controler controler;
+	Drawing drawing;
+	ViewZoneGeo zoneGeo;
+	ViewRoadMap roadMap;
 	int border = 20;
 	java.awt.Image image;
 	BufferedImage img;
 
 	
-	public ViewMain(Dessin d) 
+	public ViewMain(Drawing d) 
 	{
-		dessin = d;
-		zonegeo = null;
-		feuilleDeRoute = null;
+		drawing = d;
+		zoneGeo = null;
+		roadMap = null;
 	}
 	
 	public void repaint() {
-		dessin.repaint();
+		drawing.repaint();
 	}
 	
 	public void setZoneGeo(ZoneGeo zg,File path) {
-		zonegeo = new ViewZoneGeo(zg, this);
+		zoneGeo = new ViewZoneGeo(zg, this);
 		 try {
 			  img= ImageIO.read(new File(path.toString().substring(0, path.toString().length()-3)+"png"));
-			  image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
+			  image=  img.getScaledInstance(drawing.getWidth(),drawing.getHeight(),BufferedImage.SCALE_DEFAULT);
 		} catch (IOException e) {
 		}
 	}
 	
-	public void setFeuilleDeRoute(FeuilleDeRoute f) {
-		feuilleDeRoute = new ViewFeuilleDeRoute(f, this);
+	public void setRoadMap(RoadMap f) {
+		roadMap = new ViewRoadMap(f, this);
 	}
 	
 	public int xpix(int xplan) {
-		int canvasWidth = dessin.getWidth() - 2*border;
-		float xpourcent = (xplan - zonegeo.getXmin()) / (float)zonegeo.getWidth();
+		int canvasWidth = drawing.getWidth() - 2*border;
+		float xpourcent = (xplan - zoneGeo.getXmin()) / (float)zoneGeo.getWidth();
 		return (int) (border + xpourcent * canvasWidth);
 	}
 	
 	public int ypix(int yplan) {
-		int canvasHeight = dessin.getHeight() - 2*border;
-		float ypourcent = (yplan - zonegeo.getYmin()) / (float)zonegeo.getHeight();
+		int canvasHeight = drawing.getHeight() - 2*border;
+		float ypourcent = (yplan - zoneGeo.getYmin()) / (float)zoneGeo.getHeight();
 		return (int) (border + ypourcent * canvasHeight);
 	}
 	
 	public Object findAt(int x, int y, boolean onlyArcs) {
-		return zonegeo.findAt(x, y, onlyArcs);
+		return zoneGeo.findAt(x, y, onlyArcs);
 	}
 	
 	public void paint(Graphics g) {
-		dessin.setBackground(new Color(255, 255, 255));
-		if (zonegeo != null) {
+		drawing.setBackground(new Color(255, 255, 255));
+		if (zoneGeo != null) {
 			if (img != null) {
-				image=  img.getScaledInstance(dessin.getWidth(),dessin.getHeight(),BufferedImage.SCALE_DEFAULT);
+				image=  img.getScaledInstance(drawing.getWidth(),drawing.getHeight(),BufferedImage.SCALE_DEFAULT);
 				g.drawImage(image, 0, 0, null);
 			}
-			zonegeo.paint(g);
+			zoneGeo.paint(g);
 		}
-		if (feuilleDeRoute != null) {
-			feuilleDeRoute.paint(g);
+		if (roadMap != null) {
+			roadMap.paint(g);
 		}
 	}
 
-	public void setControleur(Controleur ctrl) {
-		controleur = ctrl;
+	public void setControler(Controler ctrl) {
+		controler = ctrl;
 	}
 	
-	public Controleur getControleur() {
-		return controleur;
+	public Controler getControler() {
+		return controler;
 	}
 	
 	public ViewNode getNode(Node n) {
-		return zonegeo.getNode(n);
+		return zoneGeo.getNode(n);
 	}
 
-	public void updateFeuilleDeRoute() {
-		feuilleDeRoute.update();
+	public void updateRoadMap() {
+		roadMap.update();
 	}
 	
 	public void updatePulseSleep(int sleepTime) {
-		feuilleDeRoute.setPulseSleepTime(sleepTime);
+		if (roadMap != null)
+			roadMap.setPulseSleepTime(sleepTime);
 	}
 }

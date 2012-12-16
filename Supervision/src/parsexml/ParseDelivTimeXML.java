@@ -43,15 +43,15 @@ public class ParseDelivTimeXML {
 	/**
     * lien vers le document XML
     */
-    org.jdom2.Document document;
+    protected org.jdom2.Document document;
 	/**
     * racine du document XML
     */
-    Element racine;
+    protected Element racine;
 	/**
     * liste dans laquelle les plages horaires lues dans le document XML seront rangées.
     */	
-    ArrayList<Schedule> plagesHoraires = new ArrayList<Schedule>();
+    protected ArrayList<Schedule> plagesHoraires = new ArrayList<Schedule>();
     
 	/**
     * Constructeur ParseDelivTimeXML.

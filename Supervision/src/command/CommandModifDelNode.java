@@ -1,25 +1,31 @@
 package command;
 
 import model.Delivery;
-import model.FeuilleDeRoute;
+import model.RoadMap;
 import model.Node;
 import model.Schedule;
 
-public class CommandeModifDelNode extends Commande {
+/**
+ * Renvoie une commande pour annuler ou répéter la suppression d'un node en mode modification.
+ *
+ * @param  n  le node à ajouter
+ * @param  rm  la feuille de route actuelle
+ */
+public class CommandModifDelNode extends Command {
 	
 	private Node node, ref;
-	private FeuilleDeRoute fdr;
+	private RoadMap rm;
 	private Schedule schedule;
 	private enum InsertState { BEFORE, AFTER, ALONE };
 	private InsertState insertState;
 
-	public CommandeModifDelNode(Node n, FeuilleDeRoute fdr) {
+	public CommandModifDelNode(Node n, RoadMap rm) {
 		this.node = n;
-		Delivery me = fdr.getDelivery(node);
+		Delivery me = rm.getDelivery(node);
 		System.out.println("A");
-		Delivery prev = fdr.previousDelivery(me);
+		Delivery prev = rm.previousDelivery(me);
 		System.out.println("B");
-		Delivery next = fdr.nextDelivery(me);
+		Delivery next = rm.nextDelivery(me);
 		schedule = me.getSchedule();
 		if (prev.getSchedule() == schedule) {
 			ref = prev.getDest();
@@ -31,41 +37,40 @@ public class CommandeModifDelNode extends Commande {
 			ref = null;
 			insertState = InsertState.ALONE;
 		}
-			
 		
-		this.fdr = fdr;
+		this.rm = rm;
 	}
 
 	@Override
 	public void undo() {
 		Delivery d = null;
 		if (ref != null)
-			d = fdr.getDelivery(ref);
+			d = rm.getDelivery(ref);
 		
 		switch (insertState) {
 		case AFTER:
 			if (d != null)
-				fdr.insertNodeAfter(node, d);
+				rm.insertNodeAfter(node, d);
 			break;
 			
 		case BEFORE:
 			if (d != null)
-				fdr.insertNodeBefore(node, d);
+				rm.insertNodeBefore(node, d);
 			break;
 			
 		case ALONE:
 			Delivery newDelivery = new Delivery(node, schedule);
 			schedule.insert(newDelivery, 0);
-			fdr.recalcPathTo(newDelivery);
-			fdr.recalcPathTo(fdr.nextDelivery(newDelivery));		
-			fdr.computeArrivalTimes();
+			rm.recalcPathTo(newDelivery);
+			rm.recalcPathTo(rm.nextDelivery(newDelivery));		
+			rm.computeArrivalTimes();
 			break;
 		}
 	}
 
 	@Override
 	public void redo() {
-		fdr.delNode(node);
+		rm.delNode(node);
 	}
 
 }

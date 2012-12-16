@@ -10,14 +10,14 @@ import Exception.*;
 public class GraphLivraisons implements Graph {
 
 	private final int timeLimit = 10000;//milliseconds
-	private Chemin[][] listeChemins;
+	private Path[][] listeChemins;
 	private int[][] listeCosts;
-	private FeuilleDeRoute feuilleDeRoute;
+	private RoadMap feuilleDeRoute;
 	private int maxArcCost=-1;
 	private int minArcCost=-1;
 	private int nbVertices=0;
 	
-	public GraphLivraisons(FeuilleDeRoute f){
+	public GraphLivraisons(RoadMap f){
 		feuilleDeRoute=f;
 	}
 	
@@ -38,7 +38,7 @@ public class GraphLivraisons implements Graph {
 			throw new GraphException(GraphException.NO_DELIVERIES);
 		}
 		
-		listeChemins=new Chemin[nbVertices][nbVertices];
+		listeChemins=new Path[nbVertices][nbVertices];
 		listeCosts=new int[nbVertices][nbVertices];
 		
 		//index de la liste des schedules de feuilleDeRoute
@@ -61,7 +61,7 @@ public class GraphLivraisons implements Graph {
 		}
 		
 		//on fait appel à la classe static Dijkstra pour calculer les plus courts chemins
-		ArrayList<Chemin> lC=Dijkstra.solve(feuilleDeRoute.getZoneGeo(), depart, listeArrivees);
+		ArrayList<Path> lC=Dijkstra.solve(feuilleDeRoute.getZoneGeo(), depart, listeArrivees);
 		
 		for(int i=0;i<lC.size();i++)
 		{
@@ -175,8 +175,6 @@ public class GraphLivraisons implements Graph {
 		int bound=(nbVertices+1)*maxArcCost;
 		SolutionState retour;
 		
-		long timeStart=Calendar.getInstance().getTimeInMillis();
-		
 		retour=tsp.solve(timeLimit, bound, this);
 		
 		if(retour==SolutionState.INCONSISTENT)
@@ -189,7 +187,6 @@ public class GraphLivraisons implements Graph {
 		}
 		
 		int[] tabPos=tsp.getPos();
-		int[] tabNext=tsp.getNext();
 		ArrayList<Delivery> itineraire=new ArrayList<Delivery>();
 		for(int i=0;i<tabPos.length-1;i++)
 		{
@@ -245,7 +242,7 @@ public class GraphLivraisons implements Graph {
 		return listeInteger;
 	}
 	
-	public Chemin[][] getListeChemin()
+	public Path[][] getListeChemin()
 	{
 		return listeChemins;
 	}

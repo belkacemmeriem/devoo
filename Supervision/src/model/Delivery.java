@@ -2,16 +2,12 @@ package model;
 
 public class Delivery
 {
-	protected
-	Node dest;
-
-
-
-	Schedule schedule;
-	Chemin pathToDest;
+	protected Node dest;
+	protected Schedule schedule;
+	protected Path pathToDest;
 	
-	int heurePrevue;
-	boolean retardPrevu;
+	protected Integer heurePrevue = null;
+	protected boolean retardPrevu;
 	
 	
 	public boolean isRetardPrevu()
@@ -24,7 +20,7 @@ public class Delivery
 		this.retardPrevu = retardPrevu;
 	}
 	
-	public int getHeurePrevue()
+	public Integer getHeurePrevue()
 	{
 		return heurePrevue;
 	}
@@ -34,7 +30,7 @@ public class Delivery
 		this.schedule = schedule;
 	}
 	
-	public void setHeurePrevue(int heurePrevue)
+	public void setHeurePrevue(Integer heurePrevue)
 	{
 		this.heurePrevue = heurePrevue;
 	}
@@ -53,12 +49,12 @@ public class Delivery
 
 	public void resetHeuresEtChemin()
 	{
-		setHeurePrevue(0);
+		setHeurePrevue(null);
 		setRetardPrevu(false);
 		pathToDest = null;
 	}
 
-	public Chemin getPathToDest()
+	public Path getPathToDest()
 	{
 		return pathToDest;
 	}
@@ -72,7 +68,7 @@ public class Delivery
 	}
 
 
-	public void setPathToDest(Chemin pathToDest)
+	public void setPathToDest(Path pathToDest)
 	{
 		this.pathToDest = pathToDest;
 	}
