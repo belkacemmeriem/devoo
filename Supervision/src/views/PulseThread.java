@@ -13,7 +13,7 @@ public class PulseThread extends Thread
 	
 	int sleepTime;
 	final int DEF_WIDTH = ViewArcPath.defaultThick;
-	final int PULSE_WIDTH = 5;
+	final int PULSE_WIDTH = 6;
 	
     public void run()
     {

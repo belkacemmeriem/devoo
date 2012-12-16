@@ -1,8 +1,7 @@
 package command;
 
-import model.Delivery;
-import model.RoadMap;
 import model.Node;
+import model.RoadMap;
 import model.Schedule;
 
 /**

@@ -1,29 +1,28 @@
 package test;
 
-import Exception.GraphException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
 import model.Delivery;
-import model.StateRoadMap;
-import model.RoadMap;
 import model.Node;
+import model.RoadMap;
 import model.Schedule;
+import model.StateRoadMap;
 import model.ZoneGeo;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import tsp.GraphLivraisons;
+import tsp.GraphDelivery;
+import Exception.GraphException;
 
 public class FeuilleDeRouteTest
 {
 	
-	static GraphLivraisons graphLivraisons;
+	static GraphDelivery graphLivraisons;
 	static RoadMap feuilleDeRoute;
 	static ZoneGeo zoneGeo;
 	static Schedule schedule1, schedule2;

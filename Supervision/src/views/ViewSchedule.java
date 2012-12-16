@@ -8,6 +8,11 @@ import java.util.List;
 import model.Delivery;
 import model.Schedule;
 
+/**
+ * Vue d'un schedule
+ * @param s le schedule
+ * @param m la vue principale
+ */
 public class ViewSchedule {
 	Schedule schedule;
 	ViewMain viewMain;
@@ -19,6 +24,9 @@ public class ViewSchedule {
 		update();
 	}
 	
+	/**
+	 * Met à jour la vue du schedule
+	 */
 	public void update() {
 		deliveries.clear();
 		for (Delivery d : schedule.getDeliveries()) {
@@ -27,6 +35,10 @@ public class ViewSchedule {
 		}
 	}
 	
+	/**
+	 * Peint this sur le canvas.
+	 * @param g objet graphics
+	 */
 	public void paint(Graphics g) {
 		for (ViewDelivery vd : deliveries) {
 			vd.paint(g);

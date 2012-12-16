@@ -6,11 +6,14 @@ package parsexml;
 
 import java.awt.Color;
 import java.io.File;
-import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import model.Schedule;
+
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
-import model.*;
 
 /**
  *

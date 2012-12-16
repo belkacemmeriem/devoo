@@ -6,10 +6,6 @@ package supervision;
 
 import ihm.Drawing;
 import ihm.Window;
-
-import java.text.ParseException;
-import model.ZoneGeo;
-import parsexml.ParseMapXML;
 import views.ViewMain;
 
 /**
@@ -18,7 +14,9 @@ import views.ViewMain;
  */
 public class Supervision extends javax.swing.JPanel {
 
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * @param args the command line arguments
      */
     public static void main(String[] args){
@@ -33,7 +31,7 @@ public class Supervision extends javax.swing.JPanel {
         ctrl.setViewMain(vm);
         vm.setControler(ctrl);
         fenetre.setControleur(ctrl);
-        ctrl.setFenetre(fenetre);
+        ctrl.setWindow(fenetre);
         d.setControler(ctrl);
         
         fenetre.update();
