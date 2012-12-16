@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.tree.*;
+
+import model.Delivery;
 import model.Schedule;
 
 /* ListLivraison.java requires no other files. */
@@ -78,31 +80,31 @@ public class ListLivraison extends JPanel {
 		DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(idSchedule);
 		
 		scheduleNode.removeAllChildren();
-		for(int i = 0; i<schedule.getDeliveries().size();i++)
+		for(Delivery d : schedule.getDeliveries())
 		{
-			String addr = schedule.getDeliveries().get(i).getDest().getID().toString();
+			String addr = d.getDest().getID().toString();
+			Integer heure = d.getHeurePrevue();
+			if (heure != null)
+				addr += " -> " + Schedule.timeToString(heure);
 			treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
 		}
 	}
 	
 	public void updateAllSchedules(ArrayList<Schedule> schedules)
 	{
-		for(int s=0;s<schedules.size()-1;s++)
+		for(int s=0; s<schedules.size()-1; s++)
 		{
 			Schedule schedule = schedules.get(s);
-			
-			//recupere le noeud relatif a une plage horaire
-			DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(s);
-
-			scheduleNode.removeAllChildren();
-			this.repaint();
-			for(int i = 0; i<schedule.getDeliveries().size();i++)
-			{
-				String addr = schedule.getDeliveries().get(i).getDest().getID().toString();
-				treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
-			}
+			updateOneSchedule(schedule);
 		}
 		treeModel.reload();
+		
+		DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(0);
+		do {
+			tree.expandPath(new TreePath(scheduleNode.getPath()));
+			scheduleNode = scheduleNode.getNextNode();
+		} while (scheduleNode != null);
+		
 		this.repaint();
 	}
 	

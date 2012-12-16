@@ -263,23 +263,10 @@ public class Controleur {
 			if (d != null)
 				feuilleDeRoute.delNode(n);
 			feuilleDeRoute.addNode(n, selectedSchedule);
+			fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
-			ListLivraison listeLivraison = fenetre.getListLivraison();
-			String addr = n.getID().toString();
-			if(listeLivraison.livExists(addr)) {
-				Object[] options = { "Ok" };
-					int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-								"L'addresse selectionnee est deja dans la liste de livraison",
-								"Addresse existante",
-								JOptionPane.ERROR_MESSAGE, 
-								JOptionPane.ERROR_MESSAGE, null,
-								options, options[0]);
-			}
-			else {
-				listeLivraison.addLiv(getSelectedSchedule(), addr);
-			}
 		}
 	}
 
@@ -291,10 +278,10 @@ public class Controleur {
 			else
 				commandes.add(new CommandeDelNode(n, feuilleDeRoute));
 			feuilleDeRoute.delNode(n);
+			fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
-			fenetre.getListLivraison().remLiv();
 		}
 	}
 
@@ -322,6 +309,7 @@ public class Controleur {
 			feuilleDeRoute.backToInit();
 			etat = Etat.REMPLISSAGE;
 		}
+		fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
@@ -340,6 +328,7 @@ public class Controleur {
 	
 	public void undo() {
 		commandes.undo();
+		fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
@@ -351,6 +340,7 @@ public class Controleur {
 	
 	public void redo() {
 		commandes.redo();
+		fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 		viewmain.updateFeuilleDeRoute();
 		viewmain.repaint();
 		fenetre.update();
