@@ -101,6 +101,10 @@ public class Controleur {
 	}
 
 	public void loadSchedules() {
+		if(fenetre.getListLivraison()!=null)
+		{
+			fenetre.getListLivraison().removeAll();
+		}
 		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
 		schedules = parserSched.getPlagesHoraires();
 		fenetre.setSchedules(schedules);
@@ -196,6 +200,7 @@ public class Controleur {
 						feuilleDeRoute.insertNodeAfter(vns.getNode(), d);
 						commandes.add(new CommandeInsertNode(vns.getNode(), true, vn.getNode(), feuilleDeRoute));
 					}
+					fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 					viewmain.updateFeuilleDeRoute();
 				}
 				selectNode(vn.getNode());

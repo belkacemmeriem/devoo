@@ -1,5 +1,8 @@
 package test;
 
+import Exception.GraphException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
@@ -112,13 +115,13 @@ public class FeuilleDeRouteTest
 		{
 			//OK
 		}
-		Delivery lastOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getLast();
-		Delivery firstOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getFirst();
+		Delivery lastOf1 = feuilleDeRoute.getSchedules().get(0).getDeliveries().getLast();
+		Delivery firstOf1 = feuilleDeRoute.getSchedules().get(0).getDeliveries().getFirst();
 		
 	//insertion 4 entre 2 et 6
 		feuilleDeRoute.insertNodeBefore(zoneGeo.getNode(4), lastOf1);
 		
-		Delivery inserted = feuilleDeRoute.getTimeZones().get(0).getDeliveries().get(1);
+		Delivery inserted = feuilleDeRoute.getSchedules().get(0).getDeliveries().get(1);
 		assertEquals(inserted.getDest(), zoneGeo.getNode(4));
 		
 		//verif maj chemin 4->6
@@ -132,23 +135,23 @@ public class FeuilleDeRouteTest
 	//insertion de 1 entre 2 et l'entrepot
 		feuilleDeRoute.insertNodeBefore(zoneGeo.getNode(1), firstOf1);
 		
-		lastOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getLast();
-		firstOf1 = feuilleDeRoute.getTimeZones().get(0).getDeliveries().getFirst();
+		lastOf1 = feuilleDeRoute.getSchedules().get(0).getDeliveries().getLast();
+		firstOf1 = feuilleDeRoute.getSchedules().get(0).getDeliveries().getFirst();
 		
 		//verif 1 bien 1er Deliv du 1er schedule
 		assertEquals(firstOf1.getDest(), zoneGeo.getNode(1));
 		//pointeur vers schedule ok?
-		assertEquals(firstOf1.getSchedule(), feuilleDeRoute.getTimeZones().get(0));
+		assertEquals(firstOf1.getSchedule(), feuilleDeRoute.getSchedules().get(0));
 		
 		//verif chemin entrepot->1
 		assertEquals(firstOf1.getPathToDest().getNoeudDepart(), zoneGeo.getWarehouse());
 		assertEquals(firstOf1.getPathToDest().getNoeudArrivee(), firstOf1.getDest());
 		
 		//schedule 1 contient 4 deliveries
-		assertEquals(feuilleDeRoute.getTimeZones().get(0).getDeliveries().size(), 4);
+		assertEquals(feuilleDeRoute.getSchedules().get(0).getDeliveries().size(), 4);
 		
 		//schedule 1 contient 2 deliveries
-		assertEquals(feuilleDeRoute.getTimeZones().get(1).getDeliveries().size(), 2);
+		assertEquals(feuilleDeRoute.getSchedules().get(1).getDeliveries().size(), 2);
 		
 		assertEquals(feuilleDeRoute.getEtat(), EtatFDR.MODIF);
 		feuilleDeRoute.computeWithTSP();

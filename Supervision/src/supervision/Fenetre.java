@@ -26,7 +26,7 @@ import model.Schedule;
  *
  * @author Mignot
  */
-public class Fenetre extends Frame {
+public class Fenetre extends java.awt.Frame {
 
 	private final String TITRE = "Supervision des Livraisons Itinerantes Planifies";
 	private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
@@ -59,6 +59,9 @@ public class Fenetre extends Frame {
 		setKeyEvents();
 	}
 	
+	/**
+	 * Met a jour les differents elements de la fenetre en fonction de l'etat actuel du controleur
+	 */
 	public void update() {
 		if (controleur == null)
 			return;
@@ -141,6 +144,13 @@ public class Fenetre extends Frame {
 		}
 	}
 
+	/**
+	 * Setter de la liste de plages horaire schedules. 
+	 * <p>
+	 * Cr�er les ToggleButtons associ�s � chaque plage horaire et d�finit leur comportement 
+	 * (deux boutons ne peuvent �tre appuy�s en m�me temps).
+	 * @param aschedules la liste des plages horaires.
+	 */
 	public void setSchedules(ArrayList<Schedule> aschedules) {
 		this.schedules = aschedules;
 		jToggleButtonSchedules = new ArrayList<JToggleButton>();
@@ -239,7 +249,7 @@ public class Fenetre extends Frame {
 	}
 
 	/**
-	 *  Associe les messages popups aux différentes actions qui les déclenchent
+	 *  Associe les messages popups aux differentes actions qui les declenchent
 	 * 
 	 */
 	private void setPopups() {
@@ -300,7 +310,7 @@ public class Fenetre extends Frame {
 	}
 
 	/**
-	 *  Associe les polices aux différents labels
+	 *  Associe les polices aux differents labels
 	 * 
 	 */
 	private void setFonts(){
@@ -312,6 +322,9 @@ public class Fenetre extends Frame {
 		jLabelTitreLivraisons.setFont(fontEdLivTitre);
 	}
 
+	/**
+	 * Creer la barre de menus de la fenetre avec les differents menu associes.
+	 */
 	private void creeMenu(){
 		// Creation de deux menus, chaque menu ayant plusieurs items
 		// et association d'un ecouteur d'action a chacun de ces items
@@ -355,6 +368,19 @@ public class Fenetre extends Frame {
 		barreDeMenu.add(menuFichier);
 		barreDeMenu.add(menuEdition);
 		this.setMenuBar(barreDeMenu);
+	}
+
+	/**
+	 * Creer un nouvel item et l'ajoute au menu rentre en parametre.
+	 * 
+	 * @param intitule nom de l'item
+	 * @param menu menu auquel ajouter l'item
+	 * @param aActionListener ActionListener associe a l'item
+	 */
+	private void ajoutItem(String intitule, Menu menu, ActionListener aActionListener){
+		MenuItem item = new MenuItem(intitule);
+		menu.add(item);
+		item.addActionListener(aActionListener);
 	}
 
 	private File trouverCheminRapport(){
@@ -424,12 +450,6 @@ public class Fenetre extends Frame {
 		if (jFileChooserXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
 			return new File(jFileChooserXML.getSelectedFile().getAbsolutePath());
 		return null;
-	}
-
-	private void ajoutItem(String intitule, Menu menu, ActionListener a){
-		MenuItem item = new MenuItem(intitule);
-		menu.add(item);
-		item.addActionListener(a);
 	}
 
 	/**
