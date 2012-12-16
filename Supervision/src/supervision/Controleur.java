@@ -270,13 +270,7 @@ public class Controleur {
 			ListLivraison listeLivraison = fenetre.getListLivraison();
 			String addr = n.getID().toString();
 			if(listeLivraison.livExists(addr)) {
-				Object[] options = { "Ok" };
-					int optionChoisie = JOptionPane.showOptionDialog(new JFrame(),
-								"L'addresse selectionnee est deja dans la liste de livraison",
-								"Addresse existante",
-								JOptionPane.ERROR_MESSAGE, 
-								JOptionPane.ERROR_MESSAGE, null,
-								options, options[0]);
+				fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 			}
 			else {
 				listeLivraison.addLiv(getSelectedSchedule(), addr);
