@@ -9,7 +9,8 @@ package Exception;
  * @author Sherlock
  */
 public class ReadMapXMLException extends Exception {
-        /** 
+	private static final long serialVersionUID = 1L;
+	/** 
 	* Crée une nouvelle instance de NodeIDInexistant 
 	*/  
 	public ReadMapXMLException() {}  

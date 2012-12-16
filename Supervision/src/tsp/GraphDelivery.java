@@ -7,18 +7,18 @@ import dijkstra.*;
 import model.*;
 import Exception.*;
 
-public class GraphLivraisons implements Graph {
+public class GraphDelivery implements Graph {
 
 	private final int timeLimit = 10000;//milliseconds
 	private Path[][] listeChemins;
 	private int[][] listeCosts;
-	private RoadMap feuilleDeRoute;
+	private RoadMap roadMap;
 	private int maxArcCost=-1;
 	private int minArcCost=-1;
 	private int nbVertices=0;
 	
-	public GraphLivraisons(RoadMap f){
-		feuilleDeRoute=f;
+	public GraphDelivery(RoadMap r){
+		roadMap=r;
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class GraphLivraisons implements Graph {
 	 */
 	public void createGraph() throws GraphException{
 		//on ajoute l'entrepot au livraisons pour connaitre le nombre de sommets
-		nbVertices=feuilleDeRoute.getAllDeliveries().size();
+		nbVertices=roadMap.getAllDeliveries().size();
 		
 		//si aucune livraison n'a été saisie
 		if(nbVertices==1)
@@ -46,22 +46,22 @@ public class GraphLivraisons implements Graph {
 		
 		//solveDijkstra pour le point de départ à l'entrepot
 		//l'entrepot est stockée comme dernier point de livraison
-		Node depart=feuilleDeRoute.getAllDeliveries().get(nbVertices-1).getDest();
+		Node depart=roadMap.getAllDeliveries().get(nbVertices-1).getDest();
 		ArrayList<Node> listeArrivees=new ArrayList<Node>();
 		
 		//on ne prend pas un schedule qui ne possède aucune livraison
-		while(feuilleDeRoute.getSchedules().get(indexSchedule).getDeliveries().size()==0)
+		while(roadMap.getSchedules().get(indexSchedule).getDeliveries().size()==0)
 		{
 			indexSchedule++;
 		}
 		
-		for(Delivery d : feuilleDeRoute.getSchedules().get(indexSchedule).getDeliveries())
+		for(Delivery d : roadMap.getSchedules().get(indexSchedule).getDeliveries())
 		{
 			listeArrivees.add(d.getDest());
 		}
 		
 		//on fait appel à la classe static Dijkstra pour calculer les plus courts chemins
-		ArrayList<Path> lC=Dijkstra.solve(feuilleDeRoute.getZoneGeo(), depart, listeArrivees);
+		ArrayList<Path> lC=Dijkstra.solve(roadMap.getZoneGeo(), depart, listeArrivees);
 		
 		for(int i=0;i<lC.size();i++)
 		{
@@ -89,9 +89,9 @@ public class GraphLivraisons implements Graph {
 		int indexSchedule2=indexSchedule+1;
 		
 		//tant qu'on est pas à la fin de la liste des schedules
-		while(indexSchedule<feuilleDeRoute.getSchedules().size()-1)
+		while(indexSchedule<roadMap.getSchedules().size()-1)
 		{
-			Schedule s1=feuilleDeRoute.getSchedules().get(indexSchedule);
+			Schedule s1=roadMap.getSchedules().get(indexSchedule);
 			
 			//on prend toutes les livraions d'un schedule
 			for(int j=0;j<s1.getDeliveries().size();j++)
@@ -109,18 +109,18 @@ public class GraphLivraisons implements Graph {
 				}
 				
 				//on cherche le schedule suivant indexSchedule possédant des livraisons 
-				while(indexSchedule2<feuilleDeRoute.getSchedules().size() && feuilleDeRoute.getSchedules().get(indexSchedule2).getDeliveries().size()==0)
+				while(indexSchedule2<roadMap.getSchedules().size() && roadMap.getSchedules().get(indexSchedule2).getDeliveries().size()==0)
 				{
 					indexSchedule2++;
 				}
 				
-				Schedule s2=feuilleDeRoute.getSchedules().get(indexSchedule2);
+				Schedule s2=roadMap.getSchedules().get(indexSchedule2);
 				for(Delivery d : s2.getDeliveries())
 				{
 					listeArrivees.add(d.getDest());
 				}
 				
-				lC=Dijkstra.solve(feuilleDeRoute.getZoneGeo(), depart, listeArrivees);
+				lC=Dijkstra.solve(roadMap.getZoneGeo(), depart, listeArrivees);
 				
 				//l'offset permet de remplir correctement listeChemins et listeCosts
 				int offset=0;
@@ -174,7 +174,7 @@ public class GraphLivraisons implements Graph {
 		TSP tsp=new TSP();
 		int bound=(nbVertices+1)*maxArcCost;
 		SolutionState retour;
-		
+
 		retour=tsp.solve(timeLimit, bound, this);
 		
 		if(retour==SolutionState.INCONSISTENT)
@@ -190,12 +190,12 @@ public class GraphLivraisons implements Graph {
 		ArrayList<Delivery> itineraire=new ArrayList<Delivery>();
 		for(int i=0;i<tabPos.length-1;i++)
 		{
-			feuilleDeRoute.getAllDeliveries().get(tabPos[i+1]-1).setPathToDest(listeChemins[tabPos[i]][tabPos[i+1]]);
-			itineraire.add(feuilleDeRoute.getAllDeliveries().get(tabPos[i+1]-1));
+			roadMap.getAllDeliveries().get(tabPos[i+1]-1).setPathToDest(listeChemins[tabPos[i]][tabPos[i+1]]);
+			itineraire.add(roadMap.getAllDeliveries().get(tabPos[i+1]-1));
 		}
-		feuilleDeRoute.getAllDeliveries().get(feuilleDeRoute.getAllDeliveries().size()-1)
+		roadMap.getAllDeliveries().get(roadMap.getAllDeliveries().size()-1)
 			.setPathToDest(listeChemins[tabPos[tabPos.length-1]][tabPos[0]]);
-		itineraire.add(feuilleDeRoute.getAllDeliveries().get(feuilleDeRoute.getAllDeliveries().size()-1));
+		itineraire.add(roadMap.getAllDeliveries().get(roadMap.getAllDeliveries().size()-1));
 		return itineraire;
 	}
 	

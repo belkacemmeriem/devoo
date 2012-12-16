@@ -1,8 +1,6 @@
 package ihm;
 
 
-import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,13 +10,10 @@ import javax.swing.JPanel;
 
 import supervision.Controler;
 import views.ViewMain;
-import views.ViewZoneGeo;
-
-import model.Node;
-import model.ZoneGeo;
 
 public class Drawing extends JPanel implements MouseListener, MouseMotionListener {
 	
+	private static final long serialVersionUID = 1L;
 	protected ViewMain viewMain;
 	protected Controler controler;
     protected Window window;

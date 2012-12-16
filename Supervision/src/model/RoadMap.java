@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 import Exception.GraphException;
 
-import tsp.GraphLivraisons;
+import tsp.GraphDelivery;
 import dijkstra.Dijkstra;
 
 public class RoadMap
@@ -108,7 +108,7 @@ public class RoadMap
 	 */
 	public void computeWithTSP() throws GraphException
 	{
-		GraphLivraisons gl = new GraphLivraisons(this);
+		GraphDelivery gl = new GraphDelivery(this);
 		gl.createGraph();
 		ArrayList<Delivery> result = gl.calcItineraire();
 		
@@ -171,7 +171,6 @@ public class RoadMap
 	public void generateReport(File path) throws IOException
 	{
 	    PrintWriter writer;
-	    int n = 5;
 
 	    writer =  new PrintWriter(new BufferedWriter(new FileWriter(path)));
 	   
@@ -185,7 +184,6 @@ public class RoadMap
 		    {
 			    writer.println("La prochaine livraison aura lieu a "+d.getDest().getID()+" ." );
 			    writer.println("Arrivee prevue a  "+ Schedule.timeToString(d.getHeurePrevue()));
-			    Integer previous=d.getPathToDest().getTrajectory().get(0).getID();
 		    	for(Arc a :d.getPathToDest().getArcs())
 		    	{
 		    		writer.print("Passer par le point "+ a.getDest().getID());
@@ -310,16 +308,13 @@ public class RoadMap
 	public Delivery previousDelivery(Delivery delivery)
 	{
 		Delivery returned = null;
-		System.out.println("NBSCHED = " + timeZones.size()); 
 		for (Schedule sch : timeZones)
 		{
 			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
 
-			System.out.println("SCHED " + sch.endTimeString() + " SIZE = " + schDeliveries.size());
 			if (schDeliveries.contains(delivery))	//si le schedule contient la livraison de reference
 			{
 				int idx = schDeliveries.indexOf(delivery);
-				System.out.println("CONTAINED. IDX : " + idx);
 				if (idx == 0)	//si premier element du schedule
 				{
 					//recherche du dernier node du schedule précédent non vide	
@@ -343,11 +338,9 @@ public class RoadMap
 	 */
 	public Delivery nextDelivery(Delivery delivery)
 	{
-		int idxSch = -1;
 		Delivery returned = null;
 		for (Schedule sch : timeZones)
 		{
-			idxSch++;
 			LinkedList<Delivery> schDeliveries = sch.getDeliveries();
 
 			if (schDeliveries.contains(delivery))	//si le schedule contient la livraison de reference

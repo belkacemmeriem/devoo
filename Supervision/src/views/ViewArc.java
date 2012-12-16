@@ -4,12 +4,14 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-
-import javax.swing.text.Segment;
 
 import model.Arc;
 
+/**
+ * Vue d'un arc de la ZoneGeo
+ * @param a un arc
+ * @param m la vue principale
+ */
 public class ViewArc {
 	Arc arc;
 	ViewMain viewMain;
@@ -18,28 +20,26 @@ public class ViewArc {
 	Color color;
 	static Color defaultColor = new Color(200, 200, 200); 
 	static Color defaultRoadColor = new Color(255, 255, 150);
-	int dx1, dy1, dx2, dy2;
 	
 	public ViewArc(Arc a, ViewMain m) {
 		arc = a;
 		viewMain = m;
 		setDefault();
-		dx1 = dx2 = dy1 = dy2 = 0;
 	}
 	
 	public Arc getArc() {
 		return arc;
 	}
 	
-	public double sqr(double x) {
+	protected double sqr(double x) {
 		return x*x;
 	}
 	
-	public double dist2(double x1, double y1, double x2, double y2) {
+	protected double dist2(double x1, double y1, double x2, double y2) {
 		return sqr(x1 - x2) + sqr(y1 - y2);
 	}
 	
-	public double distToSegment(double x1, double y1, double x2, double y2, double x3, double y3) {
+	protected double distToSegment(double x1, double y1, double x2, double y2, double x3, double y3) {
 		double l2 = dist2(x2, y2, x3, y3);
 		if (l2 == 0)
 			return Math.sqrt(dist2(x1, y1, x2, y2));
@@ -53,6 +53,12 @@ public class ViewArc {
 		return Math.sqrt(dist2(x1, y1, x, y));
 	}
 	
+	/**
+	 * Renvoie la distance entre le point x,y et this.
+	 * @param x abscisse du point
+	 * @param y ordonnée du point
+	 * @return la distance entre le point x,y et this.
+	 */
 	public double distance(int x, int y) {
 		double x1 = (double) x;
 		double y1 = (double) y;
@@ -63,13 +69,6 @@ public class ViewArc {
 		return distToSegment(x1, y1, x2, y2, x3, y3);
 	}
 	
-	public boolean isClicked(int x, int y) {
-		double distance = distance(x, y);
-		if (distance <= 5.0)
-			return true;
-		return false;
-	}
-	
 	public void setEpaisseur(int n) {
 		thick = n;
 	}
@@ -78,23 +77,20 @@ public class ViewArc {
 		color = c;
 	}
 	
-	public void setDiff() {
-		dx1 = (int) Math.random()*4 - 2;
-		dy1 = (int) Math.random()*4 - 2;
-		dx2 = (int) Math.random()*4 - 2;
-		dy2 = (int) Math.random()*4 - 2;
-	}
-	
 	public void setDefault() {
 		thick = defaultThick;
 		color = defaultColor;
 	}
 	
+	/**
+	 * Peint this sur le canvas.
+	 * @param g objet graphics
+	 */
 	public void paint(Graphics g) {
-		int x1 = viewMain.xpix(arc.getOrigin().getX()) + dx1;
-		int y1 = viewMain.ypix(arc.getOrigin().getY()) + dy1;
-		int x2 = viewMain.xpix(arc.getDest().getX()) + dx2;
-		int y2 = viewMain.ypix(arc.getDest().getY()) + dy2;
+		int x1 = viewMain.xpix(arc.getOrigin().getX());
+		int y1 = viewMain.ypix(arc.getOrigin().getY());
+		int x2 = viewMain.xpix(arc.getDest().getX());
+		int y2 = viewMain.ypix(arc.getDest().getY());
 		
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(defaultRoadColor);
@@ -107,7 +103,6 @@ public class ViewArc {
 	    g.fillPolygon(x, y, x.length);
 		g2d.setColor(defaultColor);
 	    g.drawPolygon(x, y, x.length);
-		//g2d.drawLine(x1, y1, x2, y2);
 		g2d.setStroke(new BasicStroke(1));
 	}
 }

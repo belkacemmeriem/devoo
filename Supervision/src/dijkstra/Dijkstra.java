@@ -3,12 +3,15 @@
  * and open the template in the editor.
  */
 package dijkstra;
-import model.Arc;
-import model.Node;
-import model.ZoneGeo;
-import model.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.PriorityQueue;
 
-import java.util.*;
+import model.Node;
+import model.Path;
+import model.ZoneGeo;
 
 /**
  *
@@ -36,7 +39,6 @@ public class Dijkstra {
         dist.put(source.getID(),new Double(0));
          Comparator<PriorityNode> comparator = new NodeComparator();
          PriorityQueue<PriorityNode> Q = new PriorityQueue<PriorityNode>((int)Infinity, comparator);
-         System.out.println("Les points");
          
         for(Node v : theGraph.getNodes().values())
         {

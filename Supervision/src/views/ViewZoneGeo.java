@@ -8,6 +8,11 @@ import model.Arc;
 import model.Node;
 import model.ZoneGeo;
 
+/**
+ * Vue de la zone
+ * @param zg la zone
+ * @param m la vue principale
+ */
 public class ViewZoneGeo {
 	protected ZoneGeo zoneGeo;
 	protected ViewMain viewMain;
@@ -58,6 +63,10 @@ public class ViewZoneGeo {
 		return zoneGeo.getHeight();
 	}
 	
+	/**
+	 * Peint this sur le canvas.
+	 * @param g objet graphics
+	 */
 	public void paint(Graphics g) {	
 		for (ViewArc va : arcs) {
 			va.paint(g);
@@ -68,6 +77,13 @@ public class ViewZoneGeo {
 
 	}
 
+	/**
+	 * Renvoie l'objet situé au point x,y
+	 * @param x abscisse
+	 * @param y ordonnée
+	 * @param onlyArcs pour chercher seulement parmi les arcs
+	 * @return l'objet situé au point x,y
+	 */
 	public Object findAt(int x, int y, boolean onlyArcs) {
 		double distMin;
 		
@@ -102,6 +118,11 @@ public class ViewZoneGeo {
 		return null;
 	}
 
+	/**
+	 * Renvoie la vue sur le node n
+	 * @param n un node
+	 * @return la vue sur le node n
+	 */
 	public ViewNode getNode(Node n) {
 		for (ViewNode vn : nodes) {
 			if (vn.getNode().getID() == n.getID())

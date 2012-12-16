@@ -8,12 +8,19 @@ import java.awt.Graphics2D;
 import model.Arc;
 import sun.awt.Mutex;
 
+/**
+ * Vue d'un arc de la roadmap
+ * @param a un arc
+ * @param m la vue principale
+ * @param c la couleur
+ * @param retard vrai si l'arc mène à une livraison en retard
+ */
 public class ViewArcPath {
 	Arc arc;
 	ViewMain viewMain;
 	int thick;
 	boolean late;
-	static int defaultThick = 2;
+	static int defaultThick = 1;
 	Color color;
 	protected Mutex mtx_pulse = new Mutex();
 	
@@ -39,6 +46,10 @@ public class ViewArcPath {
 		mtx_pulse.unlock();
 	}
 	
+	/**
+	 * Peint this sur le canvas.
+	 * @param g objet graphics
+	 */
 	public void paint(Graphics g) {
 		int x1 = viewMain.xpix(arc.getOrigin().getX());
 		int y1 = viewMain.ypix(arc.getOrigin().getY());

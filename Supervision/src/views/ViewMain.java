@@ -17,6 +17,9 @@ import model.ZoneGeo;
 
 import supervision.Controler;
 
+/**
+ * La vue principale
+ */
 public class ViewMain {
 	Controler controler;
 	Drawing drawing;
@@ -51,22 +54,43 @@ public class ViewMain {
 		roadMap = new ViewRoadMap(f, this);
 	}
 	
+	/**
+	 * Renvoie le pixel correspondant à une coordonnée du modèle.
+	 * @param xplan abscisse du modèle
+	 * @return le pixel correspondant à une coordonnée du modèle.
+	 */
 	public int xpix(int xplan) {
 		int canvasWidth = drawing.getWidth() - 2*border;
 		float xpourcent = (xplan - zoneGeo.getXmin()) / (float)zoneGeo.getWidth();
 		return (int) (border + xpourcent * canvasWidth);
 	}
 	
+	/**
+	 * Renvoie le pixel correspondant à une coordonnée du modèle.
+	 * @param xplan ordonnée du modèle
+	 * @return le pixel correspondant à une coordonnée du modèle.
+	 */
 	public int ypix(int yplan) {
 		int canvasHeight = drawing.getHeight() - 2*border;
 		float ypourcent = (yplan - zoneGeo.getYmin()) / (float)zoneGeo.getHeight();
 		return (int) (border + ypourcent * canvasHeight);
 	}
 	
+	/**
+	 * Renvoie l'objet se trouvant aux coordonnées x,y
+	 * @param x abscisse
+	 * @param y ordonnée
+	 * @param onlyArcs permet de ne sélectionner que les arcs
+	 * @return l'objet se trouvant aux coordonnées x,y
+	 */
 	public Object findAt(int x, int y, boolean onlyArcs) {
 		return zoneGeo.findAt(x, y, onlyArcs);
 	}
 	
+	/**
+	 * Peint this sur le canvas.
+	 * @param g objet graphics
+	 */
 	public void paint(Graphics g) {
 		drawing.setBackground(new Color(255, 255, 255));
 		if (zoneGeo != null) {

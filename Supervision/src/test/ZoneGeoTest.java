@@ -1,17 +1,10 @@
 package test;
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-
-import model.Arc;
-import model.Path;
+import static org.junit.Assert.fail;
 import model.Node;
 import model.ZoneGeo;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import dijkstra.Dijkstra;
 
 
 public class ZoneGeoTest {
