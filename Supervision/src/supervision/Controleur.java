@@ -264,10 +264,17 @@ public class Controleur {
 			if (d != null)
 				feuilleDeRoute.delNode(n);
 			feuilleDeRoute.addNode(n, selectedSchedule);
-			fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
 			viewmain.updateFeuilleDeRoute();
 			viewmain.repaint();
 			fenetre.update();
+			ListLivraison listeLivraison = fenetre.getListLivraison();
+			String addr = n.getID().toString();
+			if(listeLivraison.livExists(addr)) {
+				fenetre.getListLivraison().updateAllSchedules(feuilleDeRoute.getSchedules());
+			}
+			else {
+				listeLivraison.addLiv(getSelectedSchedule(), addr);
+			}
 		}
 	}
 
