@@ -196,7 +196,7 @@ public class Window extends java.awt.Frame {
 			jPanelHoraires.add(jToggleButtonSchedules.get(i));
 			listeLivraison = new DeliveryList();
 			listeLivraison.setjButtonSupprimer(jButtonSupprimerLiv);
-			listeLivraison.setSchedule(schedules);
+			listeLivraison.initListLivraison(schedules);
 			jPaneLivraisons.add(listeLivraison);
 		}
 	}

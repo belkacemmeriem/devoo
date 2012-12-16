@@ -18,19 +18,53 @@ import javax.swing.tree.TreeSelectionModel;
 import model.Delivery;
 import model.Schedule;
 
-/* ListLivraison.java requires no other files. */
+/**
+ * <b>DeliveryList est la classe représentant le panel contenant le JTree.</b>
+ * <p>
+ * La DeliveryList est caractérisée par les informations suivantes :
+ * <ul>
+ * <li>Un arbre permettant la représentation des données.</li>
+ * <li>Un modèle de l'arbre contenant les données de l'arbre.</li>
+ * <li>Une liste de plages horaires traitées et placées dans l'arbre.</li>
+ * </ul>
+ * </p>
+ * 
+ * @see javax.swing.JPanel
+ * 
+ * @author H4404
+ */
 public class DeliveryList extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
-	private JTree tree;
+	/**
+    * valeur du JTree
+    */
+    private JTree tree;
+	/**
+    * valeur du Modèle du JTree
+    */
     private DefaultTreeModel treeModel;
+	/**
+    * valeur des plages horaires
+    */
     private ArrayList<Schedule> schedules;
+	/**
+    * valeur du bouton Supprimer
+    */
 	private JButton jButtonSupprimer;
 
+    
+   /**
+    * Constructeur ListLivraison.
+    */
     public DeliveryList(){
         super(new BorderLayout());
     }
     
+	/**
+	 * Met à jour le bouton de supprimer de la fenetre
+	 * @param jb bouton supprimer de la fenetre
+	 */
     public void setjButtonSupprimer(JButton jb){
     	this.jButtonSupprimer=jb;
     }
@@ -70,17 +104,26 @@ public class DeliveryList extends JPanel {
     		}
     	}
     	return -1;
-    }
+    }	
 	
+	/**
+	 * Vide l'arbre de son contenu
+	 */
 	public void clearTree()
 	{
 		((DefaultMutableTreeNode)treeModel.getRoot()).removeAllChildren();
 		treeModel.reload();
 		this.repaint();
-	}
+	}	
 	
+	/**
+	 * Met à jour la plage horaire de l'arbre qui est passée en paramètres d'entrée
+	 * 
+	 * @param schedule plages horaires
+	 */
 	public void updateOneSchedule(Schedule schedule)
 	{
+		this.schedules = schedules;
 		//recuperation de l'indice du noeud de plage horaire voulue
     	Integer idSchedule=getIdSchedule(schedule);
 		//recupere le noeud relatif a une plage horaire
@@ -95,10 +138,16 @@ public class DeliveryList extends JPanel {
 				addr += " -> " + Schedule.timeToString(heure);
 			treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
 		}
-	}
+	}	
 	
+	/**
+	 * Met à jour l'arbre selon la liste de plages horaires passées en paramètre
+	 * 
+	 * @param schedules ArrayList de plages horaires
+	 */
 	public void updateAllSchedules(ArrayList<Schedule> schedules)
 	{
+		this.schedules = schedules;
 		for(int s=0; s<schedules.size()-1; s++)
 		{
 			Schedule schedule = schedules.get(s);
@@ -114,8 +163,11 @@ public class DeliveryList extends JPanel {
 		
 		this.repaint();
 		expandAll();
-	}
+	}	
 	
+	/**
+	 * Développe toutes les sections de l'arbre
+	 */
 	public void expandAll ()
 	{
 		for(int i = 0;i<((DefaultMutableTreeNode)treeModel.getRoot()).getChildCount();i++)
@@ -148,7 +200,7 @@ public class DeliveryList extends JPanel {
     }
 	
     /**
-     * Supprimer la livraison selectionne de la liste
+     * Supprime la livraison selectionnée de la liste
      */
     public void remLiv (){
 		//recupere le noeud selectionne
@@ -159,12 +211,13 @@ public class DeliveryList extends JPanel {
     }
     
     /**
-     * Setter de schedules. 
-     * @param aschedules
+     * Initialise la ListLivraison selon  la liste de Schedules passée en paramètres d'entrée
+	 * 
+     * @param aschedules Liste de Schedules
      */
-    public void setSchedule(ArrayList<Schedule> aschedules) {
+    public void initListLivraison(ArrayList<Schedule> aschedules) {
         schedules = aschedules;
-		//d�finition de la racine de l'arbre et declaration du model de l'arbre (contient la totalite des donnees et conditionne le comportement de l'arbre)
+		//definition de la racine de l'arbre et declaration du model de l'arbre (contient la totalite des donnees et conditionne le comportement de l'arbre)
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Plages horaires");
         treeModel = new DefaultTreeModel(root);
 		
@@ -207,7 +260,13 @@ public class DeliveryList extends JPanel {
 		treeModel.reload();
 		this.repaint();
     }
-
+	
+	/**
+	 * Met à jour le noeud sélectionné dans l'arbre.
+	 * Si l'adresse passée en paramètre n'existe pas dans l'arbre, aucune action n'est effectuée
+	 * 
+	 * @param addr indice du noeud selectionné en format de String
+	 */
 	public void setSelected(String addr)
 	{
 		//parcours de l'arbre afin de trouver un noeud corrfespondant à l'id passé en paramètre d'entrée

@@ -120,14 +120,19 @@ public class Controler {
 	 * Charge le fichier contenant la liste des plages horaires.
 	 */
 	public void loadSchedules() {
-		if(window.getListLivraison()!=null)
-		{
-			window.getListLivraison().removeAll();
+		try{
+			if(window.getListLivraison()!=null)
+			{
+				window.getListLivraison().removeAll();
+			}
+			ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
+			schedules = parserSched.getPlagesHoraires();
+			window.setSchedules(schedules);
+			selectedSchedule = null;
+		} catch (ReadMapXMLException ex) {
+			new ViewError(ex.getMessage());
+			schedules = null;
 		}
-		ParseDelivTimeXML parserSched = new ParseDelivTimeXML();
-		schedules = parserSched.getPlagesHoraires();
-		window.setSchedules(schedules);
-		selectedSchedule = null;
 	}
 
 	/**
