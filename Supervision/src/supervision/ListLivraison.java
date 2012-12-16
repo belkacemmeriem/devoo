@@ -119,6 +119,7 @@ public class ListLivraison extends JPanel {
 		DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(idSchedule);
 		//insere un noeud dans la plage horaire trouvee au dessus
     	treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
+		//récupération du chemin du noeud schedule afin de le déployer par défaut
 		TreeNode[] nodes = treeModel.getPathToRoot(scheduleNode);
         TreePath path = new TreePath(nodes);
 		tree.expandPath(path);
@@ -186,6 +187,27 @@ public class ListLivraison extends JPanel {
 		this.repaint();
     }
 
+	public void setSelected(String addr)
+	{
+		//parcours de l'arbre afin de trouver un noeud corrfespondant à l'id passé en paramètre d'entrée
+		for(int i = 0;i<((DefaultMutableTreeNode)treeModel.getRoot()).getChildCount();i++)
+		{
+			DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(i);
+			
+			for(int j = 0;j<scheduleNode.getChildCount();j++)
+			{
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode)scheduleNode.getChildAt(j);
+				if(addr.equals(node.toString()))
+				{
+					//récupération du chemin du noeud schedule afin de le selectionner
+					TreeNode[] nodes = treeModel.getPathToRoot(node);
+					TreePath path = new TreePath(nodes);
+					tree.setSelectionPath(path);
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Retourne l'arbre
 	 * @return l'arbre

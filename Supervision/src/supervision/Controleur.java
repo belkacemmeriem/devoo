@@ -209,6 +209,7 @@ public class Controleur {
 					selectedSchedule = deliv.getSchedule();
 					fenetre.setSchedule(selectedSchedule);
 				}
+				fenetre.getListLivraison().setSelected(vn.getNode().getID().toString());
 			}
 			else if (clicked instanceof ViewArc) {
 				deselect(selected);
