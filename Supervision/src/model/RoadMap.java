@@ -14,19 +14,17 @@ import Exception.GraphException;
 import tsp.GraphLivraisons;
 import dijkstra.Dijkstra;
 
-public class FeuilleDeRoute
+public class RoadMap
 {
-	protected
-	ArrayList<Schedule> timeZones;
-	ZoneGeo zoneGeo;
-	final int DUREE_LIVRAISON = 15;
-	EtatFDR etat = EtatFDR.INIT;
-	Delivery warehouseDelivery;
-	Schedule retourSch;
+	protected ArrayList<Schedule> timeZones;
+	protected ZoneGeo zoneGeo;
+	protected final int DUREE_LIVRAISON = 15;
+	protected StateRoadMap etat = StateRoadMap.INIT;
+	protected Delivery warehouseDelivery;
+	protected Schedule retourSch;
 	
 	
-	
-	public FeuilleDeRoute(ArrayList<Schedule> timeZones, ZoneGeo zoneGeo)
+	public RoadMap(ArrayList<Schedule> timeZones, ZoneGeo zoneGeo)
 	{
 		super();
 		this.timeZones = timeZones;
@@ -98,7 +96,7 @@ public class FeuilleDeRoute
 		return null;
 	}
 
-	public EtatFDR getEtat()
+	public StateRoadMap getEtat()
 	{
 		return etat;
 	}
@@ -131,7 +129,7 @@ public class FeuilleDeRoute
 			sch.setDeliveries(newDelivs);
 		}
 		computeArrivalTimes();
-		etat = EtatFDR.OPTIM;
+		etat = StateRoadMap.OPTIM;
 	}
 	
 	public void backToInit()
@@ -143,7 +141,7 @@ public class FeuilleDeRoute
 				deliv.resetHeuresEtChemin();
 			}
 		}
-		etat = EtatFDR.INIT;
+		etat = StateRoadMap.INIT;
 	}
 	
 	
@@ -204,7 +202,7 @@ public class FeuilleDeRoute
 	// utile seulement à l'init, avant le premier appel de computeWithTSP
 	public void addNode(Node node, Schedule schedule) throws RuntimeException
 	{
-		if (etat != EtatFDR.INIT)
+		if (etat != StateRoadMap.INIT)
 		{
 			throw new RuntimeException("trying to FeuilleDeRoute.addNode() while already initialized");
 		}
@@ -221,7 +219,7 @@ public class FeuilleDeRoute
 		Delivery deliv = getDelivery(node);
 		if (deliv != null)
 		{
-			if (etat == EtatFDR.INIT)
+			if (etat == StateRoadMap.INIT)
 			{
 				deliv.getSchedule().removeDelivery(deliv);
 			}
@@ -297,7 +295,7 @@ public class FeuilleDeRoute
 				
 				computeArrivalTimes();
 				
-				etat = EtatFDR.MODIF;
+				etat = StateRoadMap.MODIF;
 			}
 		}
 		if (!refFound)
@@ -422,7 +420,7 @@ public class FeuilleDeRoute
 		//recherche chemin
 		ArrayList<Node> singleton = new ArrayList<Node>();
 		singleton.add(delivery.getDest());
-		ArrayList<Chemin> result = Dijkstra.solve(zoneGeo, previousDelivery(delivery).getDest(), singleton);
+		ArrayList<Path> result = Dijkstra.solve(zoneGeo, previousDelivery(delivery).getDest(), singleton);
 		delivery.pathToDest = result.get(0);
 		
 	}

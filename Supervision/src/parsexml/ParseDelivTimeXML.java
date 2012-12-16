@@ -17,9 +17,9 @@ import model.*;
  * @author Sherlock
  */
 public class ParseDelivTimeXML {
-    org.jdom2.Document document;
-    Element racine;
-    ArrayList<Schedule> plagesHoraires = new ArrayList<Schedule>();
+	protected org.jdom2.Document document;
+	protected Element racine;
+	protected ArrayList<Schedule> plagesHoraires = new ArrayList<Schedule>();
     
     public ParseDelivTimeXML(){
         //Création d'un parseur d'objet XML (SAX = Simple API for XML)

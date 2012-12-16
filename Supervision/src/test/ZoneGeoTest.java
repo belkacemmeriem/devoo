@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import model.Arc;
-import model.Chemin;
+import model.Path;
 import model.Node;
 import model.ZoneGeo;
 

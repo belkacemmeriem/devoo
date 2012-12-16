@@ -5,33 +5,33 @@ import sun.awt.Mutex;
 
 public class PulseThread extends Thread
 {
-	protected LinkedList<ViewArcChemin> pulsingArcs;
+	protected LinkedList<ViewArcPath> pulsingArcs;
 	protected Mutex mtx_pulsingArcs;
 	protected Mutex mtx_sleepTime;
 	protected boolean running = true;
-	protected ViewMain mere;
+	protected ViewMain viewMain;
 	
 	int sleepTime;
-	final int DEF_WIDTH = ViewArcChemin.defaultEpaisseur;
+	final int DEF_WIDTH = ViewArcPath.defaultThick;
 	final int PULSE_WIDTH = 5;
 	
     public void run()
     {
     	int i = 0;
-    	ViewArcChemin last = pulsingArcs.getLast();;
+    	ViewArcPath last = pulsingArcs.getLast();;
     	while (running)
     	{
     		if (i>=pulsingArcs.size())
     			i = 0;
     		
-    		last.setEpaisseur(DEF_WIDTH);
+    		last.setThick(DEF_WIDTH);
     		
     		mtx_pulsingArcs.lock();
-    		pulsingArcs.get(i).setEpaisseur(PULSE_WIDTH);
+    		pulsingArcs.get(i).setThick(PULSE_WIDTH);
     		last = pulsingArcs.get(i);
     		mtx_pulsingArcs.unlock();
     		
-    		mere.repaint();
+    		viewMain.repaint();
     		i++;
     		try
 			{
@@ -49,7 +49,7 @@ public class PulseThread extends Thread
 		this.sleepTime = sleepTime;
 	}
 
-	public PulseThread(LinkedList<ViewArcChemin> pulsingArcs,
+	public PulseThread(LinkedList<ViewArcPath> pulsingArcs,
 			Mutex mtx_pulsingArcs,
 			ViewMain mere,
 			int sleepTime)
@@ -57,7 +57,7 @@ public class PulseThread extends Thread
 		super();
 		this.pulsingArcs = pulsingArcs;
 		this.mtx_pulsingArcs = mtx_pulsingArcs;
-		this.mere = mere;
+		this.viewMain = mere;
 		this.sleepTime = sleepTime;
 	}
 }

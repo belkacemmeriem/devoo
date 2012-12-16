@@ -2,17 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
-public class Chemin {
-	protected
+public class Path {
+	protected ArrayList<Node> trajectory;
+	protected ArrayList<Arc> arcs = new ArrayList<Arc>();
+	protected Node start;
+	protected Node target;
+	protected double duration;
 	
-	ArrayList<Node> trajectory;
-	ArrayList<Arc> arcs = new ArrayList<Arc>();
-
-	Node start;
-	Node target;
-	double duration;
-	
-	public Chemin(ArrayList<Node> contenu, double duration)
+	public Path(ArrayList<Node> contenu, double duration)
 	{
 		super();
 		this.trajectory = contenu;

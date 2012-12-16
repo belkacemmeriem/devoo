@@ -6,28 +6,28 @@ import java.util.LinkedList;
 import java.util.List;
 
 import sun.awt.Mutex;
-import model.EtatFDR;
-import model.FeuilleDeRoute;
+import model.StateRoadMap;
+import model.RoadMap;
 import model.Schedule;
 
-public class ViewFeuilleDeRoute {
+public class ViewRoadMap {
 	
 	public final static int PULSE_SLEEP_MIN = 30;
-	public final static int PULSE_SLEEP_MAX = 300;
+	public final static int PULSE_SLEEP_MAX = 500;
 	
-	protected FeuilleDeRoute feuilleDeRoute;
-	protected ViewMain mere;
+	protected RoadMap roadMap;
+	protected ViewMain viewMain;
 	protected ArrayList<ViewSchedule> schedules = new ArrayList<ViewSchedule>();
-	protected LinkedList<ViewArcChemin> pulsingArcs;
+	protected LinkedList<ViewArcPath> pulsingArcs;
 	protected Mutex mtx_pulsingArcs = new Mutex();
 	protected PulseThread pulseThread = null;
 	protected int pulseSleepTime = 100;
 	
-	public ViewFeuilleDeRoute(FeuilleDeRoute f, ViewMain vm) {
-		feuilleDeRoute = f;
-		mere = vm;
+	public ViewRoadMap(RoadMap f, ViewMain vm) {
+		roadMap = f;
+		viewMain = vm;
 		for (Schedule s : f.getSchedules()) {
-			ViewSchedule vs = new ViewSchedule(s, mere);
+			ViewSchedule vs = new ViewSchedule(s, viewMain);
 			schedules.add(vs);
 		}
 	}
@@ -54,7 +54,7 @@ public class ViewFeuilleDeRoute {
 		pulseSleepTime = sleepTime;
 	}
 	
-	protected List<ViewArcChemin> updatePulsingArcs()
+	protected List<ViewArcPath> updatePulsingArcs()
 	{
 		if (pulseThread != null)
 		{
@@ -62,7 +62,7 @@ public class ViewFeuilleDeRoute {
 			pulseThread = null;
 		}
 		
-		LinkedList<ViewArcChemin> list = new LinkedList<ViewArcChemin>();
+		LinkedList<ViewArcPath> list = new LinkedList<ViewArcPath>();
 		for (ViewSchedule sch: schedules)
 		{
 			list.addAll(sch.getViewArcs());
@@ -74,7 +74,7 @@ public class ViewFeuilleDeRoute {
 		
 		if (list.size() != 0)
 		{
-			pulseThread = new PulseThread(pulsingArcs, mtx_pulsingArcs, mere, pulseSleepTime);
+			pulseThread = new PulseThread(pulsingArcs, mtx_pulsingArcs, viewMain, pulseSleepTime);
 			pulseThread.start();
 		}
 		return list;

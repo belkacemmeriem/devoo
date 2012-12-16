@@ -9,51 +9,53 @@ import model.Node;
 import model.ZoneGeo;
 
 public class ViewZoneGeo {
-	protected ZoneGeo zonegeo;
-	protected ViewMain mere;
+	protected ZoneGeo zoneGeo;
+	protected ViewMain viewMain;
 	protected ArrayList<ViewNode> nodes = new ArrayList<ViewNode>();
 	protected ArrayList<ViewArc> arcs = new ArrayList<ViewArc>();
+	public final static double defaultDistNode = 7.0;
+	public final static double defaultDistArc = 5.0;
 	
 	public ViewZoneGeo(ZoneGeo zg, ViewMain m) {
-		zonegeo = zg;
-		mere = m;
-		for (Node n : zonegeo.getNodes().values()) {
-			ViewNode vn = new ViewNode(n, mere, false);
-			if (n.getID() == zonegeo.getWarehouseID()) {
+		zoneGeo = zg;
+		viewMain = m;
+		for (Node n : zoneGeo.getNodes().values()) {
+			ViewNode vn = new ViewNode(n, viewMain, false);
+			if (n.getID() == zoneGeo.getWarehouseID()) {
 				vn.setMyDefaultColor(new Color(0, 0, 255));
 				vn.setMyDefaultRadius(8);
 				vn.setDefault();
 			}
 			nodes.add(vn);
 		}
-		for (Arc a : zonegeo.getArcs()) {
-			ViewArc va = new ViewArc(a, mere);
+		for (Arc a : zoneGeo.getArcs()) {
+			ViewArc va = new ViewArc(a, viewMain);
 			arcs.add(va);
 		}
 	}
 	
 	public int getXmin() {
-		return zonegeo.getXmin();
+		return zoneGeo.getXmin();
 	}
 	
 	public int getXmax() {
-		return zonegeo.getXmax();
+		return zoneGeo.getXmax();
 	}
 	
 	public int getYmin() {
-		return zonegeo.getYmin();
+		return zoneGeo.getYmin();
 	}
 	
 	public int getYmax() {
-		return zonegeo.getYmax();
+		return zoneGeo.getYmax();
 	}
 	
 	public int getWidth() {
-		return zonegeo.getWidth();
+		return zoneGeo.getWidth();
 	}
 	
 	public int getHeight() {
-		return zonegeo.getHeight();
+		return zoneGeo.getHeight();
 	}
 	
 	public void paint(Graphics g) {	
@@ -71,7 +73,7 @@ public class ViewZoneGeo {
 		
 		// en premier, test selection node
 		if (onlyArcs == false) { 
-			distMin = 7.0;
+			distMin = defaultDistNode;
 			ViewNode clicked = null;
 			for (ViewNode vn : nodes) {
 				double dist = vn.distance(x, y);
@@ -85,7 +87,7 @@ public class ViewZoneGeo {
 		}
 		
 		// puis les arcs (le clic droit ne selectionne qu'eux)
-		distMin = 5.0;
+		distMin = defaultDistArc;
 		ViewArc clicked = null;
 		for (ViewArc va : arcs) {
 			double dist = va.distance(x, y);

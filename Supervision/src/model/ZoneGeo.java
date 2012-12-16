@@ -6,12 +6,11 @@ import java.util.HashMap;
 
 public class ZoneGeo
 {
-	protected
-	HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
-	ArrayList<Arc> arcs = new ArrayList<Arc>();
+	protected HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
+	protected ArrayList<Arc> arcs = new ArrayList<Arc>();
 
-	int warehouseID = -1;
-	int xmin = Integer.MAX_VALUE, 
+	protected int warehouseID = -1;
+	protected int xmin = Integer.MAX_VALUE, 
 		xmax = Integer.MIN_VALUE, 
 		ymin = Integer.MAX_VALUE, 
 		ymax = Integer.MIN_VALUE;

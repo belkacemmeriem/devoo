@@ -7,7 +7,7 @@ import model.Node;
 
 public class ViewNode {
 	Node node;
-	ViewMain mere;
+	ViewMain viewMain;
 	boolean square;
 	int radius;
 	int myDefaultRadius;
@@ -19,7 +19,7 @@ public class ViewNode {
 	
 	public ViewNode(Node n, ViewMain m, boolean sqr) {
 		node = n;
-		mere = m;
+		viewMain = m;
 		square = sqr;
 		myDefaultRadius = defaultRadius;
 		myDefaultColor = defaultColor;
@@ -31,8 +31,8 @@ public class ViewNode {
 	}
 	
 	public double distance(int x, int y) {
-		double xpixel = (double) mere.xpix(node.getX());
-		double ypixel = (double) mere.ypix(node.getY());
+		double xpixel = (double) viewMain.xpix(node.getX());
+		double ypixel = (double) viewMain.ypix(node.getY());
 		double dx = Math.abs((double) x - xpixel);
 		double dy = Math.abs((double) y - ypixel);
 		return Math.sqrt(dx*dx + dy*dy);
@@ -67,8 +67,8 @@ public class ViewNode {
 	}
 	
 	public void paint(Graphics g) {
-		int xpixel = mere.xpix(node.getX());
-		int ypixel = mere.ypix(node.getY());
+		int xpixel = viewMain.xpix(node.getX());
+		int ypixel = viewMain.ypix(node.getY());
 		
 		g.setColor(color); // boule noires
 		if (square)

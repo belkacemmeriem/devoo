@@ -1,7 +1,7 @@
 package command;
 
 import model.Delivery;
-import model.FeuilleDeRoute;
+import model.RoadMap;
 import model.Node;
 import model.Schedule;
 
@@ -17,32 +17,32 @@ public class CommandAddNode extends Command {
 
 	Node node;
 	Schedule newSchedule, oldSchedule;
-	FeuilleDeRoute fdr;
+	RoadMap rm;
 	
-	public CommandAddNode(Node node, Schedule newSchedule, FeuilleDeRoute fdr) {
+	public CommandAddNode(Node node, Schedule newSchedule, RoadMap rm) {
 		this.node = node;
 		this.newSchedule = newSchedule;
-		Delivery d = fdr.getDelivery(node);
+		Delivery d = rm.getDelivery(node);
 		if (d != null)
 			oldSchedule = d.getSchedule();
 		else
 			oldSchedule = null;
-		this.fdr = fdr;
+		this.rm = rm;
 	}
 
 	@Override
 	public void undo() {
-		fdr.delNode(node);
+		rm.delNode(node);
 		if (oldSchedule != null)
-			fdr.addNode(node, oldSchedule);
+			rm.addNode(node, oldSchedule);
 	}
 
 	@Override
 	public void redo() {
-		Delivery d = fdr.getDelivery(node);
+		Delivery d = rm.getDelivery(node);
 		if (d != null)
-			fdr.delNode(node);
-		fdr.addNode(node, newSchedule);
+			rm.delNode(node);
+		rm.addNode(node, newSchedule);
 	}
 
 }

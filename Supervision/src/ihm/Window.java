@@ -20,8 +20,8 @@ import java.util.Vector;
 
 import javax.swing.*;
 
-import supervision.Controleur;
-import supervision.Etat;
+import supervision.Controler;
+import supervision.State;
 import model.Schedule;
 
 
@@ -29,16 +29,16 @@ import model.Schedule;
  *
  * @author Mignot
  */
-public class Fenetre extends java.awt.Frame {
+public class Window extends java.awt.Frame {
 
 	private final String TITRE = "Supervision des Livraisons Itinerantes Planifies";
 	private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
 			+ " mode creation)";
 	private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est selectionnee";
-	private Fenetre fenetre;
+	private Window window;
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
-	private Controleur controleur;
+	private Controler controleur;
 	private JFileChooser jFileChooserXML;
 	private JFileChooser jFileChooserA;
 	private Menu menuFichier;
@@ -47,13 +47,13 @@ public class Fenetre extends java.awt.Frame {
 	private ArrayList<Schedule> schedules;
 	private ArrayList<JToggleButton> jToggleButtonSchedules;
 
-	private ListLivraison listeLivraison;
+	private DeliveryList listeLivraison;
 
 	/**
 	 * Creates new form Fenetre
 	 */
-	public Fenetre() {
-		fenetre=this;
+	public Window() {
+		window=this;
 		initComponents();
 		this.setTitle(TITRE);
 		creeMenu();
@@ -72,7 +72,7 @@ public class Fenetre extends java.awt.Frame {
 		setMainLabel(controleur.getLabel());
 		
 		switch (controleur.getEtat()) {
-		case VIDE:
+		case EMPTY:
 			menuFichier.getItem(0).setEnabled(false);
 			menuEdition.getItem(0).setEnabled(false);
 			menuEdition.getItem(1).setEnabled(false);
@@ -83,7 +83,7 @@ public class Fenetre extends java.awt.Frame {
 			jButtonValiderLiv.setEnabled(false);
 			break;
 		
-		case REMPLISSAGE:
+		case FILLING:
 			menuFichier.getItem(0).setEnabled(false);
 			menuEdition.getItem(0).setEnabled(controleur.undoAble());
 			menuEdition.getItem(1).setEnabled(controleur.redoAble());
@@ -187,7 +187,7 @@ public class Fenetre extends java.awt.Frame {
 			};
 			jToggleButtonSchedules.get(i).addActionListener(a);
 			jPanelHoraires.add(jToggleButtonSchedules.get(i));
-			listeLivraison = new ListLivraison();
+			listeLivraison = new DeliveryList();
 			listeLivraison.setjButtonSupprimer(jButtonSupprimerLiv);
 			listeLivraison.setSchedule(schedules);
 			jPaneLivraisons.add(listeLivraison);
@@ -198,12 +198,12 @@ public class Fenetre extends java.awt.Frame {
 		return (Drawing)jPanelPlan;
 	}
 
-	public ListLivraison getListLivraison()
+	public DeliveryList getListLivraison()
 	{
 		return listeLivraison;
 	}	
 	
-	public void setControleur(Controleur ctrl) {
+	public void setControleur(Controler ctrl) {
 		controleur = ctrl;
 	}
 	
@@ -550,7 +550,7 @@ public class Fenetre extends java.awt.Frame {
                     .addComponent(SpeedRateSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jPanelPlan.setFenetre(this);
+        jPanelPlan.setWindow(this);
         jPanelPlan.setBackground(new java.awt.Color(51, 51, 51));
         jPanelPlan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -741,13 +741,13 @@ public class Fenetre extends java.awt.Frame {
 	}//GEN-LAST:event_jButtonGenTournActionPerformed
 
 	private void jButtonValiderLivActionPerformed (java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLivActionPerformed
-		if (controleur.getEtat() != Etat.VIDE) {
+		if (controleur.getEtat() != State.EMPTY) {
 			controleur.add();
 		}
 	}//GEN-LAST:event_jButtonValiderLivActionPerformed
 
 	private void jButtonSupprimerLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerLivActionPerformed
-		if (controleur.getEtat() != Etat.VIDE) {
+		if (controleur.getEtat() != State.EMPTY) {
 			controleur.del();
 			jButtonSupprimerLiv.setEnabled(false);
 		}
