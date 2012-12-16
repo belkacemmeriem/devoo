@@ -105,15 +105,7 @@ public class Window extends java.awt.Frame {
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(true);
 			jLabelAddLivCurr.setEnabled(false);
-			jLabelAddLivPrec.setEnabled(false);
-			jLabelAddLivSuiv.setEnabled(false);
 			jLabelLivCurr.setEnabled(false);
-			jLabelLivPrec.setEnabled(false);
-			jLabelLivSuiv.setEnabled(false);
-			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
-					" "+CHAMP_INDISP_CREA);
-			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
-					" "+CHAMP_INDISP_CREA);
 			break;
 			
 		case MODIFICATION:
@@ -130,14 +122,6 @@ public class Window extends java.awt.Frame {
 			jButtonValiderLiv.setEnabled(false);
 			for (JToggleButton jtb : jToggleButtonSchedules)
 				jtb.setEnabled(false);
-			jLabelAddLivPrec.setEnabled(false);
-			jLabelAddLivSuiv.setEnabled(false);
-			jLabelLivPrec.setEnabled(false);
-			jLabelLivSuiv.setEnabled(false);
-			jLabelAddLivPrec.setText(CHAMP_NO_LIV_SELEC+
-					" "+CHAMP_INDISP_CREA);
-			jLabelAddLivSuiv.setText(CHAMP_NO_LIV_SELEC+
-					" "+CHAMP_INDISP_CREA);
 			break;
 		}
 	}
@@ -480,7 +464,7 @@ public class Window extends java.awt.Frame {
         jPanelGauche = new javax.swing.JPanel();
         jPanelBoutonsGen = new javax.swing.JPanel();
         jComboBoxZone = new javax.swing.JComboBox();
-        jButtonGenTourn = new javax.swing.JToggleButton();
+        jButtonGenTourn = new javax.swing.JButton();
         SpeedRateSlider = new javax.swing.JSlider();
         jPanelPlan = new Drawing();
         jPanelEditionLivraison = new javax.swing.JPanel();
@@ -490,12 +474,8 @@ public class Window extends java.awt.Frame {
         jButtonValiderLiv = new javax.swing.JButton();
         jPanelHoraires = new javax.swing.JPanel();
         jLabelLivCurr = new javax.swing.JLabel();
-        jLabelLivPrec = new javax.swing.JLabel();
-        jLabelAddLivPrec = new javax.swing.JLabel();
-        jLabelLivSuiv = new javax.swing.JLabel();
-        jLabelAddLivSuiv = new javax.swing.JLabel();
-        insertBeforeButton = new javax.swing.JToggleButton();
-        insertAfterButton = new javax.swing.JToggleButton();
+        insertBeforeButton = new javax.swing.JButton();
+        insertAfterButton = new javax.swing.JButton();
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
@@ -586,24 +566,16 @@ public class Window extends java.awt.Frame {
         jPanelHoraires.setBackground(new java.awt.Color(51, 51, 51));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabelLivCurr.setText("Selection :");
+        jLabelLivCurr.setText("Adresse de livraison :");
 
-        jLabelLivPrec.setText("Livraison précedente :");
-
-        jLabelAddLivPrec.setText("Aucune livraison sélectionnée");
-
-        jLabelLivSuiv.setText("Livraison suivante :");
-
-        jLabelAddLivSuiv.setText("Aucune livraison sélectionnée");
-
-        insertBeforeButton.setText("inserer avant..");
+        insertBeforeButton.setToolTipText("");
         insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	insertBeforeButtonActionPerformed(evt);
+                insertBeforeButtonActionPerformed(evt);
             }
         });
 
-        insertAfterButton.setText("inserer apres..");
+        insertAfterButton.setToolTipText("");
         insertAfterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertAfterButtonActionPerformed(evt);
@@ -617,18 +589,10 @@ public class Window extends java.awt.Frame {
             .addComponent(jPanelHoraires, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
             .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                    .addComponent(jLabelLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
                 .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelEdLivTitre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                    .addComponent(jLabelLivPrec, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                    .addComponent(jLabelLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                    .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelEditionLivraisonLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                            .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(insertBeforeButton)
@@ -637,7 +601,10 @@ public class Window extends java.awt.Frame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonValiderLiv)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSupprimerLiv)))
+                        .addComponent(jButtonSupprimerLiv))
+                    .addGroup(jPanelEditionLivraisonLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelAddLivCurr)))
                 .addContainerGap())
         );
         jPanelEditionLivraisonLayout.setVerticalGroup(
@@ -651,16 +618,11 @@ public class Window extends java.awt.Frame {
                         .addComponent(jButtonValiderLiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(insertAfterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(insertBeforeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelAddLivPrec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelEditionLivraisonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelAddLivSuiv, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
+                    .addComponent(jLabelAddLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelLivCurr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
                 .addComponent(jPanelHoraires, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -669,10 +631,10 @@ public class Window extends java.awt.Frame {
         jPanelGaucheLayout.setHorizontalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelBoutonsGen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelGaucheLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE))
+            .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelGaucheLayout.setVerticalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -681,7 +643,7 @@ public class Window extends java.awt.Frame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -704,28 +666,29 @@ public class Window extends java.awt.Frame {
                 .addGap(64, 64, 64))
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelDroiteLayout.setVerticalGroup(
             jPanelDroiteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jLabelTitreLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE))
+                .addComponent(jPaneLivraisons, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelDroite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelDroite, 0, 626, Short.MAX_VALUE)
             .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -776,20 +739,16 @@ private void SpeedRateSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-
 }//GEN-LAST:event_SpeedRateSliderMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton insertAfterButton;
-    private javax.swing.JToggleButton insertBeforeButton;
-    private javax.swing.JToggleButton jButtonGenTourn;
     private javax.swing.JSlider SpeedRateSlider;
+    private javax.swing.JButton insertAfterButton;
+    private javax.swing.JButton insertBeforeButton;
+    private javax.swing.JButton jButtonGenTourn;
     private javax.swing.JButton jButtonSupprimerLiv;
     private javax.swing.JButton jButtonValiderLiv;
     private javax.swing.JComboBox jComboBoxZone;
     private javax.swing.JLabel jLabelAddLivCurr;
-    private javax.swing.JLabel jLabelAddLivPrec;
-    private javax.swing.JLabel jLabelAddLivSuiv;
     private javax.swing.JLabel jLabelEdLivTitre;
     private javax.swing.JLabel jLabelLivCurr;
-    private javax.swing.JLabel jLabelLivPrec;
-    private javax.swing.JLabel jLabelLivSuiv;
     private javax.swing.JLabel jLabelTitreLivraisons;
     private javax.swing.JPanel jPaneLivraisons;
     private javax.swing.JPanel jPanelBoutonsGen;

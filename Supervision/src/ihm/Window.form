@@ -27,7 +27,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <Component id="jPanelGauche" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanelDroite" min="-2" pref="237" max="-2" attributes="0"/>
@@ -36,8 +36,8 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelDroite" alignment="0" max="32767" attributes="0"/>
-          <Component id="jPanelGauche" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanelDroite" alignment="0" min="0" pref="626" max="32767" attributes="1"/>
+          <Component id="jPanelGauche" alignment="0" max="32767" attributes="1"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -53,11 +53,11 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanelBoutonsGen" alignment="0" max="32767" attributes="0"/>
-              <Component id="jPanelEditionLivraison" alignment="0" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                   <Component id="jPanelPlan" pref="559" max="32767" attributes="0"/>
               </Group>
+              <Component id="jPanelEditionLivraison" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -67,8 +67,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanelPlan" pref="481" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanelEditionLivraison" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanelEditionLivraison" min="-2" pref="91" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -188,22 +188,12 @@
                   <Component id="jPanelHoraires" pref="569" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelEdLivTitre" alignment="1" pref="223" max="32767" attributes="0"/>
-                          <Component id="jLabelLivPrec" alignment="1" pref="223" max="32767" attributes="0"/>
-                          <Component id="jLabelLivCurr" pref="223" max="32767" attributes="0"/>
-                          <Component id="jLabelLivSuiv" pref="223" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jLabelEdLivTitre" pref="293" max="32767" attributes="0"/>
+                          <Component id="jLabelLivCurr" pref="293" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabelAddLivPrec" pref="320" max="32767" attributes="0"/>
-                                  <Component id="jLabelAddLivCurr" max="32767" attributes="0"/>
-                                  <Component id="jLabelAddLivSuiv" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Component id="insertBeforeButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -212,6 +202,10 @@
                               <Component id="jButtonValiderLiv" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonSupprimerLiv" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabelAddLivCurr" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -231,19 +225,12 @@
                           <Component id="insertAfterButton" min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="insertBeforeButton" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelLivCurr" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabelAddLivCurr" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabelLivCurr" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelLivPrec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabelAddLivPrec" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelLivSuiv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jLabelAddLivSuiv" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="jPanelHoraires" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -294,26 +281,6 @@
                 <Property name="text" type="java.lang.String" value="Adresse de livraison :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabelLivPrec">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Livraison pr&#xe9;cedente :"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelAddLivPrec">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Aucune livraison s&#xe9;lectionn&#xe9;e"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelLivSuiv">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Livraison suivante :"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelAddLivSuiv">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Aucune livraison s&#xe9;lectionn&#xe9;e"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="insertBeforeButton">
               <Properties>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -356,7 +323,7 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPaneLivraisons" min="-2" pref="232" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="54" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -365,7 +332,8 @@
               <Group type="102" attributes="0">
                   <Component id="jLabelTitreLivraisons" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPaneLivraisons" pref="657" max="32767" attributes="0"/>
+                  <Component id="jPaneLivraisons" min="-2" pref="587" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
