@@ -245,7 +245,6 @@ public class DeliveryList extends JPanel {
 				{
 					//la ligne selectionnee est une livraison?
 					if(((DefaultMutableTreeNode)tree.getLastSelectedPathComponent()).getLevel()>1){
-						//System.out.println("liv");
 						jButtonSupprimer.setEnabled(true);
 					}
 					else{

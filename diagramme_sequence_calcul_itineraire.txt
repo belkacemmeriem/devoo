@@ -1,37 +1,37 @@
 title Calcul itiénraire
 
-"f:FeuilleDeRoute"->+"g:GraphLivraisons": GraphLivraisons(this)
-"g:GraphLivraisons"-->-"f:FeuilleDeRoute":
+"r:RoadMap"->+"g:GraphDeliveries": GraphDeliveries(this)
+"g:GraphDeliveries"-->-"r:RoadMap":
 
-"f:FeuilleDeRoute"->+"g:GraphLivraisons": createGraph()
+"r:RoadMap"->+"g:GraphDeliveries": createGraph()
 
-"g:GraphLivraisons"-->+"f:FeuilleDeRoute":
+"g:GraphDeliveries"-->+"r:RoadMap":
 
-"g:GraphLivraisons"->+"f:FeuilleDeRoute":
+"g:GraphDeliveries"->+"r:RoadMap":
 getListScheludles()
 
-"f:FeuilleDeRoute"-->-"g:GraphLivraisons": timeZones
+"r:RoadMap"-->-"g:GraphDeliveries": timeZones
 
-"g:GraphLivraisons"->+"f:FeuilleDeRoute":getZoneGeo()
-"f:FeuilleDeRoute"-->-"g:GraphLivraisons":ZoneGeo
+"g:GraphDeliveries"->+"r:RoadMap":getZoneGeo()
+"r:RoadMap"-->-"g:GraphDeliveries":ZoneGeo
 loop pour chaque livraison
-"g:GraphLivraisons"->+Dijkstra:solve(z:ZoneGeo,depart:Node,listeArrivees:List<Node>)
-Dijkstra->+Chemin:Chemin(List<Node>,duration:int)
-Chemin-->-Dijkstra:
+"g:GraphDeliveries"->+Dijkstra:solve(z:ZoneGeo,depart:Node,listeArrivees:List<Node>)
+Dijkstra->+Path:Path(List<Node>,duration:int)
+Path-->-Dijkstra:
 
-Dijkstra-->-"g:GraphLivraisons":List<Chemin>
+Dijkstra-->-"g:GraphDeliveries":List<Path>
 end
-"g:GraphLivraisons"-->-"f:FeuilleDeRoute":void
+"g:GraphDeliveries"-->-"r:RoadMap":void
 
-"f:FeuilleDeRoute"->+"g:GraphLivraisons":calcItineraire()
-"g:GraphLivraisons"->+"tsp:TSP":solve(timeLimit,(nbVertices+1)*maxArcCost,this)
-"tsp:TSP"-->-"g:GraphLivraisons":retourCalc:int
+"r:RoadMap"->+"g:GraphDeliveries":calcItineraire()
+"g:GraphDeliveries"->+"tsp:TSP":solve(timeLimit,(nbVertices+1)*maxArcCost,this)
+"tsp:TSP"-->-"g:GraphDeliveries":retourCalc:int
 alt retourCalc=SOLUTION_FOUND || OPTIMAL_SOLUTION_FOUND
 loop pour chaque d:Delivery
-"g:GraphLivraisons"->+"d:Delivery":addChemin(cheminPrecedent:Chemin)
-"d:Delivery"-->-"g:GraphLivraisons":void
+"g:GraphDeliveries"->+"d:Delivery":addPath(cheminPrecedent:Path)
+"d:Delivery"-->-"g:GraphDeliveries":void
 end
-"g:GraphLivraisons"-->"f:FeuilleDeRoute":List<Delivery>
+"g:GraphDeliveries"-->"r:RoadMap":List<Delivery>
 else
-"g:GraphLivraisons"-->-"f:FeuilleDeRoute":Exception
+"g:GraphDeliveries"-->-"r:RoadMap":Exception
 end
