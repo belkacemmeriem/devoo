@@ -10,7 +10,7 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
-import supervision.Controleur;
+import supervision.Controler;
 import views.ViewMain;
 import views.ViewZoneGeo;
 
@@ -20,8 +20,8 @@ import model.ZoneGeo;
 public class Drawing extends JPanel implements MouseListener, MouseMotionListener {
 	
 	protected ViewMain viewMain;
-	protected Controleur controler;
-    protected Fenetre window;
+	protected Controler controler;
+    protected Window window;
 	
     /**
      * Retourne un JPanel amélioré réagissant aux clics.
@@ -54,11 +54,11 @@ public class Drawing extends JPanel implements MouseListener, MouseMotionListene
 		viewMain.paint(g);
 	}
 
-	public void setControleur(Controleur c) {
+	public void setControler(Controler c) {
 		controler = c;
 	}
 
-    public void setFenetre(Fenetre w) {
+    public void setWindow(Window w) {
         this.window = w;
     }
 

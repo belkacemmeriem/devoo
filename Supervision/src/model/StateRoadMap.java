@@ -1,6 +1,6 @@
 package model;
 
-public enum EtatFDR
+public enum StateRoadMap
 {
 	INIT,	// avant première passe de TSP
 	OPTIM,	// après calcul TSP

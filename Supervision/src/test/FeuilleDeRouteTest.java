@@ -9,8 +9,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import model.Delivery;
-import model.EtatFDR;
-import model.FeuilleDeRoute;
+import model.StateRoadMap;
+import model.RoadMap;
 import model.Node;
 import model.Schedule;
 import model.ZoneGeo;
@@ -24,7 +24,7 @@ public class FeuilleDeRouteTest
 {
 	
 	static GraphLivraisons graphLivraisons;
-	static FeuilleDeRoute feuilleDeRoute;
+	static RoadMap feuilleDeRoute;
 	static ZoneGeo zoneGeo;
 	static Schedule schedule1, schedule2;
 
@@ -87,7 +87,7 @@ public class FeuilleDeRouteTest
 		schedule2=new Schedule(900,1200,Color.RED);
 		listeSchedules.add(schedule2);		
 		
-		feuilleDeRoute=new FeuilleDeRoute(listeSchedules, zoneGeo);
+		feuilleDeRoute=new RoadMap(listeSchedules, zoneGeo);
 		
 	}
 	
@@ -101,11 +101,16 @@ public class FeuilleDeRouteTest
 		feuilleDeRoute.addNode(zoneGeo.getNode(1), schedule2);
 		feuilleDeRoute.addNode(zoneGeo.getNode(3), schedule2);
 		
-		assertEquals(feuilleDeRoute.getEtat(), EtatFDR.INIT);
+		assertEquals(feuilleDeRoute.getEtat(), StateRoadMap.INIT);
 		
-		feuilleDeRoute.computeWithTSP();
+		try {
+			feuilleDeRoute.computeWithTSP();
+		} catch (GraphException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		assertEquals(feuilleDeRoute.getEtat(), EtatFDR.OPTIM);
+		assertEquals(feuilleDeRoute.getEtat(), StateRoadMap.OPTIM);
 		
 		try 
 		{
@@ -153,9 +158,14 @@ public class FeuilleDeRouteTest
 		//schedule 1 contient 2 deliveries
 		assertEquals(feuilleDeRoute.getSchedules().get(1).getDeliveries().size(), 2);
 		
-		assertEquals(feuilleDeRoute.getEtat(), EtatFDR.MODIF);
-		feuilleDeRoute.computeWithTSP();
-		assertEquals(feuilleDeRoute.getEtat(), EtatFDR.OPTIM);
+		assertEquals(feuilleDeRoute.getEtat(), StateRoadMap.MODIF);
+		try {
+			feuilleDeRoute.computeWithTSP();
+		} catch (GraphException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(feuilleDeRoute.getEtat(), StateRoadMap.OPTIM);
 		
 
 	}

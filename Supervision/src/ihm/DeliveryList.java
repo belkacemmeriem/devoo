@@ -11,7 +11,7 @@ import model.Delivery;
 import model.Schedule;
 
 /* ListLivraison.java requires no other files. */
-public class ListLivraison extends JPanel {
+public class DeliveryList extends JPanel {
 	
     private JTree tree;
     private DefaultTreeModel treeModel;
@@ -20,7 +20,7 @@ public class ListLivraison extends JPanel {
     private ArrayList<Integer> idSchedules; /*numero de ligne de la Jlist 
     ou commence la liste des livraisons de la plage horaire*/
 
-    public ListLivraison(){
+    public DeliveryList(){
         super(new BorderLayout());
     }
     

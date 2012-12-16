@@ -10,11 +10,9 @@ import java.util.LinkedList;
  */
 public class Schedule
 {
-	protected
-	int startTime, endTime;	//en minutes
-    Color couleur;
-    LinkedList<Delivery> deliveries = new LinkedList<Delivery>();
-
+	protected int startTime, endTime;	//en minutes
+	protected Color couleur;
+	protected LinkedList<Delivery> deliveries = new LinkedList<Delivery>();
 	
 	public LinkedList<Delivery> getDeliveries()
 	{

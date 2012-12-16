@@ -6,7 +6,7 @@ package dijkstra;
 import model.Arc;
 import model.Node;
 import model.ZoneGeo;
-import model.Chemin;
+import model.Path;
 
 import java.util.*;
 
@@ -21,7 +21,7 @@ public class Dijkstra {
     protected
             static double Infinity =1000000;
     
-    public  static ArrayList<Chemin> solve(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
+    public  static ArrayList<Path> solve(ZoneGeo theGraph, Node source, ArrayList<Node> toEnglobe)
 
     {
     	ArrayList<Node> toCompute= (ArrayList<Node>) toEnglobe.clone();
@@ -78,7 +78,7 @@ public class Dijkstra {
 	            
             }
         }
-        ArrayList<Chemin> solution= new ArrayList<Chemin>();
+        ArrayList<Path> solution= new ArrayList<Path>();
         for(Node n : toCompute)
         {
         	double distance=0;
@@ -94,7 +94,7 @@ public class Dijkstra {
             	temp=theGraph.getNode(theID);
         	}
         	Collections.reverse(contenu);
-        	Chemin newChemin = new Chemin(contenu,distance);        
+        	Path newChemin = new Path(contenu,distance);        
         	solution.add(newChemin);
         }
         	

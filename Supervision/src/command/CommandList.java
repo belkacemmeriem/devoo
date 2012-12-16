@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class CommandList {
 
-	private ArrayList<Command> commandes = new ArrayList<Command>();
+	private ArrayList<Command> commands = new ArrayList<Command>();
 	private int index = 0;
 
 	/**
@@ -17,11 +17,11 @@ public class CommandList {
 	 * @param  c la commande à ajouter.
 	 */
 	public void add(Command c) {
-		int taille = commandes.size();
+		int taille = commands.size();
 		for (int i = index ; i < taille  ; i++) {
-			commandes.remove(index);
+			commands.remove(index);
 		}
-		commandes.add(c);
+		commands.add(c);
 		index++;
 	}
 	
@@ -29,7 +29,7 @@ public class CommandList {
 	 * Supprime toutes les commandes de l'historique.
 	 */
 	public void clear() {
-		commandes.clear();
+		commands.clear();
 		index = 0;
 	}
 
@@ -44,7 +44,7 @@ public class CommandList {
 			return false;
 		}
 		index--;
-		commandes.get(index).undo();
+		commands.get(index).undo();
 		return true;
 	}
 
@@ -54,11 +54,11 @@ public class CommandList {
 	 * @return vrai si la répétition a été possible
 	 */
 	public boolean redo() {
-		if (index >= commandes.size()) {
+		if (index >= commands.size()) {
 			System.out.println("(redo impossible)");
 			return false;
 		}
-		commandes.get(index).redo();
+		commands.get(index).redo();
 		index++;
 		return true;
 	}
@@ -69,7 +69,7 @@ public class CommandList {
 	 * @return la taille de l'historique
 	 */
 	public int size() {
-		return commandes.size();
+		return commands.size();
 	}
 	
 	/**

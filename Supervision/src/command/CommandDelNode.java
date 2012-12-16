@@ -1,7 +1,7 @@
 package command;
 
 import model.Delivery;
-import model.FeuilleDeRoute;
+import model.RoadMap;
 import model.Node;
 import model.Schedule;
 
@@ -9,28 +9,28 @@ import model.Schedule;
  * Renvoie une commande pour annuler ou répéter la suppression d'un node en mode remplissage.
  *
  * @param  n  le node à ajouter
- * @param  fdr  la feuille de route actuelle
+ * @param  rm  la feuille de route actuelle
  */
 public class CommandDelNode extends Command {
 	
 	private Node node;
-	private FeuilleDeRoute fdr;
+	private RoadMap rm;
 	private Schedule schedule;
 
-	public CommandDelNode(Node n, FeuilleDeRoute fdr) {
+	public CommandDelNode(Node n, RoadMap rm) {
 		this.node = n;
-		this.fdr = fdr;
-		this.schedule = fdr.getDelivery(n).getSchedule();
+		this.rm = rm;
+		this.schedule = rm.getDelivery(n).getSchedule();
 	}
 
 	@Override
 	public void undo() {
-		fdr.addNode(node, schedule);
+		rm.addNode(node, schedule);
 	}
 
 	@Override
 	public void redo() {
-		fdr.delNode(node);
+		rm.delNode(node);
 	}
 
 }

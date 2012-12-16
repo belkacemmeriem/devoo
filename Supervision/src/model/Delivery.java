@@ -2,16 +2,12 @@ package model;
 
 public class Delivery
 {
-	protected
-	Node dest;
-
-
-
-	Schedule schedule;
-	Chemin pathToDest;
+	protected Node dest;
+	protected Schedule schedule;
+	protected Path pathToDest;
 	
-	Integer heurePrevue = null;
-	boolean retardPrevu;
+	protected Integer heurePrevue = null;
+	protected boolean retardPrevu;
 	
 	
 	public boolean isRetardPrevu()
@@ -58,7 +54,7 @@ public class Delivery
 		pathToDest = null;
 	}
 
-	public Chemin getPathToDest()
+	public Path getPathToDest()
 	{
 		return pathToDest;
 	}
@@ -72,7 +68,7 @@ public class Delivery
 	}
 
 
-	public void setPathToDest(Chemin pathToDest)
+	public void setPathToDest(Path pathToDest)
 	{
 		this.pathToDest = pathToDest;
 	}
