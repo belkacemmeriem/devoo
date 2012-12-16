@@ -566,16 +566,17 @@ public class Window extends java.awt.Frame {
         jPanelHoraires.setBackground(new java.awt.Color(51, 51, 51));
         jPanelHoraires.setLayout(new java.awt.GridLayout(1, 0));
 
-        jLabelLivCurr.setText("Adresse de livraison :");
+        jLabelLivCurr.setText("Selection :");
 
-        insertBeforeButton.setToolTipText("");
+
+        insertBeforeButton.setText("inserer avant..");
         insertBeforeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertBeforeButtonActionPerformed(evt);
+            	insertBeforeButtonActionPerformed(evt);
             }
         });
 
-        insertAfterButton.setToolTipText("");
+        insertAfterButton.setText("inserer apres..");
         insertAfterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertAfterButtonActionPerformed(evt);
@@ -643,7 +644,7 @@ public class Window extends java.awt.Frame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelEditionLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
