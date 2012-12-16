@@ -1,0 +1,37 @@
+title Calcul itiénraire
+
+"f:FeuilleDeRoute"->+"g:GraphLivraisons": GraphLivraisons(this)
+"g:GraphLivraisons"-->-"f:FeuilleDeRoute":
+
+"f:FeuilleDeRoute"->+"g:GraphLivraisons": createGraph()
+
+"g:GraphLivraisons"-->+"f:FeuilleDeRoute":
+
+"g:GraphLivraisons"->+"f:FeuilleDeRoute":
+getListScheludles()
+
+"f:FeuilleDeRoute"-->-"g:GraphLivraisons": timeZones
+
+"g:GraphLivraisons"->+"f:FeuilleDeRoute":getZoneGeo()
+"f:FeuilleDeRoute"-->-"g:GraphLivraisons":ZoneGeo
+loop pour chaque livraison
+"g:GraphLivraisons"->+Dijkstra:solve(z:ZoneGeo,depart:Node,listeArrivees:List<Node>)
+Dijkstra->+Chemin:Chemin(List<Node>,duration:int)
+Chemin-->-Dijkstra:
+
+Dijkstra-->-"g:GraphLivraisons":List<Chemin>
+end
+"g:GraphLivraisons"-->-"f:FeuilleDeRoute":void
+
+"f:FeuilleDeRoute"->+"g:GraphLivraisons":calcItineraire()
+"g:GraphLivraisons"->+"tsp:TSP":solve(timeLimit,(nbVertices+1)*maxArcCost,this)
+"tsp:TSP"-->-"g:GraphLivraisons":retourCalc:int
+alt retourCalc=SOLUTION_FOUND || OPTIMAL_SOLUTION_FOUND
+loop pour chaque d:Delivery
+"g:GraphLivraisons"->+"d:Delivery":addChemin(cheminPrecedent:Chemin)
+"d:Delivery"-->-"g:GraphLivraisons":void
+end
+"g:GraphLivraisons"-->"f:FeuilleDeRoute":List<Delivery>
+else
+"g:GraphLivraisons"-->-"f:FeuilleDeRoute":Exception
+end
