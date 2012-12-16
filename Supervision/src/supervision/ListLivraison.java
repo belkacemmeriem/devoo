@@ -119,6 +119,9 @@ public class ListLivraison extends JPanel {
 		DefaultMutableTreeNode scheduleNode=(DefaultMutableTreeNode)((DefaultMutableTreeNode)treeModel.getRoot()).getChildAt(idSchedule);
 		//insere un noeud dans la plage horaire trouvee au dessus
     	treeModel.insertNodeInto(new DefaultMutableTreeNode(addr),scheduleNode, scheduleNode.getChildCount());
+		TreeNode[] nodes = treeModel.getPathToRoot(scheduleNode);
+        TreePath path = new TreePath(nodes);
+		tree.expandPath(path);
     }
 	
     /**
