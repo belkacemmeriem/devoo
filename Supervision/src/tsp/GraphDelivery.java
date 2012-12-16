@@ -174,7 +174,7 @@ public class GraphDelivery implements Graph {
 		TSP tsp=new TSP();
 		int bound=(nbVertices+1)*maxArcCost;
 		SolutionState retour;
-				
+
 		retour=tsp.solve(timeLimit, bound, this);
 		
 		if(retour==SolutionState.INCONSISTENT)
@@ -187,7 +187,6 @@ public class GraphDelivery implements Graph {
 		}
 		
 		int[] tabPos=tsp.getPos();
-		int[] tabNext=tsp.getNext();
 		ArrayList<Delivery> itineraire=new ArrayList<Delivery>();
 		for(int i=0;i<tabPos.length-1;i++)
 		{
