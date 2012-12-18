@@ -31,6 +31,7 @@ import javax.swing.JToggleButton;
 import model.Schedule;
 import supervision.Controler;
 import supervision.State;
+import views.ViewRoadMap;
 
 
 /**
@@ -41,9 +42,6 @@ public class Window extends java.awt.Frame {
 
 	private static final long serialVersionUID = 1L;
 	private final String TITRE = "Supervision des Livraisons Itinerantes Planifies";
-	private final String CHAMP_INDISP_CREA = "(ce champ est indisponible en"
-			+ " mode creation)";
-	private final String CHAMP_NO_LIV_SELEC = "Aucune livraison n'est selectionnee";
 	private int selectedZone;
 	private boolean masquerPopUpZone = false;
 	private Controler controleur;
@@ -464,7 +462,7 @@ public class Window extends java.awt.Frame {
         jPanelGauche = new javax.swing.JPanel();
         jPanelBoutonsGen = new javax.swing.JPanel();
         jComboBoxZone = new javax.swing.JComboBox();
-        jButtonGenTourn = new javax.swing.JButton();
+        jButtonGenTourn = new javax.swing.JToggleButton();
         SpeedRateSlider = new javax.swing.JSlider();
         jPanelPlan = new Drawing();
         jPanelEditionLivraison = new javax.swing.JPanel();
@@ -474,8 +472,8 @@ public class Window extends java.awt.Frame {
         jButtonValiderLiv = new javax.swing.JButton();
         jPanelHoraires = new javax.swing.JPanel();
         jLabelLivCurr = new javax.swing.JLabel();
-        insertBeforeButton = new javax.swing.JButton();
-        insertAfterButton = new javax.swing.JButton();
+        insertBeforeButton = new javax.swing.JToggleButton();
+        insertAfterButton = new javax.swing.JToggleButton();
         jPanelDroite = new javax.swing.JPanel();
         jLabelTitreLivraisons = new javax.swing.JLabel();
         jPaneLivraisons = new javax.swing.JPanel();
@@ -506,8 +504,10 @@ public class Window extends java.awt.Frame {
         SpeedRateSlider.setBackground(new java.awt.Color(51, 51, 51));
         SpeedRateSlider.setForeground(new java.awt.Color(51, 51, 51));
         SpeedRateSlider.setMajorTickSpacing(1);
-        SpeedRateSlider.setMaximum(300);
+        SpeedRateSlider.setMinimum(ViewRoadMap.PULSE_SLEEP_MIN);
+        SpeedRateSlider.setMaximum(ViewRoadMap.PULSE_SLEEP_MAX);
         SpeedRateSlider.setSnapToTicks(true);
+        SpeedRateSlider.setValue((ViewRoadMap.PULSE_SLEEP_MAX - ViewRoadMap.PULSE_SLEEP_MIN) / 2);
         SpeedRateSlider.setToolTipText("Edite la vitesse de rafraichissement");
         SpeedRateSlider.setPreferredSize(new java.awt.Dimension(200, 20));
         SpeedRateSlider.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -736,14 +736,14 @@ public class Window extends java.awt.Frame {
 	}//GEN-LAST:event_insertAfterButtonActionPerformed
 
 private void SpeedRateSliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpeedRateSliderMouseReleased
-	controleur.getViewMain().updatePulseSleep(SpeedRateSlider.getValue());
+	controleur.getViewMain().updatePulseSleep(ViewRoadMap.PULSE_SLEEP_MAX - SpeedRateSlider.getValue());
 }//GEN-LAST:event_SpeedRateSliderMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSlider SpeedRateSlider;
-    private javax.swing.JButton insertAfterButton;
-    private javax.swing.JButton insertBeforeButton;
-    private javax.swing.JButton jButtonGenTourn;
+    private javax.swing.JToggleButton insertAfterButton;
+    private javax.swing.JToggleButton insertBeforeButton;
+    private javax.swing.JToggleButton jButtonGenTourn;
     private javax.swing.JButton jButtonSupprimerLiv;
     private javax.swing.JButton jButtonValiderLiv;
     private javax.swing.JComboBox jComboBoxZone;
